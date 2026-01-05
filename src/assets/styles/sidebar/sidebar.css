@@ -1,0 +1,83 @@
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: #0f4c81;
+  /* blue like image */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.sidebar-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Menu */
+.sidebar-menu {
+  padding: 20px 0;
+}
+
+/* Item */
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 24px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-item .icon {
+  font-size: 18px;
+}
+
+/* Hover */
+.sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Active */
+.sidebar-item.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Employee dropdown */
+/* Employee dropdown */
+.sidebar-submenu {
+  /* margin-left: 52px; REMOVED to allow full width background on items */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-subitem {
+  display: block;
+  /* padding: top right bottom left */
+  /* Left padding = 24px (base) + 18px (icon) + 14px (gap) + extra indent ~ 14px = ~70px to look indented under text */
+  padding: 14px 24px 14px 70px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-subitem:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-subitem.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 500;
+}
