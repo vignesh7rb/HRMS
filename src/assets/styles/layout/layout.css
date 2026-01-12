@@ -1,36 +1,53 @@
+/* ===== ROOT LAYOUT ===== */
 .layout-container {
   display: flex;
-  height: 100vh;
+  height: 100vh;          /* FULL SCREEN */
   width: 100%;
+  overflow: hidden;
 }
 
-.layout-right {
-  flex: 1;
-  display: flex;.layout-container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 240px;
+  height: 100vh;          /* FULL HEIGHT */
+  background: #0f4c81;
+  position: fixed;        /* LOCK SIDEBAR */
+  top: 0;
+  left: 0;
 }
 
+/* ===== RIGHT SECTION ===== */
 .layout-right {
-  flex: 1;
+  margin-left: 240px;     /* SAME AS SIDEBAR WIDTH */
   display: flex;
   flex-direction: column;
-  background: #f1f5f9;
+  flex: 1;
+  height: 100vh;
 }
 
+/* ===== HEADER ===== */
+.topbar {
+  height: 64px;
+  flex-shrink: 0;
+  background: #0f4c81;
+  color: #fff;
+}
+
+/* ===== MAIN CONTENT ===== */
 .layout-content {
   flex: 1;
-  padding: 20px;
   overflow-y: auto;
+  background: #f8fafc;
+  padding: 24px;
 }
 
-  flex-direction: column;
+/* ===== FOOTER ===== */
+.footer {
+  height: 40px;
+  flex-shrink: 0;
   background: #f1f5f9;
-}
-
-.layout-content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+  text-align: center;
+  line-height: 40px;
+  font-size: 13px;
+  color: #475569;
 }

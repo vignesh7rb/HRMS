@@ -19,6 +19,8 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+
+
 /* Menu */
 .sidebar-menu {
   padding: 20px 0;
@@ -80,4 +82,57 @@
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2);
   font-weight: 500;
+}
+
+
+
+
+/* ===== Clickable feel ===== */
+.sidebar-item,
+.sidebar-subitem {
+  cursor: pointer;
+
+  -webkit-user-select: none; /* Chrome / Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Edge */
+  user-select: none;         /* Standard */
+}
+
+
+/* ===== Hover effect ===== */
+.sidebar-item:hover,
+.sidebar-subitem:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Icon hover */
+.sidebar-item:hover .icon,
+.sidebar-subitem:hover {
+  transform: scale(1.08);
+  transition: transform 0.15s ease;
+}
+
+/* ===== Active state ===== */
+.sidebar-item.active {
+  background-color: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.sidebar-item.active .icon {
+  color: #ffffff;
+}
+
+/* ===== Dropdown icon click ===== */
+.dropdown-icon {
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Optional: click press effect */
+.sidebar-item:active,
+.sidebar-subitem:active {
+  transform: scale(0.98);
 }

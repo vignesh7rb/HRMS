@@ -1,8 +1,8 @@
-import React from 'react';
-import Sidebar from '../common/sidebar/mainsidebar';
-import Header from '../common/Header/header';
-import Footer from '../footer/footer';
-import '../../assets/styles/layout/layout.css';
+import React from "react";
+import Sidebar from "../common/sidebar/mainsidebar";
+import Header from "../common/Header/header";
+import Footer from "../footer/footer";
+import "../../assets/styles/layout/layout.css";
 
 const MainLayout = ({ children }) => {
   return (
