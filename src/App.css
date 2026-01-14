@@ -44,3 +44,27 @@
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
+.status {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.status.approved { background: #dcfce7; color: #166534; }
+.status.pending { background: #fef3c7; color: #92400e; }
+.status.rejected { background: #fee2e2; color: #991b1b; }
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.primary { background: var(--primary-blue); color: #fff; }
+.btn.success { background: var(--success); color: #fff; }
+.btn.danger  { background: var(--danger); color: #fff; }
+
+

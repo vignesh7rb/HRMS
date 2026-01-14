@@ -4,6 +4,9 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import MainLayout from "./components/layout/mainlayout";
 
+import HRLayout from "./HR/layout/HRLayout";
+
+/* ================= EMPLOYEE PAGES ================= */
 import Attendance from "./pages/attendance/attendance";
 import LeaveList from "./pages/leave/leavelist";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
@@ -12,12 +15,23 @@ import ExitFormality from "./pages/employees/exit/ExitFormalities";
 
 
 
-/* Lazy imports */
+/* ================= HR PAGES ================= */
+
+
+import HRDashboard from "./HR/pages/Dashboard/HRDashboard";
+import EmployeeListHR from "./HR/pages/EmployeeManagement/EmployeeList";
+import LeaveDashboard from "./HR/pages/LeaveManagement/LeaveDashboard";
+import AttendanceHR from "./HR/pages/Attendence/Attendence";
+import Onboarding from "./HR/pages/Onboarding/Onboarding";
+import ExitRequests from "./HR/pages/ExitManagement/ExitRequests";
+import Payroll from "./HR/pages/Payroll/Payroll";
+import Reports from "./HR/pages/Reports/Reports";
+
+/* ================= LAZY LOADED PAGES ================= */
 const Dashboard = lazy(() => import("./pages/dashboard/dashboard"));
 const EmploymentDetails = lazy(() =>
   import("./pages/employees/EmploymentDetails")
 );
-const Login = lazy(() => import("./pages/auth/login"));
 
 function App() {
   return (
@@ -26,10 +40,7 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
 
-            {/* Login */}
-            <Route path="/" element={<Login />} />
-
-            {/* Dashboard */}
+            {/* ================= ADMIN ROUTES ================= */}
             <Route
               path="/dashboard"
               element={
@@ -39,7 +50,7 @@ function App() {
               }
             />
 
-            {/* Employee landing */}
+            {/* ================= EMPLOYEE ROUTES ================= */}
             <Route
               path="/employee"
               element={
@@ -49,7 +60,6 @@ function App() {
               }
             />
 
-            {/* Employee Directory */}
             <Route
               path="/employee/directory"
               element={
@@ -59,7 +69,6 @@ function App() {
               }
             />
 
-            {/* Onboarding Form */}
             <Route
               path="/employee/onboarding"
               element={
@@ -69,7 +78,6 @@ function App() {
               }
             />
 
-            {/* Employment Details */}
             <Route
               path="/employee/employment-details"
               element={
@@ -79,7 +87,6 @@ function App() {
               }
             />
 
-            {/* Attendance */}
             <Route
               path="/employee/attendance"
               element={
@@ -89,7 +96,6 @@ function App() {
               }
             />
 
-            {/* Leave */}
             <Route
               path="/employee/leave"
               element={
@@ -100,14 +106,25 @@ function App() {
             />
 
             <Route
-  path="/employee/exit"
-  element={
-    <MainLayout>
-      <ExitFormality /> {/* asset + finance + close employee */}
-    </MainLayout>
-  }
-/>
+              path="/employee/exit"
+              element={
+                <MainLayout>
+                  <ExitFormality />
+                </MainLayout>
+              }
+            />
 
+            {/* ================= HR ROUTES ================= */}
+<Route path="/hr" element={<HRLayout />}>
+  <Route path="dashboard" element={<HRDashboard />} />
+  <Route path="employees" element={<EmployeeListHR />} />
+  <Route path="leave" element={<LeaveDashboard />} />
+  <Route path="attendance" element={<AttendanceHR />} />
+  <Route path="onboarding" element={<Onboarding />} />
+  <Route path="exit" element={<ExitRequests />} />
+  <Route path="payroll" element={<Payroll />} />
+  <Route path="reports" element={<Reports />} />
+</Route>
 
 
           </Routes>

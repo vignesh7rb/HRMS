@@ -17,15 +17,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28px;
-}
-.blue{
-  color: #0f4c81;
+  margin-bottom: 24px;
 }
 .leave-header h2 {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
-  color: var(--primary-blue);
+  color: #0f4c81;
 }
 
 .leave-header p {
@@ -73,7 +70,7 @@
 .card-value {
   font-size: 28px;
   font-weight: 700;
-  color: var(--primary-blue);
+  color: #0f4c81;
   margin: 0;
 }
 
@@ -103,7 +100,7 @@
 .tab.active {
   background: #ffffff;
   color: var(--primary-blue);
-  box-shadow: var(--card-shadow);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
 /* TABLE CARD */
@@ -162,6 +159,10 @@ tbody td {
   background: #22c55e;
   color: #fff;
 }
+.rejected {
+  background: #ef4444;   /* red-500 */
+  color: #ffffff;
+}
 
 /* ACTIONS */
 .actions {
@@ -196,6 +197,7 @@ tbody td {
 .modal-wrapper {
   position: fixed;
   inset: 0;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;

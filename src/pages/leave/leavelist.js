@@ -4,9 +4,39 @@ import { useState } from "react";
 const LeaveList = () => {
   const [showApplyModal, setShowApplyModal] = useState(false);
 
+  const [leaveRequests, setLeaveRequests] = useState([
+    {
+      id: 1,
+      name: "John Doe",
+      empId: "EMP001",
+      type: "Casual Leave",
+      duration: "15 Jun – 17 Jun",
+      days: 3,
+      reason: "Family function",
+      status: "Pending",
+    },
+    {
+      id: 2,
+      name: "Sarah Wilson",
+      empId: "EMP002",
+      type: "Sick Leave",
+      duration: "20 Jun – 21 Jun",
+      days: 2,
+      reason: "Not feeling well",
+      status: "Approved",
+    },
+  ]);
+
+  const updateStatus = (id, newStatus) => {
+    setLeaveRequests(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, status: newStatus } : item
+      )
+    );
+  };
+
   return (
     <div className="leave-page">
-
       {/* HEADER */}
       <div className="leave-header">
         <div>
@@ -49,7 +79,6 @@ const LeaveList = () => {
       {/* TABS */}
       <div className="leave-tabs">
         <button className="tab active">Leave Requests</button>
-        <button className="tab">Calendar View</button>
         <button className="tab">Leave History</button>
       </div>
 
@@ -72,36 +101,51 @@ const LeaveList = () => {
           </thead>
 
           <tbody>
-            <tr>
-              <td>
-                <strong>John Doe</strong>
-                <div className="emp-id">EMP001</div>
-              </td>
-              <td>Casual Leave</td>
-              <td>15 Jun – 17 Jun</td>
-              <td>3</td>
-              <td>Family function</td>
-              <td><span className="status pending">Pending</span></td>
-              <td className="actions">
-                <button className="approve">✓</button>
-                <button className="reject">✕</button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <strong>Sarah Wilson</strong>
-                <div className="emp-id">EMP002</div>
-              </td>
-              <td>Sick Leave</td>
-              <td>20 Jun – 21 Jun</td>
-              <td>2</td>
-              <td>Not feeling well</td>
-              <td><span className="status approved">Approved</span></td>
-              <td>
-                <button className="view">View</button>
-              </td>
-            </tr>
+            {leaveRequests.map(req => (
+              <tr key={req.id}>
+                <td>
+                  <strong>{req.name}</strong>
+                  <div className="emp-id">{req.empId}</div>
+                </td>
+                <td>{req.type}</td>
+                <td>{req.duration}</td>
+                <td>{req.days}</td>
+                <td>{req.reason}</td>
+                <td>
+                  <span
+                    className={`status ${
+                      req.status === "Pending"
+                        ? "pending"
+                        : req.status === "Approved"
+                        ? "approved"
+                        : "rejected"
+                    }`}
+                  >
+                    {req.status}
+                  </span>
+                </td>
+                <td className="actions">
+                  {req.status === "Pending" ? (
+                    <>
+                      <button
+                        className="approve"
+                        onClick={() => updateStatus(req.id, "Approved")}
+                      >
+                        ✓
+                      </button>
+                      <button
+                        className="reject"
+                        onClick={() => updateStatus(req.id, "Rejected")}
+                      >
+                        ✕
+                      </button>
+                    </>
+                  ) : (
+                    <button className="view">View</button>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -110,10 +154,17 @@ const LeaveList = () => {
       {showApplyModal && (
         <div className="modal-wrapper">
           <div className="modal-container">
-            <button className="modal-close" onClick={() => setShowApplyModal(false)}>✕</button>
+            <button
+              className="modal-close"
+              onClick={() => setShowApplyModal(false)}
+            >
+              ✕
+            </button>
 
             <h2>Apply for Leave</h2>
-            <p className="sub-text">Fill in the details to submit your leave request.</p>
+            <p className="sub-text">
+              Fill in the details to submit your leave request.
+            </p>
 
             <div className="modal-row">
               <label>Leave Type</label>
@@ -141,7 +192,12 @@ const LeaveList = () => {
             </div>
 
             <div className="modal-footer">
-              <button className="btn-outline" onClick={() => setShowApplyModal(false)}>Cancel</button>
+              <button
+                className="btn-outline"
+                onClick={() => setShowApplyModal(false)}
+              >
+                Cancel
+              </button>
               <button className="btn-primary">Apply</button>
             </div>
           </div>

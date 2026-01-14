@@ -28,6 +28,7 @@ const Sidebar = () => {
 
       {/* Menu */}
       <div className="sidebar-menu">
+
         {/* Dashboard */}
         <Link
           to="/dashboard"
@@ -37,35 +38,23 @@ const Sidebar = () => {
           <span>Dashboard</span>
         </Link>
 
-        {/* Employee */}
-        
-        <Link
-  to="/employee"
-  className={`sidebar-item ${isEmployeeActive ? "active" : ""}`}
->
-  <FaUsers className="icon" />
-  <span>Employee</span>
+        {/* Employee (CLICKABLE DROPDOWN ROW) */}
+        <div
+          className={`sidebar-item ${isEmployeeActive ? "active" : ""}`}
+          onClick={() => setShowEmployeeMenu(!showEmployeeMenu)}
+        >
+          <FaUsers className="icon" />
+          <span>Employee</span>
 
-  {/* Chevron should NOT navigate */}
-  <span
-    className="dropdown-icon"
-    onClick={(e) => {
-      e.preventDefault();   // stop Link navigation
-      e.stopPropagation(); // stop bubbling
-      setShowEmployeeMenu(!showEmployeeMenu);
-    }}
-  >
-    {showEmployeeMenu ? <FaChevronUp /> : <FaChevronDown />}
-  </span>
-</Link>
-
+          <span className="dropdown-icon">
+            {showEmployeeMenu ? <FaChevronUp /> : <FaChevronDown />}
+          </span>
+        </div>
 
         {/* Employee Submenu */}
         {showEmployeeMenu && (
-          <div
-            className="sidebar-submenu"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="sidebar-submenu">
+
             <Link
               to="/employee/directory"
               className={`sidebar-subitem ${
@@ -103,13 +92,13 @@ const Sidebar = () => {
             </Link>
 
             <Link
-  to="/employee/exit"
-  className={`sidebar-subitem ${
-    location.pathname === "/employee/exit" ? "active" : ""
-  }`}
->
-  Exit Formality
-</Link>
+              to="/employee/exit"
+              className={`sidebar-subitem ${
+                isActive("/employee/exit") ? "active" : ""
+              }`}
+            >
+              Exit Formality
+            </Link>
 
           </div>
         )}
@@ -140,9 +129,10 @@ const Sidebar = () => {
           <FaWallet className="icon" />
           <span>Expense & Finance</span>
         </Link>
+
       </div>
     </div>
-  );  
+  );
 };
 
 export default Sidebar;
