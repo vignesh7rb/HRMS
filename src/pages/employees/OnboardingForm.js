@@ -87,7 +87,7 @@ const OnboardingForm = () => {
     <div className="onboarding-page">
       {/* ===== PAGE HEADER ===== */}
       <div className="onboarding-header">
-        <h1>Employee Onboarding</h1>
+        <h2>Employee Onboarding</h2>
         <p>Add a new employee to the organization</p>
       </div>
 

@@ -3,9 +3,10 @@
   height: 100vh;
   background-color: #0f4c81;
   /* blue like image */
-  color: #fff;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 
 /* Header */
@@ -24,6 +25,9 @@
 /* Menu */
 .sidebar-menu {
   padding: 20px 0;
+  
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* Item */
@@ -35,6 +39,10 @@
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 16px;
+  
+  cursor: pointer;
+  user-select: none;
+
   transition: all 0.2s ease;
 }
 
@@ -48,10 +56,31 @@
   color: #fff;
 }
 
+.sidebar-item:hover .icon {
+  transform: scale(1.08);
+}
+
 /* Active */
 .sidebar-item.active {
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
+  transform: scale(0.98);
+}
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.submenu.open {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Employee dropdown */
@@ -63,7 +92,7 @@
 }
 
 .sidebar-subitem {
-  display: block;
+  display: flex;
   /* padding: top right bottom left */
   /* Left padding = 24px (base) + 18px (icon) + 14px (gap) + extra indent ~ 14px = ~70px to look indented under text */
   padding: 14px 24px 14px 70px;
@@ -96,6 +125,8 @@
   -moz-user-select: none;    /* Firefox */
   -ms-user-select: none;     /* Edge */
   user-select: none;         /* Standard */
+  
+  
 }
 
 

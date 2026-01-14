@@ -17,11 +17,14 @@
   border-bottom: 1px solid #e5e7eb;
 }
 
-.onboarding-header h1 {
+.onboarding-header h2 {
   font-size: 22px;
   font-weight: 700;
+  align-items: center;
   color: #0f4c81;
   margin-bottom: 4px;
+  
+  letter-spacing: -0.3px;
 }
 
 .onboarding-header p {
