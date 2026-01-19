@@ -18,6 +18,7 @@ const HRTopbar = () => {
     if (path.includes("/hr/attendance")) return "Attendance";
     if (path.includes("/hr/onboarding")) return "Onboarding";
     if (path.includes("/hr/exit")) return "Exit Management";
+    if (path.includes("/hr/tasks")) return "Task Management";
     if (path.includes("/hr/payroll")) return "Payroll";
     if (path.includes("/hr/reports")) return "Reports";
 

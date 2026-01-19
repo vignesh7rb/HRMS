@@ -17,6 +17,7 @@ const HRSidebar = () => {
     location.pathname.startsWith("/hr/onboarding") ||
     location.pathname.startsWith("/hr/attendance") ||
     location.pathname.startsWith("/hr/leave") ||
+    location.pathname.startsWith("/hr/tasks") ||
     location.pathname.startsWith("/hr/exit");
 
   const [empOpen, setEmpOpen] = useState(isEmployeeActive);
@@ -95,6 +96,16 @@ const HRSidebar = () => {
           >
             Leave Management
           </NavLink>
+
+          <NavLink
+            to="/hr/tasks"
+            className={({ isActive }) =>
+                `submenu-item ${isActive ? "active" : ""}`
+             }
+          >
+            Task Management
+          </NavLink>
+
 
           <NavLink
             to="/hr/exit"

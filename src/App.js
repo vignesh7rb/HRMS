@@ -15,6 +15,7 @@ import ExitFormality from "./pages/employees/exit/ExitFormalities";
 
 
 
+
 /* ================= HR PAGES ================= */
 
 
@@ -23,6 +24,7 @@ import EmployeeListHR from "./HR/pages/EmployeeManagement/EmployeeList";
 import LeaveDashboard from "./HR/pages/LeaveManagement/LeaveDashboard";
 import AttendanceHR from "./HR/pages/Attendence/Attendence";
 import Onboarding from "./HR/pages/Onboarding/Onboarding";
+import TaskManagement from "./HR/pages/TaskManagement/TaskManagement";
 import ExitRequests from "./HR/pages/ExitManagement/ExitRequests";
 import Payroll from "./HR/pages/Payroll/Payroll";
 import Reports from "./HR/pages/Reports/Reports";
@@ -122,6 +124,7 @@ function App() {
   <Route path="attendance" element={<AttendanceHR />} />
   <Route path="onboarding" element={<Onboarding />} />
   <Route path="exit" element={<ExitRequests />} />
+  <Route path="tasks" element={<TaskManagement/>}/>
   <Route path="payroll" element={<Payroll />} />
   <Route path="reports" element={<Reports />} />
 </Route>
