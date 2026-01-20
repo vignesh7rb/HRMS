@@ -12,7 +12,9 @@ import LeaveList from "./pages/leave/leavelist";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
 import OnboardingForm from "./pages/employees/OnboardingForm";
 import ExitFormality from "./pages/employees/exit/ExitFormalities";
-
+import Payrolls from "./pages/payroll-admin/Payrolll";
+import AssetManagement from "./pages/AssetManagement/AssetManagement";
+import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
 
 
 
@@ -112,6 +114,32 @@ function App() {
               element={
                 <MainLayout>
                   <ExitFormality />
+                </MainLayout>
+              }
+            />
+
+             <Route
+              path="/payroll"
+              element={
+                <MainLayout>
+                  <Payrolls />
+                </MainLayout>
+              }
+            />
+
+            <Route
+              path="/assets"
+              element={
+                <MainLayout>
+                  <AssetManagement />
+                </MainLayout>
+              }
+            />
+            <Route
+              path="/expense"
+              element={
+                <MainLayout>
+                  <AdminExpenseFinance/>
                 </MainLayout>
               }
             />

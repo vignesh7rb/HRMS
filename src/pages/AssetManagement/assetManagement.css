@@ -1,0 +1,308 @@
+.asset-page {
+  padding: 24px;
+  background: #f7f9fc;
+  min-height: 100vh;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* HEADER */
+.asset-header h1 {
+  color: #0f4c81;
+  font-weight: 700;
+  text-align: left;
+  margin-bottom: 6px;
+}
+
+.asset-header p {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* SUMMARY CARDS */
+.asset-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.asset-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+.asset-card span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.asset-card strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #0f4c81;
+}
+
+/* TABLE CARD */
+.asset-table-card {
+  margin-top: 32px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.table-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.table-header p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+thead th {
+  font-size: 12px;
+  color: #6b7280;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+tbody td {
+  padding: 14px 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+tbody tr:hover {
+  background: #f9fbff;
+}
+
+/* INPUTS */
+select,
+input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+select:hover,
+input:hover {
+  background: #f8fafc;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  border-color: #0f4c81;
+  box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.15);
+  background: #fff;
+}
+
+/* STATUS COLORS */
+select.status.ASSIGNED {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+select.status.AVAILABLE {
+  background: #ecfdf5;
+  border-color: #16a34a;
+  color: #166534;
+}
+
+select.status.MAINTENANCE {
+  background: #fffbeb;
+  border-color: #d97706;
+  color: #92400e;
+}
+
+select.status.DAMAGED {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #991b1b;
+}
+
+/* REMARKS */
+input[placeholder="Remarks"] {
+  background: #fafafa;
+}
+/* SUCCESS ALERT */
+/* SUCCESS BANNER – PAYROLL STYLE */
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #166534;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  animation: fadeSlide 0.3s ease;
+}
+
+.success-icon {
+  background: #22c55e;
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.success-text {
+  flex: 1;
+}
+
+
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SAVE BUTTON */
+.save-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
+/* FLOATING SUCCESS BANNER (BELOW TOPBAR) */
+.success-banner.floating {
+  position: fixed;
+  top: 70px;              /* adjust if your topbar height differs */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  width: calc(100% - 300px); /* respects sidebar width */
+  max-width: 900px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+/* ADD ASSET BUTTON */
+.add-btn {
+  background: #0f4c81;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #09375d;
+}
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal h3 {
+  margin: 0 0 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+/* CANCEL BUTTON */
+.cancel-btn {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: #1d4ed8;
+}
+/* FORM GROUPS INSIDE ADD ASSET */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+.modal {
+  width: 100%;
+  max-width: 420px;
+}
+.modal input,
+.modal select {
+  width: 100%;
+}

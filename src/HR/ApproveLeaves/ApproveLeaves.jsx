@@ -104,10 +104,16 @@ const ApproveLeaves = ({ onClose }) => {
         ))}
       </ul>
 
-      {/* DENY MODAL */}
+      {/* ===== DENY MODAL ===== */}
       {denyModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
+        <div
+          className="modal-overlay"
+          onClick={() => setDenyModal(false)}
+        >
+          <div
+            className="modal-box"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className="danger-text">Deny Leave</h3>
 
             <textarea
