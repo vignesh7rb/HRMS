@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./root-reducer";
+import authReducer from "./slice/authSlice"; // adjust path if needed
 
 const store = configureStore({
-  reducer: rootReducer, // ✅ directly use rootReducer
+  reducer: {
+    auth: authReducer, // ✅ THIS FIXES THE ERROR
+  },
 });
 
 export default store;

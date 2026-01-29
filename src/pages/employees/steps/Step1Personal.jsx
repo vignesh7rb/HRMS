@@ -1,26 +1,18 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Step1Personal = forwardRef((props, ref) => {
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    dob: "",
-    gender: "",
-    bloodGroup: "", 
-  });
-
+const Step1Personal = forwardRef(({ data, setData }, ref) => {
   const [errors, setErrors] = useState({});
 
-  // 🔹 expose validation to parent (Next button)
+  // 🔹 expose validation to parent (Next / step click)
   useImperativeHandle(ref, () => ({
     validate() {
       const newErrors = {};
 
-      if (!form.firstName.trim()) newErrors.firstName = "Required";
-      if (!form.lastName.trim()) newErrors.lastName = "Required";
-      if (!form.dob) newErrors.dob = "Required";
-      if (!form.gender) newErrors.gender = "Required";
-      if (!form.bloodGroup) newErrors.bloodGroup = "Required";
+      if (!data.firstName?.trim()) newErrors.firstName = "Required";
+      if (!data.lastName?.trim()) newErrors.lastName = "Required";
+      if (!data.dob) newErrors.dob = "Required";
+      if (!data.gender) newErrors.gender = "Required";
+      if (!data.bloodGroup) newErrors.bloodGroup = "Required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -29,8 +21,13 @@ const Step1Personal = forwardRef((props, ref) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // clear error on change
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+
+    setErrors({ ...errors, [name]: "" });
   };
 
   return (
@@ -41,10 +38,12 @@ const Step1Personal = forwardRef((props, ref) => {
       <div className="form-grid">
         {/* First Name */}
         <div className="form-group">
-          <label>First Name <span className="required">*</span></label>
+          <label>
+            First Name <span className="required">*</span>
+          </label>
           <input
             name="firstName"
-            value={form.firstName}
+            value={data.firstName || ""}
             onChange={handleChange}
             className={errors.firstName ? "input-error" : ""}
             placeholder="Enter first name"
@@ -52,15 +51,19 @@ const Step1Personal = forwardRef((props, ref) => {
               (e.target.value = e.target.value.replace(/[^A-Za-z ]/g, ""))
             }
           />
-          {errors.firstName && <span className="error-text">{errors.firstName}</span>}
+          {errors.firstName && (
+            <span className="error-text">{errors.firstName}</span>
+          )}
         </div>
 
         {/* Last Name */}
         <div className="form-group">
-          <label>Last Name <span className="required">*</span></label>
+          <label>
+            Last Name <span className="required">*</span>
+          </label>
           <input
             name="lastName"
-            value={form.lastName}
+            value={data.lastName || ""}
             onChange={handleChange}
             className={errors.lastName ? "input-error" : ""}
             placeholder="Enter last name"
@@ -68,28 +71,36 @@ const Step1Personal = forwardRef((props, ref) => {
               (e.target.value = e.target.value.replace(/[^A-Za-z ]/g, ""))
             }
           />
-          {errors.lastName && <span className="error-text">{errors.lastName}</span>}
+          {errors.lastName && (
+            <span className="error-text">{errors.lastName}</span>
+          )}
         </div>
 
         {/* Date of Birth */}
         <div className="form-group">
-          <label>Date of Birth <span className="required">*</span></label>
+          <label>
+            Date of Birth <span className="required">*</span>
+          </label>
           <input
             type="date"
             name="dob"
-            value={form.dob}
+            value={data.dob || ""}
             onChange={handleChange}
             className={errors.dob ? "input-error" : ""}
           />
-          {errors.dob && <span className="error-text">{errors.dob}</span>}
+          {errors.dob && (
+            <span className="error-text">{errors.dob}</span>
+          )}
         </div>
 
         {/* Gender */}
         <div className="form-group">
-          <label>Gender <span className="required">*</span></label>
+          <label>
+            Gender <span className="required">*</span>
+          </label>
           <select
             name="gender"
-            value={form.gender}
+            value={data.gender || ""}
             onChange={handleChange}
             className={errors.gender ? "input-error" : ""}
           >
@@ -98,49 +109,52 @@ const Step1Personal = forwardRef((props, ref) => {
             <option>Female</option>
             <option>Other</option>
           </select>
-          {errors.gender && <span className="error-text">{errors.gender}</span>}
+          {errors.gender && (
+            <span className="error-text">{errors.gender}</span>
+          )}
         </div>
 
-        {/* Marital Status */}
+        {/* Marital Status (optional) */}
         <div className="form-group">
-  <label>Marital Status</label>
-  <select>
-    <option>Select marital status</option>
-    <option>Single</option>
-    <option>Married</option>
-  </select>
-</div>
-
-
+          <label>Marital Status</label>
+          <select
+            name="maritalStatus"
+            value={data.maritalStatus || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select marital status</option>
+            <option>Single</option>
+            <option>Married</option>
+          </select>
+        </div>
 
         {/* Blood Group */}
         <div className="form-group">
-  <label>
-    Blood Group <span className="required">*</span>
-  </label>
+          <label>
+            Blood Group <span className="required">*</span>
+          </label>
 
-  <select
-    name="bloodGroup"
-    value={form.bloodGroup}
-    onChange={handleChange}
-    className={errors.bloodGroup ? "input-error" : ""}
-  >
-    <option value="">Select blood group</option>
-    <option>A+</option>
-    <option>A-</option>
-    <option>B+</option>
-    <option>B-</option>
-    <option>O+</option>
-    <option>O-</option>
-    <option>AB+</option>
-    <option>AB-</option>
-  </select>
+          <select
+            name="bloodGroup"
+            value={data.bloodGroup || ""}
+            onChange={handleChange}
+            className={errors.bloodGroup ? "input-error" : ""}
+          >
+            <option value="">Select blood group</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+          </select>
 
-  {errors.bloodGroup && (
-    <span className="error-text">{errors.bloodGroup}</span>
-  )}
-</div>
-
+          {errors.bloodGroup && (
+            <span className="error-text">{errors.bloodGroup}</span>
+          )}
+        </div>
       </div>
     </>
   );

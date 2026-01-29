@@ -54,45 +54,45 @@ const Sidebar = () => {
 <div className={`submenu sidebar-submenu ${showEmployeeMenu ? "open" : ""}`}>
 
   <Link
-    to="/employee/directory"
+    to="/employees"
     className={`sidebar-subitem ${
-      isActive("/employee/directory") ? "active" : ""
+      isActive("/employees") ? "active" : ""
     }`}
   >
     Employee Directory
   </Link>
 
   <Link
-    to="/employee/onboarding"
+    to="/onboarding"
     className={`sidebar-subitem ${
-      isActive("/employee/onboarding") ? "active" : ""
+      isActive("/onboarding") ? "active" : ""
     }`}
   >
     Onboarding Form
   </Link>
 
   <Link
-    to="/employee/attendance"
+    to="/attendance"
     className={`sidebar-subitem ${
-      isActive("/employee/attendance") ? "active" : ""
+      isActive("/attendance") ? "active" : ""
     }`}
   >
     Attendance
   </Link>
 
   <Link
-    to="/employee/leave"
+    to="/leave"
     className={`sidebar-subitem ${
-      isActive("/employee/leave") ? "active" : ""
+      isActive("/leave") ? "active" : ""
     }`}
   >
     Leave Management
   </Link>
 
   <Link
-    to="/employee/exit"
+    to="/exit"
     className={`sidebar-subitem ${
-      isActive("/employee/exit") ? "active" : ""
+      isActive("/exit") ? "active" : ""
     }`}
   >
     Exit Formality
@@ -102,8 +102,8 @@ const Sidebar = () => {
 
         {/* Payroll */}
         <Link
-          to="/payroll"
-          className={`sidebar-item ${isActive("/payroll") ? "active" : ""}`}
+          to="/payrolll"
+          className={`sidebar-item ${isActive("/payrolll") ? "active" : ""}`}
         >
           <FaMoneyBill className="icon" />
           <span>Payroll</span>

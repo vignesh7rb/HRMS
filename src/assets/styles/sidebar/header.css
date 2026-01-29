@@ -123,3 +123,20 @@
   .dropdown-item.logout {
     color: #ffd6d6;
   }
+/* ===== FIX CLICK AFFORDANCE ===== */
+.profile-trigger {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+/* Hover feedback like HRTopbar */
+.profile-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Chevron should NOT look like the only clickable item */
+.chevron {
+  pointer-events: none;
+}

@@ -1,24 +1,47 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBell, FaChevronDown, FaSearch } from "react-icons/fa";
-import { useLocation } from "react-router-dom"; // ✅ ADD THIS
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { logout } from "../../../store/slice/authSlice";
 import "../../../assets/styles/sidebar/header.css";
+
 
 const Topbar = () => {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  const location = useLocation(); // ✅ CURRENT ROUTE
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // ✅ Decide title based on path
-  const getTitle = () => {
-    if (location.pathname.startsWith("/employee")) return "Employee";
-    if (location.pathname.startsWith("/payroll")) return "Payroll";
-    if (location.pathname.startsWith("/asset")) return "Asset Management";
-    if (location.pathname.startsWith("/expense")) return "Expense & Finance";
-    return "Dashboard";
+  // ✅ GET USER FROM REDUX
+  const user = useSelector((state) => state.auth?.user);
+
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login", { replace: true });
+    window.location.reload();
   };
 
-  // close dropdown when clicking outside
+  const handleProfile = () => {
+    setOpen(false);
+    navigate("/my-profile");
+  };
+
+  const getTitle = () => {
+    const path = location.pathname;
+    if (path.startsWith("/employee")) return "Employee";
+    if (path.startsWith("/onboarding")) return "Onboarding Form";
+    if (path.startsWith("/attendance")) return "Attendance";
+    if (path.startsWith("/leave")) return "Leave Management";
+    if (path.startsWith("/exit")) return "Exit Formality";
+    if (path.startsWith("/payroll")) return "Payroll";
+    if (path.startsWith("/asset")) return "Asset Management";
+    if (path.startsWith("/expense")) return "Expense & Finance";
+    return "Profile";
+  };
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -30,49 +53,51 @@ const Topbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (!user) return null;
+
   return (
     <div className="topbar">
-      {/* Left */}
-      <div className="topbar-left">
-        {getTitle()} {/* ✅ DYNAMIC TITLE */}
-      </div>
+      <div className="topbar-left">{getTitle()}</div>
 
-      {/* Center */}
       <div className="topbar-center">
         <div className="search-box">
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Search employee, ID..." />
           <FaSearch className="search-icon" />
         </div>
       </div>
 
-      {/* Right */}
       <div className="topbar-right">
         <FaBell className="bell-icon" />
 
         <div className="profile-area" ref={ref}>
-          <div className="profile-trigger">
+          <div
+            className="profile-trigger"
+            onClick={() => setOpen(!open)}
+          >
+            {/* ✅ SAME IMAGE AS PROFILE PAGE */}
             <img
-              src="https://i.pravatar.cc/40"
+              src={user.profileImage}
               alt="profile"
               className="profile-img"
             />
 
             <div className="profile-info">
-              <span className="profile-name">Seving Aslanova</span>
-              <span className="profile-email">seving@gmail.com</span>
+              <span className="profile-name">{user.name}</span>
+              <span className="profile-email">{user.email}</span>
             </div>
 
-            <FaChevronDown
-              className="chevron"
-              onClick={() => setOpen(!open)}
-            />
+            <FaChevronDown className="chevron" />
           </div>
 
           {open && (
             <div className="simple-dropdown">
-              <div className="dropdown-item">Profile</div>
+              <div className="dropdown-item" onClick={handleProfile}>
+                My Profile
+              </div>
               <div className="dropdown-item">Settings</div>
-              <div className="dropdown-item logout">Log out</div>
+              <div className="dropdown-item logout" onClick={handleLogout}>
+                Log out
+              </div>
             </div>
           )}
         </div>

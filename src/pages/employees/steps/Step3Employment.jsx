@@ -1,28 +1,20 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Step3Employment = forwardRef((props, ref) => {
-  const [form, setForm] = useState({
-    employeeId: "",
-    department: "",
-    designation: "",
-    reportingManager: "",
-    joiningDate: "",
-    employmentType: "",
-  });
-
+const Step3Employment = forwardRef(({ data, setData }, ref) => {
   const [errors, setErrors] = useState({});
 
-  // 🔒 expose validation to parent (Next button)
+  // 🔒 expose validation to parent (Next / step click)
   useImperativeHandle(ref, () => ({
     validate() {
       const newErrors = {};
 
-      if (!form.employeeId.trim()) newErrors.employeeId = "Required";
-      if (!form.department) newErrors.department = "Required";
-      if (!form.designation.trim()) newErrors.designation = "Required";
-      if (!form.reportingManager.trim()) newErrors.reportingManager = "Required";
-      if (!form.joiningDate) newErrors.joiningDate = "Required";
-      if (!form.employmentType) newErrors.employmentType = "Required";
+      if (!data.employeeId?.trim()) newErrors.employeeId = "Required";
+      if (!data.department) newErrors.department = "Required";
+      if (!data.designation?.trim()) newErrors.designation = "Required";
+      if (!data.reportingManager?.trim())
+        newErrors.reportingManager = "Required";
+      if (!data.joiningDate) newErrors.joiningDate = "Required";
+      if (!data.employmentType) newErrors.employmentType = "Required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -31,8 +23,13 @@ const Step3Employment = forwardRef((props, ref) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // clear error on change
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+
+    setErrors({ ...errors, [name]: "" });
   };
 
   return (
@@ -43,10 +40,12 @@ const Step3Employment = forwardRef((props, ref) => {
       <div className="form-grid">
         {/* Employee ID */}
         <div className="form-group">
-          <label>Employee ID <span className="required">*</span></label>
+          <label>
+            Employee ID <span className="required">*</span>
+          </label>
           <input
             name="employeeId"
-            value={form.employeeId}
+            value={data.employeeId || ""}
             onChange={handleChange}
             className={errors.employeeId ? "input-error" : ""}
             placeholder="Auto-generated or manually"
@@ -58,10 +57,12 @@ const Step3Employment = forwardRef((props, ref) => {
 
         {/* Department */}
         <div className="form-group">
-          <label>Department <span className="required">*</span></label>
+          <label>
+            Department <span className="required">*</span>
+          </label>
           <select
             name="department"
-            value={form.department}
+            value={data.department || ""}
             onChange={handleChange}
             className={errors.department ? "input-error" : ""}
           >
@@ -78,10 +79,12 @@ const Step3Employment = forwardRef((props, ref) => {
 
         {/* Designation */}
         <div className="form-group">
-          <label>Designation <span className="required">*</span></label>
+          <label>
+            Designation <span className="required">*</span>
+          </label>
           <input
             name="designation"
-            value={form.designation}
+            value={data.designation || ""}
             onChange={handleChange}
             className={errors.designation ? "input-error" : ""}
             placeholder="Enter designation"
@@ -93,10 +96,12 @@ const Step3Employment = forwardRef((props, ref) => {
 
         {/* Reporting Manager */}
         <div className="form-group">
-          <label>Reporting Manager <span className="required">*</span></label>
+          <label>
+            Reporting Manager <span className="required">*</span>
+          </label>
           <input
             name="reportingManager"
-            value={form.reportingManager}
+            value={data.reportingManager || ""}
             onChange={handleChange}
             className={errors.reportingManager ? "input-error" : ""}
             placeholder="Enter reporting manager"
@@ -108,11 +113,13 @@ const Step3Employment = forwardRef((props, ref) => {
 
         {/* Joining Date */}
         <div className="form-group">
-          <label>Joining Date <span className="required">*</span></label>
+          <label>
+            Joining Date <span className="required">*</span>
+          </label>
           <input
             type="date"
             name="joiningDate"
-            value={form.joiningDate}
+            value={data.joiningDate || ""}
             onChange={handleChange}
             className={errors.joiningDate ? "input-error" : ""}
           />
@@ -123,10 +130,12 @@ const Step3Employment = forwardRef((props, ref) => {
 
         {/* Employment Type */}
         <div className="form-group">
-          <label>Employment Type <span className="required">*</span></label>
+          <label>
+            Employment Type <span className="required">*</span>
+          </label>
           <select
             name="employmentType"
-            value={form.employmentType}
+            value={data.employmentType || ""}
             onChange={handleChange}
             className={errors.employmentType ? "input-error" : ""}
           >
@@ -143,8 +152,12 @@ const Step3Employment = forwardRef((props, ref) => {
         {/* Probation Period (optional) */}
         <div className="form-group">
           <label>Probation Period</label>
-          <select>
-            <option>Select period</option>
+          <select
+            name="probationPeriod"
+            value={data.probationPeriod || ""}
+            onChange={handleChange}
+          >
+            <option value="">Select period</option>
             <option>3 Months</option>
             <option>6 Months</option>
           </select>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import jsPDF from "jspdf";
-import "../payroll-admin/payroll.css";
+import "../payroll-admin/payrolll.css";
 
 /* ===============================
    HELPER: AUTO-GENERATE PAYROLL MONTHS

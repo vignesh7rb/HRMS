@@ -1,26 +1,18 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Step5Documents = forwardRef((props, ref) => {
-  const [files, setFiles] = useState({
-    resume: null,
-    photo: null,
-    idProof: null,
-    addressProof: null,
-    educationCert: null,
-  });
-
+const Step5Documents = forwardRef(({ data, setData }, ref) => {
   const [errors, setErrors] = useState({});
 
-  // 🔒 expose validation to parent (Next button)
+  // 🔒 expose validation to parent (Next / step click)
   useImperativeHandle(ref, () => ({
     validate() {
       const newErrors = {};
 
-      if (!files.resume) newErrors.resume = "Required";
-      if (!files.photo) newErrors.photo = "Required";
-      if (!files.idProof) newErrors.idProof = "Required";
-      if (!files.addressProof) newErrors.addressProof = "Required";
-      if (!files.educationCert) newErrors.educationCert = "Required";
+      if (!data.resume) newErrors.resume = "Required";
+      if (!data.photo) newErrors.photo = "Required";
+      if (!data.idProof) newErrors.idProof = "Required";
+      if (!data.addressProof) newErrors.addressProof = "Required";
+      if (!data.educationCert) newErrors.educationCert = "Required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -28,8 +20,13 @@ const Step5Documents = forwardRef((props, ref) => {
   }));
 
   const handleFileChange = (e) => {
-    const { name, files: selectedFiles } = e.target;
-    setFiles({ ...files, [name]: selectedFiles[0] });
+    const { name, files } = e.target;
+
+    setData({
+      ...data,
+      [name]: files[0],
+    });
+
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -41,43 +38,57 @@ const Step5Documents = forwardRef((props, ref) => {
       <div className="form-grid">
         {/* Resume */}
         <div className="form-group">
-          <label>Resume / CV <span className="required">*</span></label>
+          <label>
+            Resume / CV <span className="required">*</span>
+          </label>
           <input
             type="file"
             name="resume"
             onChange={handleFileChange}
             className={errors.resume ? "input-error" : ""}
           />
-          {errors.resume && <span className="error-text">{errors.resume}</span>}
+          {errors.resume && (
+            <span className="error-text">{errors.resume}</span>
+          )}
         </div>
 
         {/* Passport Photo */}
         <div className="form-group">
-          <label>Passport Photo <span className="required">*</span></label>
+          <label>
+            Passport Photo <span className="required">*</span>
+          </label>
           <input
             type="file"
             name="photo"
             onChange={handleFileChange}
             className={errors.photo ? "input-error" : ""}
           />
-          {errors.photo && <span className="error-text">{errors.photo}</span>}
+          {errors.photo && (
+            <span className="error-text">{errors.photo}</span>
+          )}
         </div>
 
         {/* ID Proof */}
         <div className="form-group">
-          <label>ID Proof <span className="required">*</span></label>
+          <label>
+            ID Proof <span className="required">*</span>
+          </label>
           <input
             type="file"
             name="idProof"
             onChange={handleFileChange}
             className={errors.idProof ? "input-error" : ""}
           />
-          {errors.idProof && <span className="error-text">{errors.idProof}</span>}
+          {errors.idProof && (
+            <span className="error-text">{errors.idProof}</span>
+          )}
         </div>
 
         {/* Address Proof */}
         <div className="form-group">
-          <label>Address Proof <span className="required">*</span></label>
+          <label>
+            Address Proof <span className="required">*</span>
+          </label>
           <input
             type="file"
             name="addressProof"
@@ -91,7 +102,9 @@ const Step5Documents = forwardRef((props, ref) => {
 
         {/* Education Certificates */}
         <div className="form-group">
-          <label>Education Certificates <span className="required">*</span></label>
+          <label>
+            Education Certificates <span className="required">*</span>
+          </label>
           <input
             type="file"
             name="educationCert"
@@ -106,7 +119,11 @@ const Step5Documents = forwardRef((props, ref) => {
         {/* Optional */}
         <div className="form-group">
           <label>Experience Certificates</label>
-          <input type="file" />
+          <input
+            type="file"
+            name="experienceCert"
+            onChange={handleFileChange}
+          />
         </div>
       </div>
     </>

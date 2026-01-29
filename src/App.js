@@ -1,26 +1,30 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import MainLayout from "./components/layout/mainlayout";
 
+/* ================= LAYOUTS ================= */
+import MainLayout from "./components/layout/mainlayout";
 import HRLayout from "./HR/layout/HRLayout";
 
-/* ================= EMPLOYEE PAGES ================= */
-import Attendance from "./pages/attendance/attendance";
-import LeaveList from "./pages/leave/leavelist";
-import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
-import OnboardingForm from "./pages/employees/OnboardingForm";
-import ExitFormality from "./pages/employees/exit/ExitFormalities";
+/* ================= AUTH ================= */
+import Login from "./pages/auth/login";
+import ProtectedRoute from "./pages/auth/ProtectedRoute";
+
+/* ================= COMMON ================= */
+import MyProfile from "./components/MyProfile/MyProfile";
+
+/* ================= ADMIN ================= */
 import Payrolls from "./pages/payroll-admin/Payrolll";
 import AssetManagement from "./pages/AssetManagement/AssetManagement";
 import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
+import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
+import Attendance from "./pages/attendance/attendance";
+import LeaveList from "./pages/leave/leavelist";
+import OnboardingForm from "./pages/employees/OnboardingForm";
+import ExitFormality from "./pages/employees/exit/ExitFormalities";
 
-
-
-/* ================= HR PAGES ================= */
-
-
+/* ================= HR ================= */
 import HRDashboard from "./HR/pages/Dashboard/HRDashboard";
 import EmployeeListHR from "./HR/pages/EmployeeManagement/EmployeeList";
 import LeaveDashboard from "./HR/pages/LeaveManagement/LeaveDashboard";
@@ -31,11 +35,7 @@ import ExitRequests from "./HR/pages/ExitManagement/ExitRequests";
 import Payroll from "./HR/pages/Payroll/Payroll";
 import Reports from "./HR/pages/Reports/Reports";
 
-/* ================= LAZY LOADED PAGES ================= */
 const Dashboard = lazy(() => import("./pages/dashboard/dashboard"));
-const EmploymentDetails = lazy(() =>
-  import("./pages/employees/EmploymentDetails")
-);
 
 function App() {
   return (
@@ -44,119 +44,147 @@ function App() {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
 
-            {/* ================= ADMIN ROUTES ================= */}
+            {/* ============ LOGIN ============ */}
+            <Route path="/login" element={<Login />} />
+
+            {/* ============ ADMIN PROFILE ============ */}
+            <Route
+              path="/my-profile"
+              element={
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <MyProfile />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ============ ADMIN ============ */}
             <Route
               path="/dashboard"
               element={
-                <MainLayout>
-                  <Dashboard />
-                </MainLayout>
-              }
-            />
-
-            {/* ================= EMPLOYEE ROUTES ================= */}
-            <Route
-              path="/employee"
-              element={
-                <MainLayout>
-                  <EmployeeDirectory />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <Dashboard />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/directory"
+              path="/employees"
               element={
-                <MainLayout>
-                  <EmployeeDirectory />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <EmployeeDirectory />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/onboarding"
+              path="/attendance"
               element={
-                <MainLayout>
-                  <OnboardingForm />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <Attendance />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/employment-details"
+              path="/leave"
               element={
-                <MainLayout>
-                  <EmploymentDetails />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <LeaveList />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/attendance"
+              path="/onboarding"
               element={
-                <MainLayout>
-                  <Attendance />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <OnboardingForm />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/leave"
+              path="/exit"
               element={
-                <MainLayout>
-                  <LeaveList />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <ExitFormality />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
-              path="/employee/exit"
-              element={
-                <MainLayout>
-                  <ExitFormality />
-                </MainLayout>
-              }
-            />
-
-             <Route
               path="/payroll"
               element={
-                <MainLayout>
-                  <Payrolls />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <Payrolls />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
             <Route
               path="/assets"
               element={
-                <MainLayout>
-                  <AssetManagement />
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <AssetManagement />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
+
             <Route
               path="/expense"
               element={
-                <MainLayout>
-                  <AdminExpenseFinance/>
-                </MainLayout>
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <AdminExpenseFinance />
+                  </MainLayout>
+                </ProtectedRoute>
               }
             />
 
-            {/* ================= HR ROUTES ================= */}
-<Route path="/hr" element={<HRLayout />}>
-  <Route path="dashboard" element={<HRDashboard />} />
-  <Route path="employees" element={<EmployeeListHR />} />
-  <Route path="leave" element={<LeaveDashboard />} />
-  <Route path="attendance" element={<AttendanceHR />} />
-  <Route path="onboarding" element={<Onboarding />} />
-  <Route path="exit" element={<ExitRequests />} />
-  <Route path="tasks" element={<TaskManagement/>}/>
-  <Route path="payroll" element={<Payroll />} />
-  <Route path="reports" element={<Reports />} />
-</Route>
+            {/* ============ HR PORTAL ============ */}
+            <Route
+              path="/hr"
+              element={
+                <ProtectedRoute allowedRoles={["HR"]}>
+                  <HRLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="dashboard" element={<HRDashboard />} />
+              <Route path="employees" element={<EmployeeListHR />} />
+              <Route path="leave" element={<LeaveDashboard />} />
+              <Route path="attendance" element={<AttendanceHR />} />
+              <Route path="onboarding" element={<Onboarding />} />
+              <Route path="exit" element={<ExitRequests />} />
+              <Route path="tasks" element={<TaskManagement />} />
+              <Route path="payroll" element={<Payroll />} />
+              <Route path="reports" element={<Reports />} />
 
+              {/* ✅ HR PROFILE (SAME PAGE, HR LAYOUT) */}
+              <Route path="my-profile" element={<MyProfile />} />
+            </Route>
+
+            {/* ============ FALLBACK ============ */}
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to="/login" />} />
 
           </Routes>
         </Suspense>

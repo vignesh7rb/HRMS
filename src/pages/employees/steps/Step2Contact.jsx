@@ -1,15 +1,6 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Step2Contact = forwardRef((props, ref) => {
-  const [form, setForm] = useState({
-    email: "",
-    phone: "",
-    emergencyName: "",
-    emergencyPhone: "",
-    currentAddress: "",
-    permanentAddress: "",
-  });
-
+const Step2Contact = forwardRef(({ data, setData }, ref) => {
   const [errors, setErrors] = useState({});
 
   // 🔒 expose validation to parent
@@ -17,12 +8,15 @@ const Step2Contact = forwardRef((props, ref) => {
     validate() {
       const newErrors = {};
 
-      if (!form.email.trim()) newErrors.email = "Required";
-      if (!form.phone.trim()) newErrors.phone = "Required";
-      if (!form.emergencyName.trim()) newErrors.emergencyName = "Required";
-      if (!form.emergencyPhone.trim()) newErrors.emergencyPhone = "Required";
-      if (!form.currentAddress.trim()) newErrors.currentAddress = "Required";
-      if (!form.permanentAddress.trim()) newErrors.permanentAddress = "Required";
+      if (!data.email?.trim()) newErrors.email = "Required";
+      if (!data.phone?.trim()) newErrors.phone = "Required";
+      if (!data.emergencyName?.trim()) newErrors.emergencyName = "Required";
+      if (!data.emergencyPhone?.trim())
+        newErrors.emergencyPhone = "Required";
+      if (!data.currentAddress?.trim())
+        newErrors.currentAddress = "Required";
+      if (!data.permanentAddress?.trim())
+        newErrors.permanentAddress = "Required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -31,7 +25,12 @@ const Step2Contact = forwardRef((props, ref) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -43,43 +42,58 @@ const Step2Contact = forwardRef((props, ref) => {
       <div className="form-grid">
         {/* Email */}
         <div className="form-group">
-          <label>Email Address <span className="required">*</span></label>
+          <label>
+            Email Address <span className="required">*</span>
+          </label>
           <input
             type="email"
             name="email"
-            value={form.email}
+            value={data.email || ""}
             onChange={handleChange}
             className={errors.email ? "input-error" : ""}
             placeholder="Enter email address"
           />
-          {errors.email && <span className="error-text">{errors.email}</span>}
+          {errors.email && (
+            <span className="error-text">{errors.email}</span>
+          )}
         </div>
 
         {/* Phone */}
         <div className="form-group">
-          <label>Phone Number <span className="required">*</span></label>
+          <label>
+            Phone Number <span className="required">*</span>
+          </label>
           <input
             name="phone"
-            value={form.phone}
+            value={data.phone || ""}
             onChange={handleChange}
             className={errors.phone ? "input-error" : ""}
             placeholder="Enter phone number"
           />
-          {errors.phone && <span className="error-text">{errors.phone}</span>}
+          {errors.phone && (
+            <span className="error-text">{errors.phone}</span>
+          )}
         </div>
 
-        {/* Alternate Phone */}
+        {/* Alternate Phone (optional) */}
         <div className="form-group">
           <label>Alternate Phone Number</label>
-          <input placeholder="Enter alternate phone number" />
+          <input
+            name="alternatePhone"
+            value={data.alternatePhone || ""}
+            onChange={handleChange}
+            placeholder="Enter alternate phone number"
+          />
         </div>
 
         {/* Emergency Name */}
         <div className="form-group">
-          <label>Emergency Contact Name <span className="required">*</span></label>
+          <label>
+            Emergency Contact Name <span className="required">*</span>
+          </label>
           <input
             name="emergencyName"
-            value={form.emergencyName}
+            value={data.emergencyName || ""}
             onChange={handleChange}
             className={errors.emergencyName ? "input-error" : ""}
             placeholder="Enter emergency contact name"
@@ -91,10 +105,12 @@ const Step2Contact = forwardRef((props, ref) => {
 
         {/* Emergency Phone */}
         <div className="form-group">
-          <label>Emergency Contact Phone <span className="required">*</span></label>
+          <label>
+            Emergency Contact Phone <span className="required">*</span>
+          </label>
           <input
             name="emergencyPhone"
-            value={form.emergencyPhone}
+            value={data.emergencyPhone || ""}
             onChange={handleChange}
             className={errors.emergencyPhone ? "input-error" : ""}
             placeholder="Enter emergency contact phone"
@@ -106,11 +122,13 @@ const Step2Contact = forwardRef((props, ref) => {
 
         {/* Current Address */}
         <div className="form-group" style={{ gridColumn: "1 / -1" }}>
-          <label>Current Address <span className="required">*</span></label>
+          <label>
+            Current Address <span className="required">*</span>
+          </label>
           <textarea
             rows="3"
             name="currentAddress"
-            value={form.currentAddress}
+            value={data.currentAddress || ""}
             onChange={handleChange}
             className={errors.currentAddress ? "input-error" : ""}
             placeholder="Enter current address"
@@ -122,11 +140,13 @@ const Step2Contact = forwardRef((props, ref) => {
 
         {/* Permanent Address */}
         <div className="form-group" style={{ gridColumn: "1 / -1" }}>
-          <label>Permanent Address <span className="required">*</span></label>
+          <label>
+            Permanent Address <span className="required">*</span>
+          </label>
           <textarea
             rows="3"
             name="permanentAddress"
-            value={form.permanentAddress}
+            value={data.permanentAddress || ""}
             onChange={handleChange}
             className={errors.permanentAddress ? "input-error" : ""}
             placeholder="Enter permanent address"

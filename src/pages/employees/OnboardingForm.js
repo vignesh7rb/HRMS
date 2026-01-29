@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+
 import "./onboarding.css";
 
 import {
@@ -29,15 +30,33 @@ const steps = [
 const OnboardingForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Step refs for validation
-  const stepRefs = [
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-    useRef(),
-  ];
+
+  // 🔐 SINGLE SOURCE OF TRUTH
+  const [formData, setFormData] = useState({
+    personal: {},
+    contact: {},
+    employment: {},
+    education: {},
+    documents: {},
+  });
+
+  const stepRef1 = useRef();
+const stepRef2 = useRef();
+const stepRef3 = useRef();
+const stepRef4 = useRef();
+const stepRef5 = useRef();
+const stepRef6 = useRef();
+
+const stepRefs = [
+  stepRef1,
+  stepRef2,
+  stepRef3,
+  stepRef4,
+  stepRef5,
+  stepRef6,
+];
+
+
 
   const next = () => {
     const ref = stepRefs[currentStep];
@@ -47,37 +66,61 @@ const OnboardingForm = () => {
 
   const prev = () => setCurrentStep((s) => Math.max(s - 1, 0));
 
-  const handleStepClick = (targetStep) => {
-    if (targetStep <= currentStep) {
-      setCurrentStep(targetStep);
-      return;
-    }
-
-    for (let i = 0; i < targetStep; i++) {
+  const handleStepClick = (target) => {
+    for (let i = 0; i < target; i++) {
       const ref = stepRefs[i];
       if (ref?.current?.validate && !ref.current.validate()) {
         setCurrentStep(i);
         return;
       }
     }
-
-    setCurrentStep(targetStep);
+    setCurrentStep(target);
   };
 
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <Step1Personal ref={stepRefs[0]} />;
+        return (
+          <Step1Personal
+            ref={stepRefs[0]}
+            data={formData.personal}
+            setData={(d) => setFormData({ ...formData, personal: d })}
+          />
+        );
       case 1:
-        return <Step2Contact ref={stepRefs[1]} />;
+        return (
+          <Step2Contact
+            ref={stepRefs[1]}
+            data={formData.contact}
+            setData={(d) => setFormData({ ...formData, contact: d })}
+          />
+        );
       case 2:
-        return <Step3Employment ref={stepRefs[2]} />;
+        return (
+          <Step3Employment
+            ref={stepRefs[2]}
+            data={formData.employment}
+            setData={(d) => setFormData({ ...formData, employment: d })}
+          />
+        );
       case 3:
-        return <Step4Education ref={stepRefs[3]} />;
+        return (
+          <Step4Education
+            ref={stepRefs[3]}
+            data={formData.education}
+            setData={(d) => setFormData({ ...formData, education: d })}
+          />
+        );
       case 4:
-        return <Step5Documents ref={stepRefs[4]} />;
+        return (
+          <Step5Documents
+            ref={stepRefs[4]}
+            data={formData.documents}
+            setData={(d) => setFormData({ ...formData, documents: d })}
+          />
+        );
       case 5:
-        return <Step6Review ref={stepRefs[5]} />;
+        return <Step6Review data={formData} />;
       default:
         return null;
     }
@@ -85,48 +128,31 @@ const OnboardingForm = () => {
 
   return (
     <div className="onboarding-page">
-      {/* ===== PAGE HEADER ===== */}
       <div className="onboarding-header">
         <h2>Employee Onboarding</h2>
         <p>Add a new employee to the organization</p>
       </div>
 
-      {/* ===== STEPPER ===== */}
+      {/* STEPPER */}
       <div className="stepper-container">
-        {steps.map((step, index) => (
-          <div className="step-wrapper" key={index}>
-            <div
-              className="step-item clickable"
-              onClick={() => handleStepClick(index)}
-            >
-              <div
-                className={`step-circle ${
-                  index <= currentStep ? "active" : ""
-                }`}
-              >
+        {steps.map((step, i) => (
+          <div className="step-wrapper" key={i}>
+            <div className="step-item clickable" onClick={() => handleStepClick(i)}>
+              <div className={`step-circle ${i <= currentStep ? "active" : ""}`}>
                 {step.icon}
               </div>
-              <span
-                className={`step-label ${
-                  index <= currentStep ? "active" : ""
-                }`}
-              >
+              <span className={`step-label ${i <= currentStep ? "active" : ""}`}>
                 {step.label}
               </span>
             </div>
-
-            {index !== steps.length - 1 && (
-              <div
-                className={`step-line ${
-                  index < currentStep ? "active" : ""
-                }`}
-              />
+            {i !== steps.length - 1 && (
+              <div className={`step-line ${i < currentStep ? "active" : ""}`} />
             )}
           </div>
         ))}
       </div>
 
-      {/* ===== CARD ===== */}
+      {/* CARD */}
       <div className="onboarding-card">
         {renderStep()}
 
@@ -137,17 +163,16 @@ const OnboardingForm = () => {
             </button>
           )}
 
-          {currentStep < 5 ? (
-            <button className="btn-primary" onClick={next}>
-              Next
-            </button>
-          ) : (
-            <button className="btn-primary">
-              Submit Application
-            </button>
-          )}
+          {currentStep < 5 && (
+  <button className="btn-primary" onClick={next}>
+    Next
+  </button>
+)}
+
         </div>
       </div>
+
+     
     </div>
   );
 };
