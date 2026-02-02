@@ -127,7 +127,7 @@ function App() {
             />
 
             <Route
-              path="/payroll"
+              path="/payrolll"
               element={
                 <ProtectedRoute allowedRoles={["ADMIN"]}>
                   <MainLayout>
