@@ -1,11 +1,18 @@
 .topbar {
+  position: fixed;          /* 🔒 lock it */
+  top: 0;
+  left: 0;
   height: 64px;
+  width: 100%;              /* 🚫 no white gap */
   background: #0f4c81;
   display: flex;
   align-items: center;
   padding: 0 24px;
   color: #fff;
+  z-index: 1000;            /* 🧠 stay above everything */
+  box-sizing: border-box;
 }
+
 
 /* Left */
 .topbar-left {

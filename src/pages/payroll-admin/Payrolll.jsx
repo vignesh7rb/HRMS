@@ -207,7 +207,7 @@ const Payroll = () => {
         <p>Real-time payroll processing & salary control</p>
       </div>
 
-      <div className="card payroll-controls">
+      <div className="cardd payroll-controls">
         <div>
           <label>Payroll Month</label>
           <select

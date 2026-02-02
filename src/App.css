@@ -68,3 +68,10 @@
 .btn.danger  { background: var(--danger); color: #fff; }
 
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;       /* kills side white strip */
+  background: #f4f7fb;      /* same as dashboard */
+}

@@ -19,18 +19,12 @@
 }
 
 /* ====== CARD ====== */
-.card {
+.cardd {
   background: #fff;
   border-radius: 10px;
   padding: 18px;
   margin-top: 20px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-.actions {
-  margin-left: auto;   /* THIS is the key */
-  display: flex;
-  gap: 10px;
 }
 
 /* ====== CONTROLS ====== */

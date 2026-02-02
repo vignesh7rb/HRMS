@@ -1,10 +1,11 @@
-/* ===== ROOT LAYOUT ===== */
 .layout-container {
   display: flex;
-  height: 100vh;          /* FULL SCREEN */
+  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
+
 
 /* ===== SIDEBAR ===== */
 .sidebar {
@@ -31,6 +32,12 @@
   flex-shrink: 0;
   background: #0f4c81;
   color: #fff;
+   margin: 0;          /* 🔥 IMPORTANT */
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+  
 }
 
 /* ===== MAIN CONTENT ===== */

@@ -180,6 +180,9 @@ const ExpenseFinance = () => {
 
           <input
             type="date"
+            
+  min="1900-01-01"
+  max="2100-12-31"
             value={form.date}
             onChange={e => setForm({ ...form, date: e.target.value })}
           />
@@ -221,10 +224,13 @@ const ExpenseFinance = () => {
         </select>
 
         <input
-          type="month"
-          value={filters.month}
-          onChange={e => setFilters({ ...filters, month: e.target.value })}
-        />
+  type="date"
+  min="1900-01-01"
+  max="2100-12-31"
+  value={form.date}
+  onChange={e => setForm({ ...form, date: e.target.value })}
+/>
+
       </div>
 
       {/* ================= EXPENSE TABLE ================= */}
