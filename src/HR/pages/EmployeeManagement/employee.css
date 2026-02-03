@@ -1,0 +1,5 @@
+.employee-page {
+  padding: 1px 32px 24px;   /* 🔑 smaller top padding */
+  background: #f8fafc;
+  min-height: 100%;
+}

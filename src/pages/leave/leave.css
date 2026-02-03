@@ -20,7 +20,7 @@
   margin-bottom: 24px;
 }
 .leave-header h2 {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
   color: #0f4c81;
 }
@@ -38,6 +38,7 @@
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
+  margin-top: -16px;
 }
 
 /* KPI GRID */

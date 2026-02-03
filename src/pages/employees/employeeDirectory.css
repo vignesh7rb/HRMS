@@ -1,6 +1,6 @@
 /* ================= PAGE BASE ================= */
 .employee-page {
-  padding: 24px;
+  padding: 1px 32px 24px;
   background: #f8fafc;
   min-height: 100vh;
 }
@@ -15,7 +15,7 @@
 
 .employee-header h2 {
   color: #0f4c81;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
 }
 
@@ -30,7 +30,7 @@
 }
 
 /* ================= STATS GRID ================= */
-.stats-grid {
+.stats-gridd {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;

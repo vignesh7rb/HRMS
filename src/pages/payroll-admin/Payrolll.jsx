@@ -201,8 +201,8 @@ const Payroll = () => {
      UI
   =============================== */
   return (
-    <div className="payroll-container">
-      <div className="payroll-header">
+    <div className="payrolll-container">
+      <div className="payrolll-header">
         <h1>Payroll Management</h1>
         <p>Real-time payroll processing & salary control</p>
       </div>

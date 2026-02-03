@@ -4,6 +4,7 @@ import "../../../HR/pages/LeaveManagement/leave.css";
 import "../../../HR/pages/Onboarding/onboarding.css";
 import "../EmployeeManagement/employee.css";
 import "../../AddEmployee/hrForms.css";
+import "../TaskManagement/task.css";
 
 const TaskManagement = () => {
   const [tasks, setTasks] = useState([

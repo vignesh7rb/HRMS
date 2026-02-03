@@ -10,6 +10,9 @@ import HRLayout from "./HR/layout/HRLayout";
 /* ================= AUTH ================= */
 import Login from "./pages/auth/login";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import AuthLayout from "../src/components/layout/AuthLayout";
 
 /* ================= COMMON ================= */
 import MyProfile from "./components/MyProfile/MyProfile";
@@ -46,6 +49,12 @@ function App() {
 
             {/* ============ LOGIN ============ */}
             <Route path="/login" element={<Login />} />
+
+            <Route element={<AuthLayout />}>
+  <Route path="/" element={<Login />} />
+  <Route path="/forgot-password" element={<ForgotPassword />} />
+  <Route path="/reset-password" element={<ResetPassword />} />
+</Route>
 
             {/* ============ ADMIN PROFILE ============ */}
             <Route

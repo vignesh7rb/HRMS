@@ -3,7 +3,7 @@
 /* ============================= */
 
 .hr-topbar {
-  height: 64px;
+  height: 70px;
   background: #0f4c81; /* SAME as main topbar */
   display: flex;
   align-items: center;

@@ -53,6 +53,11 @@
   color: var(--text-muted);
   margin-bottom: 6px;
 }
+.leave-page .page-title {
+  margin-top: 0;      /* 🔑 prevents extra drop */
+  margin-bottom: 24px;
+}
+
 
 .onboarding-stats .card h2 {
   font-size: 22px;
@@ -189,6 +194,9 @@
 
 .btn-primary:hover {
   background-color: #1d4ed8;
+}
+.leave-page{
+  padding: 1px 32px 24px;
 }
 /* =============================
    ACTION CELL (APPROVE / REJECT)

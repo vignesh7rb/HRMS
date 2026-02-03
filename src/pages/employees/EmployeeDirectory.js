@@ -120,7 +120,7 @@ function EmployeeDirectory() {
       </div>
 
       {/* ================= STATS ================= */}
-      <div className="stats-grid">
+      <div className="stats-gridd">
         <div className="stat-card">
           <p>Total Employees</p>
           <h2>{stats.totalEmployees}</h2>

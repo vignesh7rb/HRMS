@@ -1,14 +1,20 @@
 .onboarding-page h1 {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 20px;
   color: #0f4c81;
 }
+.onboarding-page {
+  padding: 1px 32px 24px;   /* 🔑 smaller top padding */
+  background: #f8fafc;
+  min-height: 100%;
+}
+
 
 /* STATS */
 .onboarding-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-bottom: 24px;
 }

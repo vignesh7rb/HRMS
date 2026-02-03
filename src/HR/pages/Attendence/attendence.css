@@ -3,13 +3,13 @@
 /* ============================= */
 
 .attendance-page {
-  padding: 24px 32px;
+  padding: 1px 32px 24px;
   background: #f8fafc;
   min-height: 100vh;
 }
 
 .attendance-page .page-title {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 20px;
   color: #0f4c81;

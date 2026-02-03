@@ -117,7 +117,8 @@ const [newAsset, setNewAsset] = useState({
 
       {/* HEADER */}
       <div className="asset-header">
-  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+
     <div>
       <h1>Asset Management</h1>
       <p>Track and manage company assets</p>

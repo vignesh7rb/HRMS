@@ -1,12 +1,19 @@
 .dashboard {
-  padding: 24px;
+  
+  padding: 12px 24px 24px; /* top right bottom left */
   background: #f8fafc;
   min-height: 100vh;
 }
 
+.dashboard {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 .dashboard-title {
   color: #0f4c81;
-  margin-bottom: 20px;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
 /* Stats */

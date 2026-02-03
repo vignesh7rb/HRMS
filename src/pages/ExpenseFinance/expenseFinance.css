@@ -1,5 +1,5 @@
 .expense-page {
-  padding: 24px;
+  padding: 1px 32px 24px;
   background: #f7f9fc;
   min-height: 100vh;
   font-family: Inter, system-ui, sans-serif;
@@ -136,7 +136,7 @@ select:focus {
 /* =========================
    CARD (EMP SUBMISSION / CHART)
 ========================= */
-.card {
+.cardd {
   background: #ffffff;
   padding: 20px;
   border-radius: 14px;
@@ -184,6 +184,7 @@ select:focus {
   color: #ffffff;
   border: none;
   padding: 8px 14px;
+  margin-top: 15px;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;

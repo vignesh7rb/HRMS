@@ -1,41 +1,25 @@
+/* =========================
+   APP ROOT LAYOUT
+========================= */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background: #f4f7fb;
 }
 
-.App-link {
-  color: #61dafb;
+/* =========================
+   MAIN CONTENT AREA
+   (below fixed topbar)
+========================= */
+.main-content {
+  margin-top: 64px;                 /* topbar height */
+  height: calc(100vh - 64px);
+  overflow-y: auto;                 /* SINGLE scrollbar */
+  padding: 24px;
+  background: #f4f7fb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 /* =========================
    GLOBAL FONT SYSTEM
 ========================= */
@@ -44,6 +28,9 @@
     "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
+/* =========================
+   STATUS PILLS
+========================= */
 .status {
   padding: 6px 14px;
   border-radius: 999px;
@@ -51,10 +38,24 @@
   font-size: 13px;
 }
 
-.status.approved { background: #dcfce7; color: #166534; }
-.status.pending { background: #fef3c7; color: #92400e; }
-.status.rejected { background: #fee2e2; color: #991b1b; }
+.status.approved {
+  background: #dcfce7;
+  color: #166534;
+}
 
+.status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.rejected {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 .btn {
   padding: 8px 18px;
   border-radius: 8px;
@@ -63,15 +64,17 @@
   cursor: pointer;
 }
 
-.btn.primary { background: var(--primary-blue); color: #fff; }
-.btn.success { background: var(--success); color: #fff; }
-.btn.danger  { background: var(--danger); color: #fff; }
+.btn.primary {
+  background: #0f4c81;
+  color: #fff;
+}
 
+.btn.success {
+  background: #16a34a;
+  color: #fff;
+}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;       /* kills side white strip */
-  background: #f4f7fb;      /* same as dashboard */
+.btn.danger {
+  background: #dc2626;
+  color: #fff;
 }

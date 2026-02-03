@@ -24,11 +24,12 @@
   flex-direction: column;
   flex: 1;
   height: 100vh;
+  padding-top: 0;
 }
 
 /* ===== HEADER ===== */
 .topbar {
-  height: 64px;
+  height: 70px;
   flex-shrink: 0;
   background: #0f4c81;
   color: #fff;
@@ -37,6 +38,8 @@
 
   display: flex;
   align-items: center;
+  
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   
 }
 

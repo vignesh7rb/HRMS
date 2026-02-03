@@ -3,7 +3,7 @@ import { FaBell, FaChevronDown, FaSearch } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../../store/slice/authSlice";
-import "../../../assets/styles/sidebar/header.css";
+import "../../../assets/header/header.css";
 
 
 const Topbar = () => {

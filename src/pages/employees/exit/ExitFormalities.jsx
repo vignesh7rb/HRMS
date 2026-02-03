@@ -83,50 +83,48 @@ const ExitFormality = () => {
 
   return (
     <div className="exit-page">
-      <div className="exit-table-card">
-        <h2 className="blue">Exit Requests</h2>
+      {/* PAGE TITLE */}
+      <h2 className="blue">Exit Requests</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Employee</th>
-              <th>Last Working Date</th>
-              <th>Finance Due</th>
-              <th>Status</th>
-              <th>Action</th>
+      {/* TABLE */}
+      <table className="exit-table">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Last Working Date</th>
+            <th>Finance Due</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {employees.map((emp) => (
+            <tr key={emp.id}>
+              <td>
+                {emp.name}
+                <div className="emp-id">{emp.id}</div>
+              </td>
+              <td>{emp.lastWorkingDate}</td>
+              <td>₹{emp.financeDue}</td>
+              <td>
+                <span
+                  className={`badge ${
+                    emp.status === "Completed" ? "success" : "pending"
+                  }`}
+                >
+                  {emp.status}
+                </span>
+              </td>
+              <td>
+                <button className="view" onClick={() => openExitModal(emp)}>
+                  View
+                </button>
+              </td>
             </tr>
-          </thead>
-
-          <tbody>
-            {employees.map((emp) => (
-              <tr key={emp.id}>
-                <td>
-                  {emp.name}
-                  <div className="emp-id">{emp.id}</div>
-                </td>
-                <td>{emp.lastWorkingDate}</td>
-                <td>₹{emp.financeDue}</td>
-                <td>
-                  <span
-                    className={`badge ${
-                      emp.status === "Completed"
-                        ? "success"
-                        : "pending"
-                    }`}
-                  >
-                    {emp.status}
-                  </span>
-                </td>
-                <td>
-                  <button className="view" onClick={() => openExitModal(emp)}>
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
 
       {/* MODAL */}
       {showExitModal && selectedEmployee && (
@@ -144,7 +142,6 @@ const ExitFormality = () => {
               Verify employee exit details before closing
             </p>
 
-            {/* DATES */}
             <div className="form-row">
               <label>Last Working Date</label>
               <input
@@ -167,7 +164,6 @@ const ExitFormality = () => {
               />
             </div>
 
-            {/* ASSETS */}
             <h4 className="section-title">Asset Clearance</h4>
             {Object.entries(selectedEmployee.assets).map(([key, value]) => (
               <div key={key} className="form-input-row">
@@ -180,7 +176,6 @@ const ExitFormality = () => {
               </div>
             ))}
 
-            {/* FINANCE */}
             <h4 className="section-title">Finance Clearance</h4>
             <div className="form-row">
               <label>Outstanding Amount</label>
@@ -197,7 +192,6 @@ const ExitFormality = () => {
               </button>
             )}
 
-            {/* FOOTER */}
             <div className="modal-footer">
               <button
                 className="btn-outline"

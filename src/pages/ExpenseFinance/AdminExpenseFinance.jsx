@@ -1,6 +1,13 @@
 import { useState, useMemo } from "react";
 import "./expenseFinance.css";
 
+const EMPLOYEE_MASTER = {
+  EMP001: "John Doe",
+  EMP002: "Sarah Wilson",
+  EMP003: "Amit Kumar",
+  EMP004: "Priya Sharma",
+};
+
 const ExpenseFinance = () => {
   const [expenses, setExpenses] = useState([]);
   const [filters, setFilters] = useState({
@@ -10,6 +17,7 @@ const ExpenseFinance = () => {
   });
 
   const [form, setForm] = useState({
+    empid: "",
     employee: "",
     department: "Engineering",
     category: "Travel",
@@ -19,7 +27,21 @@ const ExpenseFinance = () => {
   });
 
   /* ======================
-     ADD EXPENSE (EMPLOYEE)
+     EMPLOYEE ID HANDLER
+  ====================== */
+  const handleEmpIdChange = (e) => {
+    const empid = e.target.value.toUpperCase();
+    const empName = EMPLOYEE_MASTER[empid] || "";
+
+    setForm(prev => ({
+      ...prev,
+      empid,
+      employee: empName,
+    }));
+  };
+
+  /* ======================
+     ADD EXPENSE
   ====================== */
   const submitExpense = () => {
     if (!form.employee || !form.amount || !form.date) return;
@@ -35,6 +57,7 @@ const ExpenseFinance = () => {
     ]);
 
     setForm({
+      empid: "",
       employee: "",
       department: "Engineering",
       category: "Travel",
@@ -45,7 +68,7 @@ const ExpenseFinance = () => {
   };
 
   /* ======================
-     APPROVAL → PAYROLL LINK
+     APPROVAL ACTIONS
   ====================== */
   const approveExpense = id => {
     setExpenses(prev =>
@@ -66,7 +89,7 @@ const ExpenseFinance = () => {
   };
 
   /* ======================
-     REAL-TIME FILTERING
+     FILTERING
   ====================== */
   const filteredExpenses = useMemo(() => {
     return expenses.filter(e => {
@@ -81,7 +104,7 @@ const ExpenseFinance = () => {
   }, [expenses, filters]);
 
   /* ======================
-     CHART (MONTHLY SPEND)
+     MONTHLY SPEND
   ====================== */
   const monthlySpend = useMemo(() => {
     const map = {};
@@ -96,7 +119,7 @@ const ExpenseFinance = () => {
   const maxMonthlySpend = Math.max(...Object.values(monthlySpend), 1);
 
   /* ======================
-     EXPORT CSV (FIXED)
+     EXPORT CSV
   ====================== */
   const exportCSV = () => {
     if (!filteredExpenses.length) {
@@ -127,7 +150,7 @@ const ExpenseFinance = () => {
   };
 
   /* ======================
-     REPORT BUTTON ACTIONS
+     REPORT ACTIONS
   ====================== */
   const generateMonthlyReport = () => {
     const currentMonth = new Date().toISOString().slice(0, 7);
@@ -142,15 +165,21 @@ const ExpenseFinance = () => {
     <div className="expense-page">
       <h1>Expense & Finance</h1>
 
-      {/* ================= EMPLOYEE SUBMISSION ================= */}
-      <div className="card">
+      {/* ================= SUBMIT EXPENSE ================= */}
+      <div className="cardd">
         <h2>Submit Expense</h2>
 
         <div className="grid">
           <input
+            placeholder="Employee ID (e.g. EMP001)"
+            value={form.empid}
+            onChange={handleEmpIdChange}
+          />
+
+          <input
             placeholder="Employee Name"
             value={form.employee}
-            onChange={e => setForm({ ...form, employee: e.target.value })}
+            disabled
           />
 
           <select
@@ -180,9 +209,8 @@ const ExpenseFinance = () => {
 
           <input
             type="date"
-            
-  min="1900-01-01"
-  max="2100-12-31"
+            min="1900-01-01"
+            max="2100-12-31"
             value={form.date}
             onChange={e => setForm({ ...form, date: e.target.value })}
           />
@@ -224,17 +252,16 @@ const ExpenseFinance = () => {
         </select>
 
         <input
-  type="date"
-  min="1900-01-01"
-  max="2100-12-31"
-  value={form.date}
-  onChange={e => setForm({ ...form, date: e.target.value })}
-/>
-
+          type="date"
+          min="1900-01-01"
+          max="2100-12-31"
+          value={filters.month}
+          onChange={e => setFilters({ ...filters, month: e.target.value })}
+        />
       </div>
 
-      {/* ================= EXPENSE TABLE ================= */}
-      <div className="card">
+      {/* ================= TABLE ================= */}
+      <div className="cardd">
         <h2>Expense Approvals</h2>
 
         <table>
@@ -279,8 +306,8 @@ const ExpenseFinance = () => {
         </table>
       </div>
 
-      {/* ================= MONTHLY CHART ================= */}
-      <div className="card">
+      {/* ================= CHART ================= */}
+      <div className="cardd">
         <h2>Monthly Spend</h2>
         <div className="chart">
           {Object.entries(monthlySpend).map(([m, v]) => (
@@ -298,7 +325,7 @@ const ExpenseFinance = () => {
       </div>
 
       {/* ================= REPORTS ================= */}
-      <div className="card report-actions">
+      <div className="cardd report-actions">
         <button className="blue-btn" onClick={generateMonthlyReport}>
           Monthly Report
         </button>

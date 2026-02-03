@@ -1,21 +1,25 @@
 /* ====== LAYOUT ====== */
-.payroll-container {
-  padding: 24px;
-  background: #f4f6f9;
+.payrolll-container {
+  padding: 1px 32px 24px;
+  background: #f7f9fc;
   min-height: 100vh;
   font-family: Inter, system-ui, sans-serif;
 }
 
-.payroll-header h1 {
+.payrolll-header h1 {
   color: #0f4c81;
   font-weight: 700;
   text-align: left;
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
-
-.payroll-header p {
-  margin-top: 6px;
+.payrolll-header{
+   margin-top: 0;
+  line-height: 1.2;
+}
+.payrolll-header p {
+  margin-bottom: 24px;
   color: #6b7280;
+  
 }
 
 /* ====== CARD ====== */
