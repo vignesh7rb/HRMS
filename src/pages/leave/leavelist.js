@@ -1,5 +1,5 @@
 import "../leave/leave.css";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const LeaveList = () => {
   const [showApplyModal, setShowApplyModal] = useState(false);
@@ -26,6 +26,63 @@ const LeaveList = () => {
       status: "Approved",
     },
   ]);
+
+  /* =========================
+     FILTER STATES (NEW)
+  ========================= */
+  const [filterEmpId, setFilterEmpId] = useState("");
+  const [filterEmpName, setFilterEmpName] = useState("");
+  const [filterType, setFilterType] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+
+  /* =========================
+     AUTO FILL EMP NAME
+  ========================= */
+  useMemo(() => {
+    const emp = leaveRequests.find(
+      e => e.empId.toLowerCase() === filterEmpId.toLowerCase()
+    );
+    if (emp) setFilterEmpName(emp.name);
+    else setFilterEmpName("");
+  }, [filterEmpId, leaveRequests]);
+
+  /* =========================
+     FILTER LOGIC
+  ========================= */
+  const filteredLeaves = useMemo(() => {
+    return leaveRequests.filter(item => {
+      return (
+        (!filterEmpId ||
+          item.empId.toLowerCase().includes(filterEmpId.toLowerCase())) &&
+        (!filterEmpName ||
+          item.name.toLowerCase().includes(filterEmpName.toLowerCase())) &&
+        (!filterType || item.type === filterType) &&
+        (!filterStatus || item.status === filterStatus) &&
+        (!filterDate || item.duration.includes(filterDate))
+      );
+    });
+  }, [
+    leaveRequests,
+    filterEmpId,
+    filterEmpName,
+    filterType,
+    filterStatus,
+    filterDate,
+  ]);
+
+  /* =========================
+     PAGINATION
+  ========================= */
+  const ITEMS_PER_PAGE = 5;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(filteredLeaves.length / ITEMS_PER_PAGE);
+
+  const paginatedLeaves = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredLeaves.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredLeaves, currentPage]);
 
   const updateStatus = (id, newStatus) => {
     setLeaveRequests(prev =>
@@ -85,7 +142,45 @@ const LeaveList = () => {
       {/* TABLE */}
       <div className="leave-table-card">
         <h3>Leave Requests</h3>
-        <p className="sub-text">Manage pending and recent leave applications</p>
+        <p className="sub-text">
+          Manage pending and recent leave applications
+        </p>
+
+        {/* ================= FILTER BAR ================= */}
+        <div className="leave-filter-bar">
+          <input
+            placeholder="Employee ID"
+            value={filterEmpId}
+            onChange={e => setFilterEmpId(e.target.value)}
+          />
+
+          <input placeholder="Employee Name" value={filterEmpName} readOnly />
+
+          <select value={filterType} onChange={e => setFilterType(e.target.value)}>
+            <option value="">All Leave</option>
+            <option>Casual Leave</option>
+            <option>Sick Leave</option>
+            <option>Earned Leave</option>
+          </select>
+
+          <input
+            type="text"
+            placeholder="Date (eg: 15 Jun)"
+            value={filterDate}
+            onChange={e => setFilterDate(e.target.value)}
+          />
+
+          <select
+            value={filterStatus}
+            onChange={e => setFilterStatus(e.target.value)}
+          >
+            <option value="">Status</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+            <option>Pending</option>
+          </select>
+        </div>
+        {/* ================================================= */}
 
         <table>
           <thead>
@@ -101,7 +196,7 @@ const LeaveList = () => {
           </thead>
 
           <tbody>
-            {leaveRequests.map(req => (
+            {paginatedLeaves.map(req => (
               <tr key={req.id}>
                 <td>
                   <strong>{req.name}</strong>
@@ -148,9 +243,36 @@ const LeaveList = () => {
             ))}
           </tbody>
         </table>
+
+        {/* PAGINATION */}
+        <div className="leave-pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(p => p - 1)}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={currentPage === i + 1 ? "active" : ""}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages || totalPages === 0}
+            onClick={() => setCurrentPage(p => p + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
-      {/* MODAL */}
+      {/* MODAL (UNCHANGED) */}
       {showApplyModal && (
         <div className="modal-wrapper">
           <div className="modal-container">

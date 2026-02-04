@@ -62,6 +62,36 @@ const TaskManagement = () => {
         <div className="card"><p>Overdue</p><h2>{overdue}</h2></div>
       </div>
 
+      {/* =============================
+          TASK FILTER BAR (SAME STYLE)
+      ============================= */}
+      <div className="leave-filter-bar">
+        <div className="filter-item">
+          <label>Select Date</label>
+          <input type="date" />
+        </div>
+
+        <input
+          type="text"
+          className="filter-search"
+          placeholder="Search Employee Name..."
+        />
+
+        <select className="filter-select">
+          <option>All Departments</option>
+          <option>Engineering</option>
+          <option>Finance</option>
+          <option>HR</option>
+        </select>
+
+        <select className="filter-select">
+          <option>All Status</option>
+          <option>Pending</option>
+          <option>Completed</option>
+          <option>Overdue</option>
+        </select>
+      </div>
+
       {/* TABLE */}
       <div className="card table-card">
         <h2>All Tasks</h2>

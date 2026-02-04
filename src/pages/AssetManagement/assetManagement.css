@@ -86,6 +86,10 @@ tbody td {
   font-size: 14px;
   border-bottom: 1px solid #f1f5f9;
 }
+/* CENTER THE "-" IN ASSIGNED TO COLUMN */
+.asset-table-card table td:nth-child(5) {
+  text-align: center;
+}
 
 tbody tr:hover {
   background: #f9fbff;
@@ -305,4 +309,76 @@ input[placeholder="Remarks"] {
 .modal input,
 .modal select {
   width: 100%;
+}
+/* =============================
+   ASSET FILTER BAR (LOCAL STYLE)
+============================= */
+
+.asset-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  background: #ffffff;   /* 🔥 different from white stat cards */
+  padding: 10px 16px;
+  border-radius: 14px;
+  margin: 12px 0 20px;
+}
+
+.asset-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.asset-filter-item label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.asset-filter-bar input,
+.asset-filter-bar select {
+  height: 34px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #ffffff;
+  min-width: 160px;
+}
+
+.asset-filter-search {
+  width: 260px;
+}
+/* PAGINATION */
+.asset-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.asset-pagination button {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.asset-pagination button:hover {
+  background: #f3f4f6;
+}
+
+.asset-pagination button.active {
+  background: #0f4c81;
+  color: #fff;
+  border-color: #0f4c81;
+}
+
+.asset-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

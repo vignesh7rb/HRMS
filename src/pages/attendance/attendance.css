@@ -249,3 +249,30 @@ tbody td {
   border: 1px solid #d1d5db;
   cursor: pointer;
 }
+/* PAGINATION */
+.attendance-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.attendance-pagination button {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.attendance-pagination button.active {
+  background: #0f4c81;
+  color: #fff;
+  border-color: #0f4c81;
+}
+
+.attendance-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

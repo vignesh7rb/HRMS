@@ -4,6 +4,7 @@ import StatusBadge from "../../components/StatusBadge";
 import Table from "../../components/Table";
 import "../../AddEmployee/hrForms.css";
 import "../EmployeeManagement/employee.css";
+import "../../../HR/pages/LeaveManagement/leave.css"; // 🔥 reuse same filter css
 
 const ExitRequests = () => {
   const [requests, setRequests] = useState([
@@ -30,10 +31,6 @@ const ExitRequests = () => {
   const [history, setHistory] = useState([]);
   const [selected, setSelected] = useState(null);
 
-  /* =============================
-     ACTIONS
-  ============================= */
-
   const approveExit = (id) => {
     setRequests((prev) =>
       prev.map((r) =>
@@ -41,7 +38,6 @@ const ExitRequests = () => {
       )
     );
 
-    // ⏱ Auto close after 0.25 seconds
     setTimeout(() => {
       setSelected(null);
     }, 250);
@@ -54,7 +50,6 @@ const ExitRequests = () => {
       )
     );
 
-    // ⏱ Auto close after 2 seconds
     setTimeout(() => {
       setSelected(null);
     }, 2000);
@@ -75,10 +70,6 @@ const ExitRequests = () => {
       },
     }));
   };
-
-  /* =============================
-     RELIEVING LETTER (STANDARD FORMAT)
-  ============================= */
 
   const generateRelievingLetter = (emp) => {
     const doc = new jsPDF();
@@ -123,11 +114,7 @@ const ExitRequests = () => {
       115
     );
 
-    doc.text(
-      "We wish them success in all their future endeavors.",
-      20,
-      135
-    );
+    doc.text("We wish them success in all their future endeavors.", 20, 135);
 
     doc.text("For Company Name", 20, 165);
     doc.text("Authorized Signatory", 20, 180);
@@ -141,8 +128,37 @@ const ExitRequests = () => {
       <h1 className="page-title">Exit Requests</h1>
 
       {/* =============================
-          ACTIVE EXIT REQUESTS
+          FILTER BAR (SAME STYLE)
       ============================= */}
+      <div className="leave-filter-bar">
+        <div className="filter-item">
+          <label>Select Date</label>
+          <input type="date" />
+        </div>
+
+        <input
+          type="text"
+          className="filter-search"
+          placeholder="Search Employee Name..."
+        />
+
+        <select className="filter-select">
+          <option>All Departments</option>
+          <option>Engineering</option>
+          <option>Finance</option>
+          <option>HR</option>
+        </select>
+
+        <select className="filter-select">
+          <option>All Status</option>
+          <option>Pending</option>
+          <option>Approved</option>
+          <option>Rejected</option>
+          <option>Completed</option>
+        </select>
+      </div>
+
+      {/* ACTIVE EXIT REQUESTS */}
       <div className="employee-table-card">
         <h2>Active Exit Requests</h2>
 
@@ -182,9 +198,7 @@ const ExitRequests = () => {
         </Table>
       </div>
 
-      {/* =============================
-          EXIT HISTORY
-      ============================= */}
+      {/* EXIT HISTORY */}
       <div className="employee-table-card" style={{ marginTop: "32px" }}>
         <h2>Exit History</h2>
 
@@ -219,9 +233,7 @@ const ExitRequests = () => {
         )}
       </div>
 
-      {/* =============================
-          DETAIL MODAL
-      ============================= */}
+      {/* MODAL (UNCHANGED) */}
       {selected && (
         <>
           <div

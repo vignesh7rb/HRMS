@@ -249,3 +249,43 @@ tbody td {
   padding: 8px 16px;
   border-radius: 8px;
 }
+.leave-pagination {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.leave-pagination button {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.leave-pagination button.active {
+  background: #0f4c81;
+  color: #fff;
+  border-color: #0f4c81;
+}
+
+.leave-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.leave-filter-bar{
+  display:flex;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.leave-filter-bar input,
+.leave-filter-bar select{
+  height:36px;
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  font-size:14px;
+}

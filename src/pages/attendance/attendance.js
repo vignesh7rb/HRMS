@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "./attendance.css";
 import MarkAttendance from "./MarkAttendance";
 
 const Attendance = () => {
 
   /* =========================
-     DATA STATE (MUST be useState)
+     DATA STATE
   ========================= */
   const [attendanceData, setAttendanceData] = useState([
     {
@@ -28,7 +28,20 @@ const Attendance = () => {
   const [showMarkAttendance, setShowMarkAttendance] = useState(false);
 
   /* =========================
-     SAVE HANDLER (KEY PART)
+     PAGINATION (NEW)
+  ========================= */
+  const ITEMS_PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(attendanceData.length / ITEMS_PER_PAGE);
+
+  const paginatedAttendance = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return attendanceData.slice(start, start + ITEMS_PER_PAGE);
+  }, [attendanceData, currentPage]);
+
+  /* =========================
+     SAVE HANDLER
   ========================= */
   const handleSaveAttendance = (newRecord) => {
     setAttendanceData([...attendanceData, newRecord]);
@@ -70,7 +83,7 @@ const Attendance = () => {
           </thead>
 
           <tbody>
-            {attendanceData.map((item, index) => (
+            {paginatedAttendance.map((item, index) => (
               <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
@@ -85,6 +98,33 @@ const Attendance = () => {
             ))}
           </tbody>
         </table>
+
+        {/* PAGINATION */}
+        <div className="attendance-pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(p => p - 1)}
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              className={currentPage === i + 1 ? "active" : ""}
+              onClick={() => setCurrentPage(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === totalPages || totalPages === 0}
+            onClick={() => setCurrentPage(p => p + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {/* MODAL */}
