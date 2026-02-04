@@ -29,23 +29,29 @@
 }
 
 /* TOP-LEFT LOGO (GLASS BADGE) */
+/* TOP LOGO ABOVE LOGIN BOX */
 .login-brand {
   position: absolute;
-  top: 20px;
-  left: 24px;
-  z-index: 2;
 
-  padding: 10px 14px;
-  border-radius: 14px;
+  /* center horizontally */
+  left: 50%;
+  transform: translateX(-50%);
 
-  /* background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px); */
+  /* place above white card */
+  top: calc(50% - 260px); /* adjust slightly if needed */
 
-  /* box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); */
+  z-index: 3;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 }
+
+.login-brand img {
+  height: 90px;
+  width: auto;
+}
+
 
 .login-brand img {
   height: 90px;
