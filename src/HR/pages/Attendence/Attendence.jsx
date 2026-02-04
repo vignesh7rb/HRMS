@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import "../../pages/Attendence/attendence.css";
+
 /* EMPLOYEE MASTER (REALISTIC HR DATA) */
 const employees = [
   { id: "EMP001", name: "Arun Kumar", department: "Engineering" },
@@ -10,7 +11,7 @@ const employees = [
 
 /* DYNAMIC ATTENDANCE GENERATOR */
 const generateAttendanceForDate = (date) => {
-  const seed = new Date(date).getDate(); // stable per day
+  const seed = new Date(date).getDate();
 
   return employees.map((emp, index) => {
     const value = (seed + index) % 3;
@@ -44,18 +45,46 @@ const generateAttendanceForDate = (date) => {
 
 const Attendance = () => {
   const today = new Date().toISOString().split("T")[0];
+
   const [date, setDate] = useState(today);
 
-  /* REGENERATE WHEN DATE CHANGES */
+  /* 🔎 FILTER STATES */
+  const [empNameSearch, setEmpNameSearch] = useState(""); // 👈 SEARCH BAR
+  const [departmentFilter, setDepartmentFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  /* GENERATE ATTENDANCE */
   const attendanceData = useMemo(
     () => generateAttendanceForDate(date),
     [date]
   );
 
-  const total = attendanceData.length;
-  const present = attendanceData.filter(e => e.status === "present").length;
-  const absent = attendanceData.filter(e => e.status === "absent").length;
-  const leave = attendanceData.filter(e => e.status === "leave").length;
+  /* UNIQUE DEPARTMENTS */
+  const departments = [...new Set(employees.map((e) => e.department))];
+
+  /* 🔎 FILTERED DATA */
+  const filteredData = useMemo(() => {
+    return attendanceData.filter((emp) => {
+      const matchName = emp.name
+        .toLowerCase()
+        .includes(empNameSearch.toLowerCase());
+
+      const matchDept =
+        departmentFilter === "all" ||
+        emp.department === departmentFilter;
+
+      const matchStatus =
+        statusFilter === "all" || emp.status === statusFilter;
+
+      return matchName && matchDept && matchStatus;
+    });
+  }, [attendanceData, empNameSearch, departmentFilter, statusFilter]);
+
+  /* SUMMARY COUNTS */
+  const total = filteredData.length;
+  const present = filteredData.filter((e) => e.status === "present").length;
+  const absent = filteredData.filter((e) => e.status === "absent").length;
+  const leave = filteredData.filter((e) => e.status === "leave").length;
 
   return (
     <div className="attendance-page">
@@ -81,14 +110,47 @@ const Attendance = () => {
         </div>
       </div>
 
-      {/* DATE FILTER */}
+      {/* FILTER BAR */}
       <div className="attendance-filter">
+        {/* DATE */}
         <label>Select Date</label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+
+        {/* 🔎 EMPLOYEE NAME SEARCH BAR */}
+        <input
+          type="text"
+          placeholder="Search Employee Name..."
+          value={empNameSearch}
+          onChange={(e) => setEmpNameSearch(e.target.value)}
+        />
+
+        {/* DEPARTMENT DROPDOWN */}
+        <select
+          value={departmentFilter}
+          onChange={(e) => setDepartmentFilter(e.target.value)}
+        >
+          <option value="all">All Departments</option>
+          {departments.map((dept) => (
+            <option key={dept} value={dept}>
+              {dept}
+            </option>
+          ))}
+        </select>
+
+        {/* STATUS DROPDOWN */}
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="all">All Status</option>
+          <option value="present">Present</option>
+          <option value="absent">Absent</option>
+          <option value="leave">On Leave</option>
+        </select>
       </div>
 
       {/* TABLE */}
@@ -108,14 +170,15 @@ const Attendance = () => {
           </thead>
 
           <tbody>
-            {attendanceData.map((emp) => (
+            {filteredData.map((emp) => (
               <tr key={emp.id}>
                 <td>{emp.id}</td>
                 <td>{emp.name}</td>
                 <td>{emp.department}</td>
                 <td>
                   <span className={`attendance-status ${emp.status}`}>
-                    {emp.status.charAt(0).toUpperCase() + emp.status.slice(1)}
+                    {emp.status.charAt(0).toUpperCase() +
+                      emp.status.slice(1)}
                   </span>
                 </td>
                 <td>{emp.checkIn}</td>

@@ -73,6 +73,11 @@
   font-size: 14px;
 }
 
+.attendance-filter input[type="date"] {
+  width: 140px;
+}
+
+
 /* ============================= */
 /* TABLE CONTAINER               */
 /* ============================= */
