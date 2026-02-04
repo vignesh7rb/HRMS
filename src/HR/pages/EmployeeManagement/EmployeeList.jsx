@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Table from "../../components/Table";
 import "../EmployeeManagement/employee.css";
 
@@ -22,12 +22,93 @@ const employees = [
 ];
 
 const EmployeeList = () => {
+
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  /* =========================
+     FILTER STATES (NEW)
+  ========================= */
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchDept, setSearchDept] = useState("");
+  const [searchDesg, setSearchDesg] = useState("");
+  const [searchStatus, setSearchStatus] = useState("");
+
+  /* =========================
+     FILTER LOGIC
+  ========================= */
+  const filteredEmployees = useMemo(() => {
+    return employees.filter(emp => {
+      return (
+        emp.id.toLowerCase().includes(searchId.toLowerCase()) &&
+        emp.name.toLowerCase().includes(searchName.toLowerCase()) &&
+        emp.department.toLowerCase().includes(searchDept.toLowerCase()) &&
+        emp.designation.toLowerCase().includes(searchDesg.toLowerCase()) &&
+        (searchStatus === "" || emp.status === searchStatus)
+      );
+    });
+  }, [searchId, searchName, searchDept, searchDesg, searchStatus]);
 
   return (
     <div className="employee-page">
+
       {/* PAGE TITLE */}
       <h1 className="page-title">Employee Directory</h1>
+
+      {/* =========================
+          FILTER BAR
+      ========================= */}
+      <div className="employee-filter-bar">
+
+        <div className="employee-filter-item">
+          <label>Employee ID</label>
+          <input
+            type="text"
+            value={searchId}
+            onChange={(e)=>setSearchId(e.target.value)}
+          />
+        </div>
+
+        <div className="employee-filter-item">
+          <label>Employee Name</label>
+          <input
+            type="text"
+            value={searchName}
+            onChange={(e)=>setSearchName(e.target.value)}
+          />
+        </div>
+
+        <div className="employee-filter-item">
+          <label>Department</label>
+          <input
+            type="text"
+            value={searchDept}
+            onChange={(e)=>setSearchDept(e.target.value)}
+          />
+        </div>
+
+        <div className="employee-filter-item">
+          <label>Designation</label>
+          <input
+            type="text"
+            value={searchDesg}
+            onChange={(e)=>setSearchDesg(e.target.value)}
+          />
+        </div>
+
+        <div className="employee-filter-item">
+          <label>Status</label>
+          <select
+            value={searchStatus}
+            onChange={(e)=>setSearchStatus(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="Active">Active</option>
+            <option value="Exited">Exited</option>
+          </select>
+        </div>
+
+      </div>
 
       {/* TABLE CARD */}
       <div className="employee-table-card">
@@ -41,7 +122,7 @@ const EmployeeList = () => {
             "Actions",
           ]}
         >
-          {employees.map((emp) => (
+          {filteredEmployees.map((emp) => (
             <tr key={emp.id}>
               <td>{emp.id}</td>
               <td>{emp.name}</td>
@@ -90,18 +171,10 @@ const EmployeeList = () => {
             </div>
 
             <div className="modal-body">
-              <p>
-                <strong>Employee ID:</strong> {selectedEmployee.id}
-              </p>
-              <p>
-                <strong>Name:</strong> {selectedEmployee.name}
-              </p>
-              <p>
-                <strong>Department:</strong> {selectedEmployee.department}
-              </p>
-              <p>
-                <strong>Designation:</strong> {selectedEmployee.designation}
-              </p>
+              <p><strong>Employee ID:</strong> {selectedEmployee.id}</p>
+              <p><strong>Name:</strong> {selectedEmployee.name}</p>
+              <p><strong>Department:</strong> {selectedEmployee.department}</p>
+              <p><strong>Designation:</strong> {selectedEmployee.designation}</p>
               <p>
                 <strong>Status:</strong>{" "}
                 <span
@@ -116,9 +189,7 @@ const EmployeeList = () => {
               </p>
 
               <div className="info-box">
-                <p>
-                  <strong>Projects Assigned</strong>
-                </p>
+                <p><strong>Projects Assigned</strong></p>
 
                 {selectedEmployee.projects.length > 0 ? (
                   <ul>

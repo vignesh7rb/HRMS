@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import "./onboarding.css";
 
 const Onboarding = () => {
+
   const [employees, setEmployees] = useState([
     {
       id: "EMP001",
@@ -23,10 +24,34 @@ const Onboarding = () => {
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
+  /* =========================
+     FILTER STATES (NEW)
+  ========================= */
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchRole, setSearchRole] = useState("");
+  const [searchDoj, setSearchDoj] = useState("");
+  const [searchStatus, setSearchStatus] = useState("");
+
   /* ===== STATS (REAL-TIME) ===== */
   const total = employees.length;
   const pending = employees.filter(e => e.status === "Pending").length;
   const completed = employees.filter(e => e.status === "Completed").length;
+
+  /* =========================
+     FILTER LOGIC
+  ========================= */
+  const filteredEmployees = useMemo(() => {
+    return employees.filter(emp => {
+      return (
+        emp.id.toLowerCase().includes(searchId.toLowerCase()) &&
+        emp.name.toLowerCase().includes(searchName.toLowerCase()) &&
+        emp.role.toLowerCase().includes(searchRole.toLowerCase()) &&
+        emp.doj.includes(searchDoj) &&
+        (searchStatus === "" || emp.status === searchStatus)
+      );
+    });
+  }, [employees, searchId, searchName, searchRole, searchDoj, searchStatus]);
 
   /* ===== UPDATE EMPLOYEE ===== */
   const handleUpdate = () => {
@@ -62,6 +87,58 @@ const Onboarding = () => {
       <div className="card table-card">
         <h2>Onboarding List</h2>
 
+        {/* =========================
+            FILTER BAR
+        ========================= */}
+        <div className="onboarding-filter-bar">
+
+          <div className="onboarding-filter-item">
+            <label>Employee ID</label>
+            <input
+              value={searchId}
+              onChange={(e)=>setSearchId(e.target.value)}
+            />
+          </div>
+
+          <div className="onboarding-filter-item">
+            <label>Name</label>
+            <input
+              value={searchName}
+              onChange={(e)=>setSearchName(e.target.value)}
+            />
+          </div>
+
+          <div className="onboarding-filter-item">
+            <label>Role</label>
+            <input
+              value={searchRole}
+              onChange={(e)=>setSearchRole(e.target.value)}
+            />
+          </div>
+
+          <div className="onboarding-filter-item">
+            <label>Date of Joining</label>
+            <input
+              type="date"
+              value={searchDoj}
+              onChange={(e)=>setSearchDoj(e.target.value)}
+            />
+          </div>
+
+          <div className="onboarding-filter-item">
+            <label>Status</label>
+            <select
+              value={searchStatus}
+              onChange={(e)=>setSearchStatus(e.target.value)}
+            >
+              <option value="">All</option>
+              <option>Pending</option>
+              <option>Completed</option>
+            </select>
+          </div>
+
+        </div>
+
         <table className="onboarding-table">
           <thead>
             <tr>
@@ -75,7 +152,7 @@ const Onboarding = () => {
           </thead>
 
           <tbody>
-            {employees.map((emp) => (
+            {filteredEmployees.map((emp) => (
               <tr key={emp.id}>
                 <td>{emp.id}</td>
                 <td>{emp.name}</td>

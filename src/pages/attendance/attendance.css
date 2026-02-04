@@ -276,3 +276,31 @@ tbody td {
   opacity: 0.4;
   cursor: not-allowed;
 }
+/* ATTENDANCE FILTER BAR */
+.attendance-filter-bar{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.attendance-filter-item{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:180px;
+}
+
+.attendance-filter-item label{
+  font-size:12px;
+  font-weight:600;
+  color:#6b7280;
+}
+
+.attendance-filter-item input,
+.attendance-filter-item select{
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  font-size:14px;
+}

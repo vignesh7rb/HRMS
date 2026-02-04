@@ -28,23 +28,60 @@ const Attendance = () => {
   const [showMarkAttendance, setShowMarkAttendance] = useState(false);
 
   /* =========================
-     PAGINATION (NEW)
+     FILTER STATE
+  ========================= */
+  const [searchEmpId, setSearchEmpId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+  const [searchStatus, setSearchStatus] = useState("");
+
+  /* =========================
+     PAGINATION
   ========================= */
   const ITEMS_PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(attendanceData.length / ITEMS_PER_PAGE);
+  /* =========================
+     DATE FORMATTER (CALENDAR STYLE)
+  ========================= */
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+
+    const options = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    };
+
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+  };
+
+  /* =========================
+     FILTER LOGIC
+  ========================= */
+  const filteredAttendance = useMemo(() => {
+    return attendanceData.filter(item => {
+      return (
+        item.id.toLowerCase().includes(searchEmpId.toLowerCase()) &&
+        item.name.toLowerCase().includes(searchName.toLowerCase()) &&
+        item.date.includes(searchDate) &&
+        item.status.toLowerCase().includes(searchStatus.toLowerCase())
+      );
+    });
+  }, [attendanceData, searchEmpId, searchName, searchDate, searchStatus]);
+
+  const totalPages = Math.ceil(filteredAttendance.length / ITEMS_PER_PAGE);
 
   const paginatedAttendance = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return attendanceData.slice(start, start + ITEMS_PER_PAGE);
-  }, [attendanceData, currentPage]);
+    return filteredAttendance.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredAttendance, currentPage]);
 
   /* =========================
      SAVE HANDLER
   ========================= */
   const handleSaveAttendance = (newRecord) => {
-    setAttendanceData([...attendanceData, newRecord]);
+    setAttendanceData(prev => [...prev, newRecord]);
   };
 
   return (
@@ -67,10 +104,71 @@ const Attendance = () => {
         </div>
       </div>
 
-      {/* TABLE */}
+      {/* TABLE CARD */}
       <div className="table-card">
         <h3>Attendance Records</h3>
+        {/* FILTER BAR */}
+<div className="attendance-filter-bar">
 
+  <div className="attendance-filter-item">
+    <label></label>
+    <input
+      type="text"
+      placeholder="Search Emp ID"
+      value={searchEmpId}
+      onChange={(e) => {
+        setSearchEmpId(e.target.value);
+        setCurrentPage(1);
+      }}
+    />
+  </div>
+
+  <div className="attendance-filter-item">
+    <label></label>
+    <input
+      type="text"
+      placeholder="Search Name"
+      value={searchName}
+      onChange={(e) => {
+        setSearchName(e.target.value);
+        setCurrentPage(1);
+      }}
+    />
+  </div>
+
+  <div className="attendance-filter-item">
+    <label></label>
+    <input
+      type="date"
+      value={searchDate}
+      onChange={(e) => {
+        setSearchDate(e.target.value);
+        setCurrentPage(1);
+      }}
+    />
+  </div>
+
+  <div className="attendance-filter-item">
+    <label></label>
+    <select
+      value={searchStatus}
+      onChange={(e) => {
+        setSearchStatus(e.target.value);
+        setCurrentPage(1);
+      }}
+    >
+      <option value="">All</option>
+      <option value="Present">Present</option>
+      <option value="Absent">Absent</option>
+      <option value="Leave">Leave</option>
+    </select>
+  </div>
+
+</div>
+
+        {/* =========================
+            TABLE
+        ========================= */}
         <table>
           <thead>
             <tr>
@@ -87,19 +185,25 @@ const Attendance = () => {
               <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
-                <td>{item.date}</td>
+
+                {/* FORMATTED CALENDAR DATE */}
+                <td>{formatDate(item.date)}</td>
+
                 <td>
                   <span className={`badge ${item.status.toLowerCase()}`}>
                     {item.status}
                   </span>
                 </td>
+
                 <td>{item.notes}</td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        {/* PAGINATION */}
+        {/* =========================
+            PAGINATION
+        ========================= */}
         <div className="attendance-pagination">
           <button
             disabled={currentPage === 1}
