@@ -197,6 +197,7 @@
 }
 .leave-page{
   padding: 1px 32px 24px;
+   background: #f8fafc; 
 }
 /* =============================
    ACTION CELL (APPROVE / REJECT)
@@ -207,4 +208,59 @@
   align-items: center;
   gap: 12px;            /* 🔑 spacing between buttons */
   white-space: nowrap; /* prevents wrap */
+}
+/* =============================
+   LEAVE FILTER BAR (ATTENDANCE STYLE)
+============================= */
+
+/* =============================
+   LEAVE FILTER BAR (REFINED)
+============================= */
+
+.leave-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  /* 🔥 move it slightly up */
+  margin-top: 9px;
+  margin-bottom: 10px;
+
+  /* 🔥 make height smaller */
+  padding: 10px 16px;
+
+  /* 🔥 different color from stat cards */
+  background: #ffffff;
+
+  border-radius: 14px;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-item label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.leave-filter-bar input,
+.leave-filter-bar select {
+  height: 34px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background: #fff;
+}
+
+.filter-search {
+  width: 260px;
+}
+
+.filter-select {
+  min-width: 200px;
 }

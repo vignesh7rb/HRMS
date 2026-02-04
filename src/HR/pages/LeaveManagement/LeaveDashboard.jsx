@@ -123,6 +123,36 @@ const LeaveDashboard = () => {
       </div>
 
       {/* =============================
+    LEAVE FILTER BAR (UI ONLY)
+============================= */}
+<div className="leave-filter-bar">
+  <div className="filter-item">
+    <label>Select Date</label>
+    <input type="date" />
+  </div>
+
+  <input
+    type="text"
+    className="filter-search"
+    placeholder="Search Employee Name..."
+  />
+
+  <select className="filter-select">
+    <option>All Departments</option>
+    <option>Engineering</option>
+    <option>Finance</option>
+    <option>HR</option>
+  </select>
+
+  <select className="filter-select">
+    <option>All Status</option>
+    <option>Approved</option>
+    <option>Pending</option>
+    <option>Rejected</option>
+  </select>
+</div>
+
+      {/* =============================
           PENDING LEAVE REQUESTS
       ============================= */}
       <div className="card leave-section">
