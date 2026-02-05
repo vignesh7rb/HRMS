@@ -31,38 +31,54 @@ const Payroll = () => {
 
   /* ===============================
      EMPLOYEE PAYROLL DATA
+     🔥 Upgraded internally with DA HRA PF
   =============================== */
-  const [employees, setEmployees] = useState([
-    {
-      id: "EMP001",
-      name: "John Doe",
-      department: "Engineering",
-      gross: 85000,
-      deductions: 12500,
-      status: "PROCESSED",
-    },
-    {
-      id: "EMP014",
-      name: "Priya Sharma",
-      department: "HR",
-      gross: 60000,
-      deductions: 9200,
-      status: "PENDING",
-    },
-  ]);
+ const [employees, setEmployees] = useState([
+  {
+    id: "EMP001",
+    name: "John Doe",
+    department: "Engineering",
+    basic: 40000,
+    hra: 12000,
+    allowance: 5000,
+    pf: 4800,
+    leaveSalary: 1500,
+    deductions: 12500,
+    status: "PROCESSED",
+  },
+  {
+    id: "EMP014",
+    name: "Priya Sharma",
+    department: "HR",
+    basic: 30000,
+    hra: 9000,
+    allowance: 4000,
+    pf: 3600,
+    leaveSalary: 1000,
+    deductions: 9200,
+    status: "PENDING",
+  },
+]);
+
 
   /* ===============================
      SUMMARY (REAL-TIME)
   =============================== */
   const payrollSummary = useMemo(() => {
     const totalEmployees = employees.length;
+
     const processedEmployees = employees.filter(
       (e) => e.status === "PROCESSED"
     ).length;
 
-    const totalGross = employees.reduce((s, e) => s + e.gross, 0);
+    const totalGross = employees.reduce(
+      (s, e) =>
+        s + (e.basic + e.hra + e.allowance),
+      0
+    );
+
     const totalDeductions = employees.reduce(
-      (s, e) => s + e.deductions,
+      (s, e) => s + (e.deductions + e.pf),
       0
     );
 
@@ -132,6 +148,11 @@ const Payroll = () => {
     processed.forEach((emp) => {
       const doc = new jsPDF();
 
+      const gross =
+        emp.basic + emp.hra + emp.allowance;
+
+      const totalDeduction = emp.deductions + emp.pf;
+
       doc.setFontSize(18);
       doc.text("Payslip", 20, 20);
 
@@ -143,18 +164,19 @@ const Payroll = () => {
       doc.text(`Name: ${emp.name}`, 20, 70);
       doc.text(`Department: ${emp.department}`, 20, 80);
 
-      doc.text(`Gross Salary: ₹ ${emp.gross}`, 20, 100);
-      doc.text(`Deductions: ₹ ${emp.deductions}`, 20, 110);
-      doc.text(
-        `Net Pay: ₹ ${emp.gross - emp.deductions}`,
-        20,
-        120
-      );
+      doc.text(`Basic: ₹ ${emp.basic}`, 20, 100);
+      doc.text(`HRA: ₹ ${emp.hra}`, 20, 110);
+      doc.text(`Allowance: ₹ ${emp.allowance}`, 20, 130);
+
+      doc.text(`PF: ₹ ${emp.pf}`, 20, 145);
+      doc.text(`Other Deductions: ₹ ${emp.deductions}`, 20, 155);
+
+      doc.text(`Net Pay: ₹ ${gross - totalDeduction}`, 20, 170);
 
       doc.text(
         "This is a system-generated payslip.",
         20,
-        150
+        190
       );
 
       doc.save(`${emp.id}_${month}_Payslip.pdf`);
@@ -175,15 +197,22 @@ const Payroll = () => {
       "Status",
     ];
 
-    const rows = employees.map((e) => [
-      e.id,
-      e.name,
-      e.department,
-      e.gross,
-      e.deductions,
-      e.gross - e.deductions,
-      e.status,
-    ]);
+    const rows = employees.map((e) => {
+      const gross =
+        e.basic + e.hra + e.allowance;
+
+      const totalDeduction = e.deductions + e.pf;
+
+      return [
+        e.id,
+        e.name,
+        e.department,
+        gross,
+        totalDeduction,
+        gross - totalDeduction,
+        e.status,
+      ];
+    });
 
     const csv =
       "data:text/csv;charset=utf-8," +
@@ -198,7 +227,7 @@ const Payroll = () => {
   };
 
   /* ===============================
-     UI
+     UI (UNCHANGED)
   =============================== */
   return (
     <div className="payrolll-container">
@@ -289,52 +318,72 @@ const Payroll = () => {
 
         <table className="payroll-table">
           <thead>
-            <tr>
-              <th>Emp ID</th>
-              <th>Name</th>
-              <th>Department</th>
-              <th>Gross</th>
-              <th>Deductions</th>
-              <th>Net</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+  <tr>
+    <th>Emp ID</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Basic</th>
+    <th>HRA</th>
+    <th>Allowance</th>
+    <th>PF</th>
+    <th>Leave Salary</th>
+    <th>Deductions</th>
+    <th>Net</th>
+    <th>Status</th>
+  </tr>
+</thead>
+
 
           <tbody>
-            {employees.map((e) => (
-              <tr key={e.id}>
-                <td>{e.id}</td>
-                <td>{e.name}</td>
-                <td>{e.department}</td>
-                <td>₹ {e.gross.toLocaleString()}</td>
-                <td>
-                  <input
-                    type="number"
-                    value={e.deductions}
-                    disabled={payrollStatus === "LOCKED"}
-                    onChange={(ev) =>
-                      updateDeductions(e.id, ev.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  ₹ {(e.gross - e.deductions).toLocaleString()}
-                </td>
-                <td>
-                  <select
-                    value={e.status}
-                    disabled={payrollStatus === "LOCKED"}
-                    onChange={(ev) =>
-                      updateEmployeeStatus(e.id, ev.target.value)
-                    }
-                  >
-                    <option value="PENDING">Pending</option>
-                    <option value="PROCESSED">Processed</option>
-                  </select>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+  {employees.map((e) => {
+    const gross =
+      e.basic + e.hra  + e.allowance;
+
+    const net =
+      gross - (e.deductions + e.pf + e.leaveSalary);
+
+    return (
+      <tr key={e.id}>
+        <td>{e.id}</td>
+        <td>{e.name}</td>
+        <td>{e.department}</td>
+
+        <td>₹ {e.basic.toLocaleString()}</td>
+        <td>₹ {e.hra.toLocaleString()}</td>
+        <td>₹ {e.allowance.toLocaleString()}</td>
+        <td>₹ {e.pf.toLocaleString()}</td>
+        <td>₹ {e.leaveSalary.toLocaleString()}</td>
+
+        <td>
+          <input
+            type="number"
+            value={e.deductions}
+            disabled={payrollStatus === "LOCKED"}
+            onChange={(ev) =>
+              updateDeductions(e.id, ev.target.value)
+            }
+          />
+        </td>
+
+        <td>₹ {net.toLocaleString()}</td>
+
+        <td>
+          <select
+            value={e.status}
+            disabled={payrollStatus === "LOCKED"}
+            onChange={(ev) =>
+              updateEmployeeStatus(e.id, ev.target.value)
+            }
+          >
+            <option value="PENDING">Pending</option>
+            <option value="PROCESSED">Processed</option>
+          </select>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
+
         </table>
       </div>
 
