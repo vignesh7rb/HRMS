@@ -21,6 +21,13 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
   const isEmployeeActive = location.pathname.includes("/employee");
 
+  const [showPayrollMenu, setShowPayrollMenu] = useState(
+  location.pathname.includes("/payrolll")
+);
+
+const isPayrollActive = location.pathname.includes("/payrolll");
+
+
   return (
     <div className="sidebar">
       {/* Logo */}
@@ -100,14 +107,88 @@ const Sidebar = () => {
 
 </div>
 
-        {/* Payroll */}
-        <Link
-          to="/payrolll"
-          className={`sidebar-item ${isActive("/payrolll") ? "active" : ""}`}
+
+
+         {/* ================= PAYROLL DROPDOWN (NEW) ================= */}
+        <div
+          className={`sidebar-item ${isPayrollActive ? "active" : ""}`}
+          onClick={() => setShowPayrollMenu(!showPayrollMenu)}
         >
           <FaMoneyBill className="icon" />
           <span>Payroll</span>
-        </Link>
+
+          <span className="dropdown-icon">
+            {showPayrollMenu ? <FaChevronUp /> : <FaChevronDown />}
+          </span>
+        </div>
+
+        <div className={`submenu sidebar-submenu ${showPayrollMenu ? "open" : ""}`}>
+
+          <Link
+            to="/payrolll/dashboard"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/dashboard") ? "active" : ""
+            }`}
+          >
+            Dashboard
+          </Link>
+
+          <Link
+            to="/payrolll/process"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/process") ? "active" : ""
+            }`}
+          >
+            Process Payroll
+          </Link>
+
+          <Link
+            to="/payrolll/approvals"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/approvals") ? "active" : ""
+            }`}
+          >
+            Approvals
+          </Link>
+
+          <Link
+            to="/payrolll/payslips"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/payslips") ? "active" : ""
+            }`}
+          >
+            Payslips
+          </Link>
+
+          <Link
+            to="/payrolll/release"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/release") ? "active" : ""
+            }`}
+          >
+            Salary Release
+          </Link>
+
+          <Link
+            to="/payrolll/reports"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/reports") ? "active" : ""
+            }`}
+          >
+            Reports
+          </Link>
+
+          <Link
+            to="/payrolll/salarystructure"
+            className={`sidebar-subitem ${
+              isActive("/payrolll/salarystructure") ? "active" : ""
+            }`}
+          >
+            Salary structure
+          </Link>
+
+        </div>
+
 
         {/* Asset Management */}
         <Link

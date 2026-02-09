@@ -18,7 +18,17 @@ import AuthLayout from "../src/components/layout/AuthLayout";
 import MyProfile from "./components/MyProfile/MyProfile";
 
 /* ================= ADMIN ================= */
-import Payrolls from "./pages/payroll-admin/Payrolll";
+
+/* ================= ADMIN PAYROLL MODULES ================= */
+import AdminPayrollDashboard from "./pages/payroll-admin/Dashboard/AdminPayrollDashboard";
+import AdminProcessPayroll from "./pages/payroll-admin/Process/AdminProcessPayroll";
+import AdminPayrollApprovals from "./pages/payroll-admin/Approvals/AdminPayrollApprovals";
+import AdminPayslips from "./pages/payroll-admin/Payslips/AdminPayslips";
+import AdminSalaryRelease from "./pages/payroll-admin/Release/AdminSalaryRelease";
+import AdminPayrollReports from "./pages/payroll-admin/Reports/AdminPayrollReports";
+import AdminSalaryStructure from "./pages/payroll-admin/AdminSalaryStructure";
+
+
 import AssetManagement from "./pages/AssetManagement/AssetManagement";
 import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
@@ -135,16 +145,84 @@ function App() {
               }
             />
 
-            <Route
-              path="/payrolll"
-              element={
-                <ProtectedRoute allowedRoles={["ADMIN"]}>
-                  <MainLayout>
-                    <Payrolls />
-                  </MainLayout>
-                </ProtectedRoute>
-              }
-            />
+           <Route
+  path="/payrolll/dashboard"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminPayrollDashboard />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/payrolll/process"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminProcessPayroll />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/payrolll/approvals"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminPayrollApprovals />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/payrolll/payslips"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminPayslips />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/payrolll/release"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminSalaryRelease />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/payrolll/reports"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminPayrollReports />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/payrolll/salarystructure"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AdminSalaryStructure />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+
+
 
             <Route
               path="/assets"

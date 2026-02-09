@@ -130,6 +130,7 @@
 /* ====== TABLE ====== */
 .payroll-table {
   width: 100%;
+   table-layout: fixed; 
   border-collapse: collapse;
   margin-top: 12px;
 }
@@ -140,12 +141,18 @@
   color: #6b7280;
   padding: 10px;
   border-bottom: 1px solid #e5e7eb;
+  
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .payroll-table td {
   padding: 10px;
   border-bottom: 1px solid #f1f5f9;
   font-size: 14px;
+  
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .payroll-table input,
@@ -153,7 +160,7 @@
   padding: 6px 8px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
-  width: 100%;
+  width: 90px;
 }
 
 /* ====== FOOTER ====== */
@@ -163,3 +170,93 @@
   gap: 12px;
   margin-top: 20px;
 }
+
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 120px;0/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+/* 🔥 Center Status Dropdown Text */
+.payroll-table select {
+  width: 130px;          /* stop full stretch */
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+
+  text-align: center;
+  text-align-last: center; /* centers selected option */
+}
+
+/* Optional: center entire status column */
+.payroll-table td:last-child {
+  text-align: center;
+}
+
