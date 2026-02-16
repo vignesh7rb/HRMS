@@ -58,13 +58,15 @@ function App() {
           <Routes>
 
             {/* ============ LOGIN ============ */}
-            <Route path="/login" element={<Login />} />
 
             <Route element={<AuthLayout />}>
-  <Route path="/" element={<Login />} />
+  <Route path="/login" element={<Login />} />
   <Route path="/forgot-password" element={<ForgotPassword />} />
   <Route path="/reset-password" element={<ResetPassword />} />
 </Route>
+
+<Route path="/" element={<Navigate to="/login" replace />} />
+<Route path="*" element={<Navigate to="/login" replace />} />
 
             {/* ============ ADMIN PROFILE ============ */}
             <Route

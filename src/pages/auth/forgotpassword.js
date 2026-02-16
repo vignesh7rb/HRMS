@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
 
 import loginVideo from "../../assets/login-bg.mp4";
 import ccsLogo from "../../assets/ccs-logo.png";
+import "./login.css";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
