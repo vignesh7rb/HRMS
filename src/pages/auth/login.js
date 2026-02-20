@@ -14,46 +14,27 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleLogin = () => {
+    let user = null;
 
-  const handleLogin = async () => {
-  try {
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.message);
+    if (email === "admin@hrms.com" && password === "admin@123") {
+      user = { id: 1, role: "ADMIN", name: "Admin User", email };
+    } else if (email === "hr@hrms.com" && password === "hr@123") {
+      user = { id: 2, role: "HR", name: "HR Admin", email };
+    } else if (email.endsWith("@employee.com") && password === "emp@123") {
+      user = { id: Date.now(), role: "EMPLOYEE", name: "Employee User", email };
+    } else {
+      alert("Invalid credentials");
       return;
     }
 
-    dispatch(setUser(data.user));
-    localStorage.setItem("token", data.token);
+    dispatch(setUser(user));
+    localStorage.setItem("token", "dummy-token");
 
-    if (data.user.role === "ADMIN")
-      navigate("/dashboard", { replace: true });
-    else if (data.user.role === "HR")
-      navigate("/hr/dashboard", { replace: true });
-    else
-      navigate("/employee/dashboard", { replace: true });
-
-  } catch (error) {
-    console.error("Login error:", error);
-    alert("Server error");
-  }
-};
-
-
-
-
-
-
-
+    if (user.role === "ADMIN") navigate("/dashboard", { replace: true });
+    else if (user.role === "HR") navigate("/hr/dashboard", { replace: true });
+    else navigate("/employee/dashboard", { replace: true });
+  };
 
   return (
     <div className="login-page">
