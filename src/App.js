@@ -17,6 +17,15 @@ import AuthLayout from "../src/components/layout/AuthLayout";
 /* ================= COMMON ================= */
 import MyProfile from "./components/MyProfile/MyProfile";
 
+/* ================= EMPLOYEE ================= */
+import EmployeeMainLayout from "./employee/layout/EmployeeMainLayout";
+import EmployeeDashboard from "./employee/dashboard/EmployeeDashboard";
+import EmployeeAttendance from "./employee/attendance/EmployeeAttendance";
+import EmployeeLeave from "./employee/leave/EmployeeLeave";
+import EmployeePayroll from "./employee/payroll/EmployeePayroll";
+
+import EmployeeProfile from "./employee/profile/EmployeeProfile";
+
 /* ================= ADMIN ================= */
 
 /* ================= ADMIN PAYROLL MODULES ================= */
@@ -274,6 +283,23 @@ function App() {
             {/* ============ FALLBACK ============ */}
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="*" element={<Navigate to="/login" />} />
+
+            {/* ============ EMPLOYEE PORTAL ============ */}
+<Route
+  path="/employee"
+  element={
+    <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+      <EmployeeMainLayout />
+    </ProtectedRoute>
+  }
+>
+  <Route index element={<Navigate to="dashboard" />} />
+  <Route path="dashboard" element={<EmployeeDashboard />} />
+  <Route path="attendance" element={<EmployeeAttendance />} />
+  <Route path="leave" element={<EmployeeLeave />} />
+  <Route path="payroll" element={<EmployeePayroll />} />
+  <Route path="profile" element={<EmployeeProfile />} />
+</Route>
 
           </Routes>
         </Suspense>

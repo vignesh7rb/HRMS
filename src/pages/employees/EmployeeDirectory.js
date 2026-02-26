@@ -114,9 +114,9 @@ function EmployeeDirectory() {
       {/* ================= HEADER ================= */}
       <div className="employee-header">
         <h2>Employee Management</h2>
-        <button className="add-btn" onClick={() => setShowAddEmployee(true)}>
+        {/* <button className="add-btn" onClick={() => setShowAddEmployee(true)}>
           + Add Employee
-        </button>
+        </button> */}
       </div>
 
       {/* ================= STATS ================= */}
