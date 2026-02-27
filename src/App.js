@@ -38,7 +38,13 @@ import AdminPayrollReports from "./pages/payroll-admin/Reports/AdminPayrollRepor
 import AdminSalaryStructure from "./pages/payroll-admin/AdminSalaryStructure";
 
 
-import AssetManagement from "./pages/AssetManagement/AssetManagement";
+import AssetMaster from "./pages/AssetManagement/AssetMaster";
+import AssignAsset from "./pages/AssetManagement/AssignAsset";
+import ReturnAsset from "./pages/AssetManagement/ReturnAsset";
+import MaintenanceSchedule from "./pages/AssetManagement/MaintenanceSchedule";
+import AssetDisposal from "./pages/AssetManagement/AssetDisposal";
+
+
 import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
 import Attendance from "./pages/attendance/attendance";
@@ -235,16 +241,63 @@ function App() {
 
 
 
-            <Route
-              path="/assets"
-              element={
-                <ProtectedRoute allowedRoles={["ADMIN"]}>
-                  <MainLayout>
-                    <AssetManagement />
-                  </MainLayout>
-                </ProtectedRoute>
-              }
-            />
+           {/* ================= ASSET MANAGEMENT ================= */}
+
+<Route
+  path="/assets/master"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AssetMaster />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/assets/assign"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AssignAsset />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/assets/return"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <ReturnAsset />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/assets/maintenance"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <MaintenanceSchedule />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/assets/disposal"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <AssetDisposal />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+            
 
             <Route
               path="/expense"

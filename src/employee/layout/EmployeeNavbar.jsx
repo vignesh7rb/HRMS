@@ -3,21 +3,21 @@ import { FaBell, FaChevronDown } from "react-icons/fa";
 
 const EmployeeNavbar = () => {
   return (
-    <div className="topbar">
+    <div className="topbarr">
       {/* LEFT */}
-      <div className="topbar-left">
+      <div className="topbarr-left">
         Crest Climbers
       </div>
 
       {/* CENTER */}
-      <div className="topbar-center">
+      <div className="topbarr-center">
         <div className="search-box">
           <input placeholder="Search employee, ID..." />
         </div>
       </div>
 
       {/* RIGHT */}
-      <div className="topbar-right">
+      <div className="topbarr-right">
         <FaBell className="bell-icon" />
 
         <div className="profile-trigger">

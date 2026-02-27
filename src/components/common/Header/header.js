@@ -36,8 +36,21 @@ const Topbar = () => {
     if (path.startsWith("/attendance")) return "Attendance";
     if (path.startsWith("/leave")) return "Leave Management";
     if (path.startsWith("/exit")) return "Exit Formality";
-    if (path.startsWith("/payroll")) return "Payroll";
-    if (path.startsWith("/asset")) return "Asset Management";
+
+    if (path.startsWith("/payrolll/dashboard")) return "Payroll Dashboard";
+    if (path.startsWith("/payrolll/process")) return "Payroll Process";
+    if (path.startsWith("/payrolll/approvals")) return "Payroll Approvals";
+    if (path.startsWith("/payrolll/payslips")) return "Payroll Payslips";
+    if (path.startsWith("/payrolll/release")) return "Payroll Release";
+    if (path.startsWith("/payrolll/reports")) return "Payroll Reports";
+    if (path.startsWith("/payrolll/salarystructure")) return "Payroll Salary Structure";
+
+    if (path.startsWith("/assets/master")) return "Asset Master";
+    if (path.startsWith("/assets/assign")) return "Asset Assignment";
+    if (path.startsWith("/assets/return")) return "Asset Return";
+    if (path.startsWith("/assets/maintenance")) return "AssetMaintenance";
+    if (path.startsWith("/assets/disposal")) return "Asset Disposal";
+    
     if (path.startsWith("/expense")) return "Expense & Finance";
     return "Profile";
   };
