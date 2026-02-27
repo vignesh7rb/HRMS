@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { FaPlus, FaDownload, FaEdit, FaTrash } from "react-icons/fa";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 import "./assetManagement.css";
 
 const AssetMaster = () => {
@@ -8,10 +10,52 @@ const AssetMaster = () => {
 const [categoryFilter, setCategoryFilter] = useState("ALL");
 const [statusFilter, setStatusFilter] = useState("ALL");
 
+const [categories, setCategories] = useState([
+  "Laptop",
+  "Mobile"
+]);
+
+const handleExportExcel = () => {
+  const worksheet = XLSX.utils.json_to_sheet(assets);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Assets");
+
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array"
+  });
+
+  const data = new Blob([excelBuffer], {
+    type: "application/octet-stream"
+  });
+
+  saveAs(data, "AssetMaster.xlsx");
+};
+
 const [isEditOpen, setIsEditOpen] = useState(false);
 const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 const [selectedAsset, setSelectedAsset] = useState(null);
 const [editForm, setEditForm] = useState({});
+
+const [isAddOpen, setIsAddOpen] = useState(false);
+const [newAsset, setNewAsset] = useState({
+  id: "",
+  name: "",
+  category: "",
+  serial: "",
+  purchaseDate: "",
+  purchaseValue: "",
+  currentValue: "",
+  warranty: "",
+  condition: "Good",
+  status: "Active",
+  amcStatus: "No",
+  amcExpiry: ""
+});
+
+const [isCategoryEditOpen, setIsCategoryEditOpen] = useState(false);
+const [editingCategory, setEditingCategory] = useState("");
+const [newCategoryName, setNewCategoryName] = useState("");
 
 const [toast, setToast] = useState({
   show: false,
@@ -118,12 +162,18 @@ const handleSave = () => {
         </div>
 
         <div className="asset-header-actions">
-          <button className="secondary-btn">
-            <FaDownload /> Export
-          </button>
-          <button className="primary-btn">
-            <FaPlus /> Add Asset
-          </button>
+          <button
+  className="secondary-btn"
+  onClick={handleExportExcel}
+>
+  <FaDownload /> Export
+</button>
+          <button
+  className="primary-btn"
+  onClick={() => setIsAddOpen(true)}
+>
+  <FaPlus /> Add Asset
+</button>
         </div>
       </div>
 
@@ -131,25 +181,29 @@ const handleSave = () => {
       <div className="asset-summary">
         <div className="summary-card">
           <span>Total Assets</span>
-          <h2>3</h2>
+          <h2>{assets.length}</h2>
           <small>In master database</small>
         </div>
 
         <div className="summary-card">
           <span>Total Value</span>
-          <h2>₹1,56,000</h2>
+          <h2>
+  ₹{assets.reduce((sum, a) => sum + Number(a.currentValue || 0), 0).toLocaleString()}
+</h2>
           <small>Current book value</small>
         </div>
 
         <div className="summary-card">
           <span>Active Assets</span>
-          <h2>3</h2>
+          <h2>
+  {assets.filter(a => a.status === "Active").length}
+</h2>
           <small>Currently in use</small>
         </div>
 
         <div className="summary-card">
           <span>Categories</span>
-          <h2>6</h2>
+          <h2>{categories.length}</h2>
           <small>Asset categories</small>
         </div>
       </div>
@@ -198,8 +252,9 @@ const handleSave = () => {
     onChange={(e) => setCategoryFilter(e.target.value)}
   >
     <option value="ALL">All Categories</option>
-    <option value="Laptop">Laptop</option>
-    <option value="Mobile">Mobile</option>
+{categories.map(cat => (
+  <option key={cat} value={cat}>{cat}</option>
+))}
   </select>
 
   <select
@@ -436,6 +491,123 @@ const handleSave = () => {
           </div>
         </div>
       )}
+      {isAddOpen && (
+  <div
+    className="modal-overlay"
+    onClick={() => setIsAddOpen(false)}
+  >
+    <div
+      className="modal-box"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="modal-header">
+        <h3>Add Asset</h3>
+        <span
+          className="close-btn"
+          onClick={() => setIsAddOpen(false)}
+        >
+          ✖
+        </span>
+      </div>
+
+      <div className="modal-body">
+
+        <label>Asset ID</label>
+        <input
+          value={newAsset.id}
+          onChange={(e) =>
+            setNewAsset({ ...newAsset, id: e.target.value })
+          }
+        />
+
+        <label>Asset Name</label>
+        <input
+          value={newAsset.name}
+          onChange={(e) =>
+            setNewAsset({ ...newAsset, name: e.target.value })
+          }
+        />
+
+        <label>Category</label>
+        <select
+          value={newAsset.category}
+          onChange={(e) =>
+            setNewAsset({ ...newAsset, category: e.target.value })
+          }
+        >
+          {categories.map((cat) => (
+            <option key={cat}>{cat}</option>
+          ))}
+        </select>
+
+        <label>Purchase Value</label>
+        <input
+          type="number"
+          value={newAsset.purchaseValue}
+          onChange={(e) =>
+            setNewAsset({
+              ...newAsset,
+              purchaseValue: Number(e.target.value)
+            })
+          }
+        />
+
+      </div>
+
+      <div className="modal-footer">
+        <button
+          className="secondary-btn"
+          onClick={() => setIsAddOpen(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+  className="primary-btn"
+  onClick={() => {
+
+    if (!newAsset.id || !newAsset.name || !newAsset.category) {
+      showToast("Please fill required fields!");
+      return;
+    }
+
+    if (assets.some(a => a.id === newAsset.id)) {
+      showToast("Asset ID already exists!");
+      return;
+    }
+
+    const updatedAssets = [...assets, newAsset];
+    setAssets(updatedAssets);
+
+    if (!categories.includes(newAsset.category)) {
+      setCategories(prev => [...prev, newAsset.category]);
+    }
+
+    setNewAsset({
+      id: "",
+      name: "",
+      category: categories[0] || "",
+      serial: "",
+      purchaseDate: "",
+      purchaseValue: "",
+      currentValue: "",
+      warranty: "",
+      condition: "Good",
+      status: "Active",
+      amcStatus: "No",
+      amcExpiry: ""
+    });
+
+    setIsAddOpen(false);
+    showToast("Asset added successfully!");
+  }}
+>
+  Save Asset
+</button>
+      </div>
+    </div>
+  </div>
+)}
 
                   <td className="action-buttons">
   <button onClick={() => handleEdit(asset)}>
@@ -454,15 +626,29 @@ const handleSave = () => {
         </div>
       )}
 
-      {activeTab === "categories" && (
+     {activeTab === "categories" && (
   <div className="asset-table-card">
-    <div className="table-header">
-      <h2>Asset Categories</h2>
-      <p>Manage asset categories and their statistics</p>
-    </div>
+    <div className="categories-header">
+  <div>
+    <h2>Asset Categories</h2>
+    <p>Manage asset categories and their statistics</p>
+  </div>
+  
+
+  <button
+    className="primary-btn"
+    onClick={() => {
+      setEditingCategory("");
+      setNewCategoryName("");
+      setIsCategoryEditOpen(true);
+    }}
+  >
+    + Add Category
+  </button>
+</div>
 
     <div className="categories-grid">
-      {["Laptop", "Mobile"].map((cat) => {
+      {categories.map((cat) => {
         const categoryAssets = assets.filter(a => a.category === cat);
 
         const totalValue = categoryAssets.reduce(
@@ -478,6 +664,7 @@ const handleSave = () => {
         return (
           <div className="category-card" key={cat}>
             <h3>{cat}</h3>
+
             <p><strong>Count:</strong> {categoryAssets.length}</p>
             <p><strong>Total Value:</strong> ₹{totalValue.toLocaleString()}</p>
             <p><strong>Avg Value:</strong> ₹{avgValue.toLocaleString()}</p>
@@ -495,9 +682,11 @@ const handleSave = () => {
 
               <button
                 className="primary-outline-btn"
-                onClick={() =>
-                  showToast(`${cat} category settings opened`)
-                }
+                onClick={() => {
+                  setEditingCategory(cat);
+                  setNewCategoryName(cat);
+                  setIsCategoryEditOpen(true);
+                }}
               >
                 Edit Category
               </button>
@@ -522,32 +711,40 @@ const handleSave = () => {
       <div className="bulk-card">
         <h3>Bulk Update Status</h3>
         <button
-          className="secondary-btn"
-          onClick={() => {
-            const updated = assets.map(a => ({
-              ...a,
-              status: "Active"
-            }));
-            setAssets(updated);
-            showToast("All assets marked as Active");
-          }}
-        >
-          Mark All Active
-        </button>
+  className="secondary-btn"
+  onClick={() => {
+    if (assets.length === 0) return;
 
-        <button
-          className="secondary-btn"
-          onClick={() => {
-            const updated = assets.map(a => ({
-              ...a,
-              status: "Inactive"
-            }));
-            setAssets(updated);
-            showToast("All assets marked as Inactive");
-          }}
-        >
-          Mark All Inactive
-        </button>
+    setAssets(prev =>
+      prev.map(a => ({
+        ...a,
+        status: "Active"
+      }))
+    );
+
+    showToast("All assets marked as Active");
+  }}
+>
+  Mark All Active
+</button>
+
+<button
+  className="secondary-btn"
+  onClick={() => {
+    if (assets.length === 0) return;
+
+    setAssets(prev =>
+      prev.map(a => ({
+        ...a,
+        status: "Inactive"
+      }))
+    );
+
+    showToast("All assets marked as Inactive");
+  }}
+>
+  Mark All Inactive
+</button>
       </div>
 
       {/* BULK AMC EXPIRY EXTENSION */}
@@ -581,9 +778,7 @@ const handleSave = () => {
         <h3>Bulk Export</h3>
         <button
           className="secondary-btn"
-          onClick={() =>
-            showToast("Exported to Excel (simulation)")
-          }
+          onClick={handleExportExcel}
         >
           Export to Excel
         </button>
@@ -598,6 +793,84 @@ const handleSave = () => {
         </button>
       </div>
 
+    </div>
+  </div>
+)}
+{isCategoryEditOpen && (
+  <div
+    className="modal-overlay"
+    onClick={() => setIsCategoryEditOpen(false)}
+  >
+    <div
+      className="modal-box"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="modal-header">
+        <h3>Edit Category</h3>
+        <span
+          className="close-btn"
+          onClick={() => setIsCategoryEditOpen(false)}
+        >
+          ✖
+        </span>
+      </div>
+
+      <div className="modal-body">
+        <label>Category Name</label>
+        <input
+          value={newCategoryName}
+          onChange={(e) => setNewCategoryName(e.target.value)}
+        />
+      </div>
+
+      <div className="modal-footer">
+        <button
+          className="secondary-btn"
+          onClick={() => setIsCategoryEditOpen(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+  className="primary-btn"
+  onClick={() => {
+    if (!newCategoryName.trim()) return;
+
+    // EDIT CATEGORY
+    if (editingCategory) {
+      const updatedAssets = assets.map((asset) =>
+        asset.category === editingCategory
+          ? { ...asset, category: newCategoryName }
+          : asset
+      );
+
+      setAssets(updatedAssets);
+
+      const updatedCategories = categories.map((c) =>
+        c === editingCategory ? newCategoryName : c
+      );
+
+      setCategories(updatedCategories);
+
+      showToast("Category updated successfully!");
+    } 
+    // ADD CATEGORY
+    else {
+      if (categories.includes(newCategoryName)) {
+        showToast("Category already exists!");
+        return;
+      }
+
+      setCategories([...categories, newCategoryName]);
+      showToast("Category added successfully!");
+    }
+
+    setIsCategoryEditOpen(false);
+  }}
+>
+  Save Changes
+</button>
+      </div>
     </div>
   </div>
 )}
