@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState,useMemo } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./assetManagement.css";
 
 const MaintenanceSchedule = () => {
   const [activeTab, setActiveTab] = useState("schedule");
+  const [searchText, setSearchText] = useState("");
+const [typeFilter, setTypeFilter] = useState("ALL");
+const [statusFilter, setStatusFilter] = useState("ALL");
+const [priorityFilter, setPriorityFilter] = useState("ALL");
 
-  const tasks = [
+  const tasks = useMemo(() => [
     {
       id: "AST001",
       asset: "Dell Latitude 5420",
@@ -45,7 +49,28 @@ const MaintenanceSchedule = () => {
       status: "Scheduled",
       cost: "₹2,500",
     },
-  ];
+  ], []);
+
+  const filteredTasks = useMemo(() => {
+  return tasks.filter((task) => {
+
+    const matchSearch =
+      task.asset.toLowerCase().includes(searchText.toLowerCase()) ||
+      task.description.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchType =
+      typeFilter === "ALL" || task.type === typeFilter;
+
+    const matchStatus =
+      statusFilter === "ALL" || task.status === statusFilter;
+
+    const matchPriority =
+      priorityFilter === "ALL" || task.priority === priorityFilter;
+
+    return matchSearch && matchType && matchStatus && matchPriority;
+
+  });
+}, [tasks, searchText, typeFilter, statusFilter, priorityFilter]);
 
   return (
     <div className="maintenance-page">
@@ -128,17 +153,41 @@ const MaintenanceSchedule = () => {
 
           {/* FILTERS */}
           <div className="table-filters">
-            <input placeholder="Search maintenance tasks..." />
-            <select>
-              <option>All Types</option>
-            </select>
-            <select>
-              <option>All Status</option>
-            </select>
-            <select>
-              <option>All Priority</option>
-            </select>
-          </div>
+  <input
+    placeholder="Search maintenance tasks..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+  />
+
+  <select
+    value={typeFilter}
+    onChange={(e) => setTypeFilter(e.target.value)}
+  >
+    <option value="ALL">All Types</option>
+    <option value="Preventive">Preventive</option>
+    <option value="Corrective">Corrective</option>
+  </select>
+
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+  >
+    <option value="ALL">All Status</option>
+    <option value="Scheduled">Scheduled</option>
+    <option value="In Progress">In Progress</option>
+    <option value="Completed">Completed</option>
+  </select>
+
+  <select
+    value={priorityFilter}
+    onChange={(e) => setPriorityFilter(e.target.value)}
+  >
+    <option value="ALL">All Priority</option>
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+</div>
 
           {/* TABLE */}
           <table>
@@ -156,7 +205,7 @@ const MaintenanceSchedule = () => {
             </thead>
 
             <tbody>
-              {tasks.map((task) => (
+              {filteredTasks.map((task) => (
                 <tr key={task.id}>
 
                   <td>

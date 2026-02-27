@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./assetManagement.css";
 
 const AssignAsset = () => {
   const [activeTab, setActiveTab] = useState("current");
+  const [searchText, setSearchText] = useState("");
+const [departmentFilter, setDepartmentFilter] = useState("ALL");
+const [statusFilter, setStatusFilter] = useState("ALL");
 
-  const assignments = [
+  const assignments = useMemo(() => [
     {
       id: "AST001",
       assetName: "Dell Latitude 5420",
@@ -34,7 +37,24 @@ const AssignAsset = () => {
       until: "10 Feb 2026",
       status: "Active",
     },
-  ];
+  ], []);
+  const filteredAssignments = useMemo(() => {
+  return assignments.filter((item) => {
+
+    const matchSearch =
+      item.assetName.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.employee.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchDepartment =
+      departmentFilter === "ALL" || item.department === departmentFilter;
+
+    const matchStatus =
+      statusFilter === "ALL" || item.status === statusFilter;
+
+    return matchSearch && matchDepartment && matchStatus;
+
+  });
+}, [assignments, searchText, departmentFilter, statusFilter]);
 
   return (
     <div className="assign-page">
@@ -112,15 +132,31 @@ const AssignAsset = () => {
           </div>
 
           {/* FILTER BAR */}
-          <div className="table-filters">
-            <input placeholder="Search assignments..." />
-            <select>
-              <option>All Departments</option>
-            </select>
-            <select>
-              <option>All Status</option>
-            </select>
-          </div>
+         <div className="table-filters">
+  <input
+    placeholder="Search assets..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+  />
+
+  <select
+    value={departmentFilter}
+    onChange={(e) => setDepartmentFilter(e.target.value)}
+  >
+    <option value="ALL">All Departments</option>
+    <option value="Engineering">Engineering</option>
+    <option value="HR">HR</option>
+  </select>
+
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+  >
+    <option value="ALL">All Status</option>
+    <option value="Active">Active</option>
+    <option value="Completed">Completed</option>
+  </select>
+</div>
 
           {/* TABLE */}
           <table>
@@ -136,7 +172,7 @@ const AssignAsset = () => {
             </thead>
 
             <tbody>
-              {assignments.map((item) => (
+              {filteredAssignments.map((item) => (
                 <tr key={item.id}>
 
                   <td>

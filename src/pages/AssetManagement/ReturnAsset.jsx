@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import "./assetManagement.css";
 
 const ReturnAsset = () => {
   const [activeTab, setActiveTab] = useState("pending");
+  const [searchText, setSearchText] = useState("");
+const [departmentFilter, setDepartmentFilter] = useState("ALL");
+const [statusFilter, setStatusFilter] = useState("ALL");
 
-  const returns = [
+  const returns = useMemo(() => [
     {
       id: "AST001",
       assetName: "Dell Latitude 5420",
@@ -41,7 +44,25 @@ const ReturnAsset = () => {
       returnStatus: "Due Soon",
       condition: "Good",
     },
-  ];
+  ], []);
+  const filteredReturns = useMemo(() => {
+  return returns.filter((item) => {
+
+    const matchSearch =
+      item.assetName.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.employee.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchDepartment =
+      departmentFilter === "ALL" || item.department === departmentFilter;
+
+    const matchStatus =
+      statusFilter === "ALL" ||
+      item.returnStatus.toLowerCase().includes(statusFilter.toLowerCase());
+
+    return matchSearch && matchDepartment && matchStatus;
+
+  });
+}, [returns, searchText, departmentFilter, statusFilter]);
 
   return (
     <div className="return-page">
@@ -116,14 +137,31 @@ const ReturnAsset = () => {
 
           {/* FILTER BAR */}
           <div className="table-filters">
-            <input placeholder="Search pending returns..." />
-            <select>
-              <option>All Departments</option>
-            </select>
-            <select>
-              <option>All Status</option>
-            </select>
-          </div>
+  <input
+    placeholder="Search pending returns..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+  />
+
+  <select
+    value={departmentFilter}
+    onChange={(e) => setDepartmentFilter(e.target.value)}
+  >
+    <option value="ALL">All Departments</option>
+    <option value="Engineering">Engineering</option>
+    <option value="Design">Design</option>
+    <option value="Sales">Sales</option>
+  </select>
+
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+  >
+    <option value="ALL">All Status</option>
+    <option value="Due Soon">Due Soon</option>
+    <option value="Overdue">Overdue</option>
+  </select>
+</div>
 
           {/* TABLE */}
           <table>
@@ -139,7 +177,7 @@ const ReturnAsset = () => {
             </thead>
 
             <tbody>
-              {returns.map((item) => (
+              {filteredReturns.map((item) => (
                 <tr key={item.id}>
 
                   <td>

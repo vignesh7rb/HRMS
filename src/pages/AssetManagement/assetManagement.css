@@ -160,21 +160,48 @@
    FILTER BAR
 =================================*/
 
+/* ===============================
+   COMMON FILTER BAR (ALL MODULES)
+=================================*/
+
 .table-filters,
 .disposal-filters {
   display: flex;
+  align-items: center;
   gap: 14px;
+  flex-wrap: wrap;        /* prevents overflow */
   margin: 16px 0;
 }
 
+/* Make search bigger */
 .table-filters input,
-.table-filters select,
-.disposal-filters input,
-.disposal-filters select {
+.disposal-filters input {
+  flex: 1.5;              /* takes more space */
+  min-width: 220px;
+  height: 38px;
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
   font-size: 14px;
+}
+
+/* Make dropdowns equal */
+.table-filters select,
+.disposal-filters select {
+  flex: 1;
+  min-width: 160px;
+  height: 38px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+/* If button exists inside filter */
+.table-filters button,
+.disposal-filters button {
+  height: 38px;
+  white-space: nowrap;
 }
 
 /* ===============================
@@ -345,4 +372,204 @@ tbody tr:hover {
 .recovery {
   font-weight: 600;
   color: #2563eb;
+}
+/* ===============================
+   MODAL OVERLAY (DIM BACKGROUND)
+=================================*/
+/* ===============================
+   CENTERED MODAL FIX
+=================================*/
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(0.5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;      /* TRUE vertical center */
+  z-index: 2000;
+  padding: 20px;            /* prevents edge touching */
+  overflow-y: auto;         /* allows scroll if needed */
+}
+
+.modal-box {
+  background: #ffffff;
+  width: 500px;
+  max-width: 95%;
+  max-height: 90vh;         /* prevents overflow */
+  overflow-y: auto;         /* internal scroll */
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+  animation: scaleIn 0.2s ease-in-out;
+}
+
+.modal-box.small {
+  width: 340px;
+}
+
+/* ===============================
+   MODAL HEADER
+=================================*/
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f4c81;
+  margin: 0;
+}
+
+.close-btn {
+  font-size: 16px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #dc2626;
+}
+
+/* ===============================
+   MODAL BODY
+=================================*/
+
+.modal-body {
+  margin-bottom: 18px;
+}
+
+.modal-body input,
+.modal-body select {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.modal-body input:focus,
+.modal-body select:focus {
+  outline: none;
+  border-color: #0f4c81;
+  box-shadow: 0 0 0 2px rgba(15, 76, 129, 0.1);
+}
+
+/* ===============================
+   MODAL FOOTER
+=================================*/
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Delete button style */
+.danger-btn {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.danger-btn:hover {
+  background: #b91c1c;
+}
+
+/* ===============================
+   ANIMATIONS
+=================================*/
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===============================
+   SUCCESS TOAST
+=================================*/
+
+/* ===============================
+   BIG TOP SUCCESS BANNER
+=================================*/
+.top-success-banner {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 480px;          /* reduced width */
+  max-width: 85%;
+  background: #d1fae5;
+  color: #065f46;
+  padding: 14px 20px;    /* reduced padding */
+  border-radius: 10px;   /* slightly smaller radius */
+  font-size: 15px;       /* smaller text */
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06); /* lighter shadow */
+  border: 1px solid #34d399;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;              /* smaller spacing */
+  animation: slideDown 0.25s ease;
+  z-index: 5000;
+}
+
+.check-icon {
+  font-size: 16px;       /* smaller icon */
+  color: #059669;
+}
+.badge.amc-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.amc-inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.categories-grid,
+.bulk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.category-card,
+.bulk-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.category-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
 }

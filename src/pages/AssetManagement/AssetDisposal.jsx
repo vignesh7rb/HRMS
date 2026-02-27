@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { FaPlus, FaEye, FaEdit } from "react-icons/fa";
 import "./assetManagement.css";
 
 const AssetDisposal = () => {
-  const disposals = [
+    
+const [searchText, setSearchText] = useState("");
+const [statusFilter, setStatusFilter] = useState("ALL");
+const [methodFilter, setMethodFilter] = useState("ALL");
+  const disposals = useMemo(() => [
     {
       id: "AST001",
       asset: "Dell Laptop - Inspiron 15",
@@ -32,7 +36,24 @@ const AssetDisposal = () => {
       requestDate: "2024-01-10",
       reason: "Damaged beyond repair",
     },
-  ];
+  ], []);
+  const filteredDisposals = useMemo(() => {
+  return disposals.filter((item) => {
+
+    const matchSearch =
+      item.asset.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.id.toLowerCase().includes(searchText.toLowerCase());
+
+    const matchStatus =
+      statusFilter === "ALL" || item.status === statusFilter;
+
+    const matchMethod =
+      methodFilter === "ALL" || item.method === methodFilter;
+
+    return matchSearch && matchStatus && matchMethod;
+
+  });
+}, [disposals, searchText, statusFilter, methodFilter]);
 
   return (
     <div className="disposal-page">
@@ -69,27 +90,35 @@ const AssetDisposal = () => {
       </div>
 
       {/* FILTER BAR */}
-      <div className="disposal-filters">
-        <input placeholder="Search assets..." />
+    <div className="disposal-filters">
+  <input
+    placeholder="Search assets..."
+    value={searchText}
+    onChange={(e) => setSearchText(e.target.value)}
+  />
 
-        <select>
-          <option>All Status</option>
-          <option>Pending</option>
-          <option>Completed</option>
-          <option>Request</option>
+  <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+  >
+    <option value="ALL">All Status</option>
+    <option value="Pending">Pending</option>
+    <option value="Completed">Completed</option>
+  </select>
 
-        </select>
+  <select
+    value={methodFilter}
+    onChange={(e) => setMethodFilter(e.target.value)}
+  >
+    <option value="ALL">All Methods</option>
+    <option value="Sale">Sale</option>
+    <option value="Donation">Donation</option>
+  </select>
 
-        <select>
-          <option>All Methods</option>
-          <option>Sale</option>
-          <option>Donation</option>
-        </select>
-
-        <button className="primary-btn">
-          <FaPlus /> Request Disposal
-        </button>
-      </div>
+  <button className="primary-btn">
+    <FaPlus /> Request Disposal
+  </button>
+</div>
 
       {/* TABLE */}
       <div className="disposal-table-card">
@@ -110,7 +139,7 @@ const AssetDisposal = () => {
           </thead>
 
           <tbody>
-            {disposals.map((item) => (
+            {filteredDisposals.map((item) => (
               <tr key={item.id}>
 
                 <td>
