@@ -64,7 +64,27 @@ const MaintenanceSchedule = () => {
 
   const [confirmAction, setConfirmAction] = useState(null);
 const [confirmTaskId, setConfirmTaskId] = useState(null);
+const [selectedDay, setSelectedDay] = useState(null)
 
+const today = new Date()
+
+const [selectedMonth, setSelectedMonth] = useState(today.getMonth())
+const [selectedYear, setSelectedYear] = useState(today.getFullYear())
+const months = [
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
+]
+const years = []
+
+for(let y = 2023; y <= 2030; y++){
+  years.push(y)
+}
+const parseDate = (dateString) => {
+  return new Date(dateString)
+}
+const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate()
+
+const firstDayOfMonth = new Date(selectedYear, selectedMonth, 1).getDay()
 const [formData, setFormData] = useState({
   asset: "",
   description: "",
@@ -100,6 +120,20 @@ const [formData, setFormData] = useState({
     });
 
   }, [taskList, searchText, typeFilter, statusFilter, priorityFilter]);
+
+  const calendarTasks = taskList.filter(task => {
+
+const taskDate = parseDate(task.date)
+
+return (
+taskDate.getMonth() === selectedMonth &&
+taskDate.getFullYear() === selectedYear
+)
+
+})
+const selectedDateTasks = calendarTasks.filter(
+task => new Date(task.date).getDate() === selectedDay
+)
 
   /* ---------------- START TASK ---------------- */
 
@@ -271,6 +305,7 @@ const saveMaintenance = () => {
         >
           Calendar
         </button>
+        
 
         <button
           className={activeTab === "history" ? "active" : ""}
@@ -449,6 +484,97 @@ Edit
         </div>
 
       )}
+      {/* CALENDAR TAB */}
+
+{activeTab === "calendar" && (
+
+<div className="maintenance-table-card">
+
+<div className="table-header">
+<h2>Maintenance Calendar</h2>
+<p>Visual calendar view of maintenance schedules</p>
+</div>
+
+{/* MONTH YEAR FILTER */}
+
+<div className="calendar-filters">
+
+<select
+value={selectedMonth}
+onChange={(e)=>setSelectedMonth(Number(e.target.value))}
+>
+{months.map((m,i)=>(
+<option key={i} value={i}>{m}</option>
+))}
+</select>
+
+<select
+value={selectedYear}
+onChange={(e)=>setSelectedYear(Number(e.target.value))}
+>
+{years.map(y=>(
+<option key={y} value={y}>{y}</option>
+))}
+</select>
+
+</div>
+
+{/* CALENDAR GRID */}
+
+<div className="calendar-grid">
+
+<div className="calendar-header">Sun</div>
+<div className="calendar-header">Mon</div>
+<div className="calendar-header">Tue</div>
+<div className="calendar-header">Wed</div>
+<div className="calendar-header">Thu</div>
+<div className="calendar-header">Fri</div>
+<div className="calendar-header">Sat</div>
+
+{/* Empty slots before first day */}
+
+{Array.from({length:firstDayOfMonth}).map((_,i)=>(
+<div key={"empty"+i}></div>
+))}
+
+{/* Actual days */}
+
+{Array.from({length:daysInMonth},(_,i)=>{
+
+const day = i+1
+
+const tasksForDay = calendarTasks.filter(
+task => new Date(task.date).getDate() === day
+)
+
+return(
+
+<div
+key={day}
+className="calendar-day"
+onClick={()=>setSelectedDay(day)}
+>
+
+<div className="calendar-date">{day}</div>
+
+{tasksForDay.map(task=>(
+<div key={task.id} className="calendar-task">
+{task.asset}
+</div>
+))}
+
+</div>
+
+)
+
+})}
+
+</div>
+
+</div>
+
+
+)}
 
       {/* SUCCESS POPUP */}
 
@@ -546,6 +672,56 @@ onChange={handleChange}
         </div>
 
       )}
+      {selectedDay && (
+
+<div className="modal-overlay">
+
+<div className="asset-day-popup">
+
+<h3>
+Maintenance Details - {selectedDay} {months[selectedMonth]} {selectedYear}
+</h3>
+
+{selectedDateTasks.length === 0 && (
+<p>No maintenance scheduled</p>
+)}
+
+{selectedDateTasks.map(task=>(
+
+<div key={task.id} className="asset-popup-card">
+
+<h4>{task.asset}</h4>
+
+<p><strong>Issue:</strong> {task.description}</p>
+
+<p><strong>Assigned To:</strong> {task.assignedTo}</p>
+
+<p><strong>Duration:</strong> {task.duration}</p>
+
+<p><strong>Priority:</strong> {task.priority}</p>
+
+<p><strong>Cost:</strong> {task.cost}</p>
+
+<p><strong>Estimated Recovery:</strong> {task.duration}</p>
+
+<p><strong>AMC:</strong> Active</p>
+
+</div>
+
+))}
+
+<button
+className="secondary-btn"
+onClick={()=>setSelectedDay(null)}
+>
+Close
+</button>
+
+</div>
+
+</div>
+
+)}
 
       {confirmAction && (
 
