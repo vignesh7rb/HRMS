@@ -12,7 +12,8 @@ const [statusFilter, setStatusFilter] = useState("ALL");
 
 const [categories, setCategories] = useState([
   "Laptop",
-  "Mobile"
+  "Mobile",
+  "Uncategorized"
 ]);
 
 const handleExportExcel = () => {
@@ -56,6 +57,7 @@ const [newAsset, setNewAsset] = useState({
 const [isCategoryEditOpen, setIsCategoryEditOpen] = useState(false);
 const [editingCategory, setEditingCategory] = useState("");
 const [newCategoryName, setNewCategoryName] = useState("");
+const [isCategoryDeleteOpen, setIsCategoryDeleteOpen] = useState(false);
 
 const [toast, setToast] = useState({
   show: false,
@@ -824,6 +826,14 @@ const handleSave = () => {
       </div>
 
       <div className="modal-footer">
+        {editingCategory && (
+  <button
+    className="danger-btn"
+    onClick={() => setIsCategoryDeleteOpen(true)}
+  >
+    Delete
+  </button>
+)}
         <button
           className="secondary-btn"
           onClick={() => setIsCategoryEditOpen(false)}
@@ -834,7 +844,7 @@ const handleSave = () => {
         <button
   className="primary-btn"
   onClick={() => {
-    if (!newCategoryName.trim()) return;
+    if (!newCategoryName.trim()) return; 
 
     // EDIT CATEGORY
     if (editingCategory) {
@@ -870,6 +880,66 @@ const handleSave = () => {
 >
   Save Changes
 </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{/* CATEGORY DELETE CONFIRM MODAL */}
+{isCategoryDeleteOpen && (
+  <div
+    className="modal-overlay"
+    onClick={() => setIsCategoryDeleteOpen(false)}
+  >
+    <div
+      className="modal-box small"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h3>Confirm Delete</h3>
+
+      <p>
+        Are you sure you want to delete category
+        <strong> {editingCategory}</strong>?
+      </p>
+
+      <div className="modal-footer">
+
+        <button
+          className="secondary-btn"
+          onClick={() => setIsCategoryDeleteOpen(false)}
+        >
+          Cancel
+        </button>
+
+        <button
+          className="danger-btn"
+          onClick={() => {
+
+            // Move assets to Uncategorized
+const updatedAssets = assets.map(asset =>
+  asset.category === editingCategory
+    ? { ...asset, category: "Uncategorized" }
+    : asset
+);
+
+setAssets(updatedAssets);
+
+// Remove category
+const updatedCategories = categories.filter(
+  c => c !== editingCategory
+);
+
+setCategories(updatedCategories);
+
+setIsCategoryDeleteOpen(false);
+setIsCategoryEditOpen(false);
+
+showToast("Category deleted successfully!");
+}} 
+        >
+          Delete
+        </button>
+
       </div>
     </div>
   </div>

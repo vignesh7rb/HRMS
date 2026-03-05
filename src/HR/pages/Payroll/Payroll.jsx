@@ -41,6 +41,7 @@ const HRPayroll = () => {
       allowance: 5000,
       pf: 4800,
       leaveSalary: 1500,
+      deductions: 0,
       status: "READY",
     },
     {
@@ -53,6 +54,7 @@ const HRPayroll = () => {
       allowance: 4000,
       pf: 3600,
       leaveSalary: 1000,
+      deductions: 0,
       status: "PENDING",
     },
   ]);
@@ -138,7 +140,7 @@ const HRPayroll = () => {
 
   <div className="summary-card">
     <h3>Total Employees</h3>
-    <p>{employees.length}</p>
+    <p>{summary.totalEmployees}</p>
   </div>
 
   <div className="summary-card success">
@@ -157,19 +159,13 @@ const HRPayroll = () => {
 
   <div className="summary-card">
     <h3>Total Gross Preview</h3>
-    <p>
-      ₹ {employees
-        .reduce((s,e)=>s+(e.basic+e.hra+e.allowance),0)
-        .toLocaleString()}
+    <p>₹ {summary.totalGross.toLocaleString()}
     </p>
   </div>
 
   <div className="summary-card warning">
     <h3>Total Leave Deductions</h3>
-    <p>
-      ₹ {employees
-        .reduce((s,e)=>s+e.leaveSalary,0)
-        .toLocaleString()}
+    <p>₹ {summary.totalLeave.toLocaleString()}
     </p>
   </div>
 
@@ -199,7 +195,7 @@ const HRPayroll = () => {
 
 <tbody>
   {employees.map((e) => {
-    const gross = e.basic + e.hra + e.allowance;
+    const gross = e.basic + e.hra + e.da+ e.allowance;
 
     const net =
       gross - (e.pf + e.leaveSalary + e.deductions);
