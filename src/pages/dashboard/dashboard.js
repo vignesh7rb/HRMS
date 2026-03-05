@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../assets/styles/dashboard/dashboard.css';
+import '../../assets/styles/layout/dashboard/dashboard.css';
 
 
 /* ================= MOCK DATA (API READY) ================= */
