@@ -1,88 +1,140 @@
-import { useState } from "react";
-
-const Step6Review = () => {
-  const [showPopup, setShowPopup] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false);
-
-  const handleSubmit = () => {
-    setShowPopup(true);
-    setFadeOut(false);
-
-    // Start fade after 3 seconds
-    setTimeout(() => {
-      setFadeOut(true);
-    }, 3000);
-
-    // Fully remove popup after fade animation
-    setTimeout(() => {
-      setShowPopup(false);
-      setFadeOut(false);
-    }, 3800); // 3s + fade duration
-  };
-
+const Step6Review = ({ data, prev, showPopup, fadeOut }) => {
   return (
     <>
       <h2>Review & Submit</h2>
       <p className="subtitle">Step 6 of 6</p>
 
-      {/* Info box */}
-      <div
-        style={{
-          background: "#e0f2fe",
-          padding: "16px",
-          borderRadius: "10px",
-          marginBottom: "20px",
-        }}
-      >
+      {/* Info Box */}
+      <div className="review-info">
         <strong>Review Your Information</strong>
-        <p style={{ fontSize: "14px" }}>
+        <p>
           Please review all the information before submitting.
           Once submitted, changes require HR approval.
         </p>
       </div>
 
-      <div className="form-grid">
-        <div className="form-group">
-          <label>Personal Information</label>
-          <p>Name, Email, Phone, Gender</p>
-        </div>
+      {/* REVIEW DATA */}
+      <div className="review-main-container">
+        <div className="review-grid">
 
-        <div className="form-group">
-          <label>Employment Details</label>
-          <p>Employee ID, Department, Designation</p>
+          {/* Personal */}
+          <div className="review-section">
+            <h3>Personal Information</h3>
+
+            <div className="review-row">
+              <span>Full Name</span>
+              <span>
+                {data?.personal?.firstName} {data?.personal?.lastName}
+              </span>
+            </div>
+
+            <div className="review-row">
+              <span>Date of Birth</span>
+              <span>{data?.personal?.dob}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Gender</span>
+              <span>{data?.personal?.gender}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Blood Group</span>
+              <span>{data?.personal?.bloodGroup}</span>
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div className="review-section">
+            <h3>Contact Details</h3>
+
+            <div className="review-row">
+              <span>Email</span>
+              <span>{data?.contact?.email}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Phone</span>
+              <span>{data?.contact?.phone}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Emergency Contact</span>
+              <span>{data?.contact?.emergencyName}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Emergency Phone</span>
+              <span>{data?.contact?.emergencyPhone}</span>
+            </div>
+          </div>
+
+          {/* Employment */}
+          <div className="review-section">
+            <h3>Employment Details</h3>
+
+            <div className="review-row">
+              <span>Employee ID</span>
+              <span>{data?.employment?.employeeId}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Department</span>
+              <span>{data?.employment?.department}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Designation</span>
+              <span>{data?.employment?.designation}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Manager</span>
+              <span>{data?.employment?.reportingManager}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Joining Date</span>
+              <span>{data?.employment?.joiningDate}</span>
+            </div>
+          </div>
+
+          {/* Education */}
+          <div className="review-section">
+            <h3>Education</h3>
+
+            <div className="review-row">
+              <span>Qualification</span>
+              <span>{data?.education?.qualification}</span>
+            </div>
+
+            <div className="review-row">
+              <span>University</span>
+              <span>{data?.education?.university}</span>
+            </div>
+
+            <div className="review-row">
+              <span>Graduation Year</span>
+              <span>{data?.education?.graduationYear}</span>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      {/* Next steps */}
-      <div
-        style={{
-          background: "#e5f0fb",
-          padding: "16px",
-          borderRadius: "10px",
-          marginTop: "20px",
-        }}
-      >
+      {/* NEXT STEPS */}
+      <div className="review-next">
         <strong>Next Steps</strong>
-        <ul style={{ fontSize: "14px" }}>
-          <li>HR will review within 2–3 business days</li>
-          <li>Email confirmation after approval</li>
-          <li>Account activated on joining date</li>
+        <ul>
+           <li>HR will review within 2–3 business days</li>
+          <li>  Email confirmation after approval</li>
+          <li>  Account activated on joining date</li>
         </ul>
       </div>
 
-      {/* Submit Button */}
-      <div style={{ marginTop: "24px", textAlign: "right" }}>
-        <button className="btn-primary" onClick={handleSubmit}>
-          Submit Application
-        </button>
-      </div>
+    
 
-      {/* ✅ SUCCESS POPUP */}
-      {showPopup && (
-        <div className={`success-popup ${fadeOut ? "fade-out" : ""}`}>
-          ✅ Application Submitted Successfully
-        </div>
-      )}
+    
     </>
   );
 };

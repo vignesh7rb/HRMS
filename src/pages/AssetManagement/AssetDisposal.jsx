@@ -7,7 +7,21 @@ const AssetDisposal = () => {
 const [searchText, setSearchText] = useState("");
 const [statusFilter, setStatusFilter] = useState("ALL");
 const [methodFilter, setMethodFilter] = useState("ALL");
-  const disposals = useMemo(() => [
+
+const [showModal, setShowModal] = useState(false);
+const [modalType, setModalType] = useState("");
+const [selectedAsset, setSelectedAsset] = useState(null);
+
+const [formData, setFormData] = useState({
+  asset: "",
+  category: "",
+  method: "Sale",
+  original: "",
+  current: "",
+  recovery: "",
+  reason: "",
+});
+  const [disposals, setDisposals] = useState([
     {
       id: "AST001",
       asset: "Dell Laptop - Inspiron 15",
@@ -36,7 +50,22 @@ const [methodFilter, setMethodFilter] = useState("ALL");
       requestDate: "2024-01-10",
       reason: "Damaged beyond repair",
     },
-  ], []);
+  ]);
+
+  const totalDisposals = disposals.length;
+
+const pendingCount = disposals.filter(
+  (d) => d.status === "Pending"
+).length;
+
+const completedCount = disposals.filter(
+  (d) => d.status === "Completed"
+).length;
+
+const totalRecovery = disposals.reduce(
+  (sum, d) => sum + d.recovery,
+  0
+);
   const filteredDisposals = useMemo(() => {
   return disposals.filter((item) => {
 
@@ -55,37 +84,106 @@ const [methodFilter, setMethodFilter] = useState("ALL");
   });
 }, [disposals, searchText, statusFilter, methodFilter]);
 
+
+const openView = (item) => {
+  setSelectedAsset(item);
+  setFormData(item);
+  setModalType("view");
+  setShowModal(true);
+};
+
+const openEdit = (item) => {
+  setSelectedAsset(item);
+  setFormData(item);
+  setModalType("edit");
+  setShowModal(true);
+};
+
+const openNew = () => {
+  setSelectedAsset(null);
+  setFormData({
+    asset: "",
+    category: "",
+    method: "Sale",
+    original: "",
+    current: "",
+    recovery: "",
+    reason: "",
+  });
+  setModalType("new");
+  setShowModal(true);
+};
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+const saveDisposal = () => {
+
+  if (modalType === "new") {
+
+    const newAsset = {
+      ...formData,
+      id: "AST" + (disposals.length + 1).toString().padStart(3, "0"),
+      status: "Pending",
+      requestedBy: "Current User",
+      requestDate: new Date().toISOString().split("T")[0],
+      date: "",
+    };
+
+    setDisposals([...disposals, newAsset]);
+
+  } else if (modalType === "edit") {
+
+    const updated = disposals.map((item) =>
+      item.id === selectedAsset.id
+        ? { ...item, ...formData }
+        : item
+    );
+
+    setDisposals(updated);
+  }
+
+  setShowModal(false);
+};
   return (
     <div className="disposal-page">
 
       {/* HEADER */}
-      <div className="disposal-header">
-        <div>
-          <h1>Asset Disposal</h1>
-          <p>Manage asset disposal and retirement</p>
-        </div>
-      </div>
+      {/* HEADER */}
+<div className="disposal-header">
+  <div>
+    <h1>Asset Disposal</h1>
+    <p>Manage asset disposal and retirement</p>
+  </div>
+
+  <button className="primary-btn" onClick={openNew}>
+  <FaPlus /> Request Disposal
+</button>
+</div>  
 
       {/* SUMMARY CARDS */}
       <div className="disposal-summary">
         <div className="summary-card">
           <span>Total Disposals</span>
-          <h2>2</h2>
+          <h2>{totalDisposals}</h2>
         </div>
 
         <div className="summary-card">
           <span>Pending</span>
-          <h2 className="orange">1</h2>
+          <h2 className="orange">{pendingCount}</h2>
         </div>
 
         <div className="summary-card">
           <span>Completed</span>
-          <h2 className="green">1</h2>
+          <h2 className="green">{completedCount}</h2>
         </div>
 
         <div className="summary-card">
           <span>Recovery Value</span>
-          <h2 className="blue">₹250</h2>
+          <h2 className="blue">₹{totalRecovery}</h2>
+
         </div>
       </div>
 
@@ -115,14 +213,12 @@ const [methodFilter, setMethodFilter] = useState("ALL");
     <option value="Donation">Donation</option>
   </select>
 
-  <button className="primary-btn">
-    <FaPlus /> Request Disposal
-  </button>
+ 
 </div>
 
       {/* TABLE */}
       <div className="disposal-table-card">
-        <h2>Asset Disposals (2)</h2>
+        <h2>Asset Disposals ({filteredDisposals.length})</h2>
 
         <table>
           <thead>
@@ -166,7 +262,7 @@ const [methodFilter, setMethodFilter] = useState("ALL");
                 <td>{item.date}</td>
 
                 <td>
-                  <span className={`badge status ₹{item.status.toLowerCase()}`}>
+                  <span className={`badge status ${item.status.toLowerCase()}`}>
                     {item.status}
                   </span>
                 </td>
@@ -181,12 +277,19 @@ const [methodFilter, setMethodFilter] = useState("ALL");
                 <td>{item.reason}</td>
 
                 <td className="action-buttons">
-                  <button className="icon-btn">
-                    <FaEye />
-                  </button>
-                  <button className="icon-btn">
-                    <FaEdit />
-                  </button>
+                  <button
+  className="icon-btn"
+  onClick={() => openView(item)}
+>
+  <FaEye />
+</button>
+
+                  <button
+  className="icon-btn"
+  onClick={() => openEdit(item)}
+>
+  <FaEdit />
+</button>
                 </td>
 
               </tr>
@@ -194,6 +297,172 @@ const [methodFilter, setMethodFilter] = useState("ALL");
           </tbody>
         </table>
       </div>
+      {showModal && (
+  <div className="modal-overlay">
+
+    <div className="modal-box">
+
+      <div className="modal-header">
+        <h2>
+          {modalType === "view" && "View Disposal"}
+          {modalType === "edit" && "Edit Disposal"}
+          {modalType === "new" && "Request Disposal"}
+        </h2>
+
+        <button
+          className="close-btn"
+          onClick={() => setShowModal(false)}
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="modal-body">
+
+{modalType === "view" && (
+  <>
+    <h3 className="modal-section">Asset Information</h3>
+
+    <div className="view-row">
+      <span>Asset Name : </span>
+      <strong>{selectedAsset?.asset}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Asset ID : </span>
+      <strong>{selectedAsset?.id}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Category : </span>
+      <strong>{selectedAsset?.category}</strong>
+    </div>
+
+    <h3 className="modal-section">Financial Details</h3>
+
+    <div className="view-row">
+      <span>Original Value : </span>
+      <strong>₹{selectedAsset?.original}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Current Value : </span>
+      <strong>₹{selectedAsset?.current}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Recovery Value : </span>
+      <strong>₹{selectedAsset?.recovery}</strong>
+    </div>
+
+    <h3 className="modal-section">Disposal Details</h3>
+
+    <div className="view-row">
+      <span>Method : </span>
+      <strong>{selectedAsset?.method}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Status : </span>
+      <strong>{selectedAsset?.status}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Requested By : </span>
+      <strong>{selectedAsset?.requestedBy}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Request Date : </span>
+      <strong>{selectedAsset?.requestDate}</strong>
+    </div>
+
+    <div className="view-row">
+      <span>Reason :</span>
+      <strong>{selectedAsset?.reason}</strong>
+    </div>
+  </>
+)}
+
+{modalType !== "view" && (
+  <>
+    <label>Asset Name</label>
+    <input
+      name="asset"
+      value={formData.asset}
+      onChange={handleChange}
+    />
+
+    <label>Category</label>
+    <input
+      name="category"
+      value={formData.category}
+      onChange={handleChange}
+    />
+
+    <label>Disposal Method</label>
+    <select
+      name="method"
+      value={formData.method}
+      onChange={handleChange}
+    >
+      <option>Sale</option>
+      <option>Donation</option>
+      <option>Recycle</option>
+      <option>Scrap</option>
+    </select>
+
+    <label>Original Value</label>
+    <input
+      type="number"
+      name="original"
+      value={formData.original}
+      onChange={handleChange}
+    />
+
+    <label>Current Value</label>
+    <input
+      type="number"
+      name="current"
+      value={formData.current}
+      onChange={handleChange}
+    />
+
+    <label>Recovery Value</label>
+    <input
+      type="number"
+      name="recovery"
+      value={formData.recovery}
+      onChange={handleChange}
+    />
+
+    <label>Reason</label>
+    <textarea
+      name="reason"
+      value={formData.reason}
+      onChange={handleChange}
+    />
+  </>
+)}
+
+</div>
+
+      <div className="modal-footer">
+        <button onClick={() => setShowModal(false)}>
+          Cancel
+        </button>
+
+        {modalType !== "view" && (
+          <button className="primary-btn" onClick={saveDisposal}>
+  Save
+</button>
+        )}
+      </div>
+
+    </div>
+
+  </div>
+)}
 
     </div>
   );

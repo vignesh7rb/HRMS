@@ -1,6 +1,7 @@
 import "../leave/leave.css";
 import { useState, useMemo } from "react";
 
+
 const LeaveList = () => {
   const [showApplyModal, setShowApplyModal] = useState(false);
 
@@ -91,6 +92,7 @@ const LeaveList = () => {
       )
     );
   };
+  
 
   return (
     <div className="leave-page">

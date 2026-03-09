@@ -1,6 +1,8 @@
 /* ===============================
    GLOBAL ASSET MODULE LAYOUT
 =================================*/
+/* FORCE ACTION COLUMN CENTER */
+
 
 .asset-page,
 .assign-page,
@@ -225,7 +227,7 @@ thead th {
 tbody td {
   padding: 14px 10px;
   font-size: 14px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: none;
   vertical-align: middle;
 }
 
@@ -438,6 +440,13 @@ tbody tr:hover {
   color: #dc2626;
 }
 
+.action-buttons {
+  display:flex !important;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top: 20px;
+}
 /* ===============================
    MODAL BODY
 =================================*/
@@ -759,16 +768,8 @@ transition:0.2s;
 .request-return-btn:hover{
 background:#1d4ed8;
 }
-.action-buttons{
-display:flex;
-align-items:center;
-justify-content:flex-start;
-gap:10px;
-height:100%;
-}
-td{
-vertical-align:middle;
-}.icon-btn:hover{
+
+.icon-btn:hover{
 background:#d1d5db;
 }
 .asset-card-modern{
@@ -1030,11 +1031,7 @@ font-size:14px;
 
 /* ACTION BUTTON GROUP */
 
-.action-buttons{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
+
 
 /* CONFIRM POPUP */
 
@@ -1137,18 +1134,331 @@ margin-bottom:3px;
 }
 
 .asset-day-popup{
+position:relative;
 background:white;
-padding:20px;
-border-radius:10px;
-width:400px;
-max-height:500px;
+padding:24px;
+border-radius:12px;
+width:460px;
+max-height:520px;
 overflow:auto;
+}
+.amc-active{
+background:#e6f7ee;
+color:#1f8a4c;
+padding:4px 10px;
+border-radius:6px;
+font-size:12px;
+font-weight:500;
 }
 
 .asset-popup-card{
+background:#ffffff;
 border:1px solid #e5e7eb;
-border-radius:6px;
-padding:10px;
+border-radius:10px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
+font-size:14px;
+line-height:1.5;
+}
+.asset-popup-card p{
+display:flex;
+justify-content:space-between;
+border-bottom:1px dashed #e5e7eb;
+padding:4px 0;
+margin:4px 0;
+}
+
+.asset-popup-card p:last-child{
+border-bottom:none;
+}
+
+.popup-close-btn{
+position:absolute;
+top:10px;
+right:12px;
+background:none;
+border:none;
+font-size:18px;
+cursor:pointer;
+color:#6b7280;
+}
+
+.popup-close-btn:hover{
+color:#111827;
+}
+
+
+.history-item{
+display:flex;
+justify-content:space-between;
+background:white;
+border:1px solid #e6e8ec;
+border-radius:10px;
+padding:18px 22px;
+margin-bottom:14px;
+}
+
+.history-left{
+flex:2;
+}
+
+.history-middle{
+flex:1;
+}
+
+.history-right{
+flex:1;
+text-align:right;
+}
+
+.history-title{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:15px;
 margin-bottom:10px;
-background:#fafafa;
+}
+
+.history-meta{
+color:#6b7280;
+font-size:12px;
+margin-left:8px;
+}
+
+.history-check{
+background:#e7f8ee;
+color:#1fa971;
+border-radius:50%;
+padding:4px 7px;
+font-size:12px;
+}
+
+.history-section{
+margin-bottom:10px;
+}
+
+.label{
+font-size:12px;
+color:#6b7280;
+display:block;
+}
+
+.history-date{
+font-size:13px;
+}
+
+.status-completed{
+display:inline-block;
+background:#e7f8ee;
+color:#1fa971;
+font-size:12px;
+padding:4px 10px;
+border-radius:6px;
+margin-top:6px;
+}
+
+.calendar-task{
+font-size:11px;
+padding:4px;
+margin-top:3px;
+border-radius:4px;
+color:#fff;
+cursor:pointer;
+}
+
+/* Maintenance */
+.maintenance-task{
+background:#1976d2;
+}
+
+/* Issue Reported */
+.issue-task{
+background:#f8bbd0;
+color:#333;
+}
+
+.calendar-task{
+font-size:11px;
+padding:4px;
+margin-top:3px;
+border-radius:4px;
+color:white;
+cursor:pointer;
+}
+
+/* 🌸 Issue Reported */
+.issue-task{
+background:#f8bbd0;
+color:#333;
+}
+
+/* 🔵 Scheduled Maintenance */
+.maintenance-task{
+background:#1976d2;
+}
+
+/* 🟢 Completed Repair */
+.completed-task{
+background:#2e7d32;
+}
+.asset-title{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.status-tag{
+padding:3px 8px;
+border-radius:6px;
+font-size:12px;
+margin-left:6px;
+}
+
+.status-tag.scheduled{
+background:#fde8ef;
+color:#be185d;
+}
+
+.status-tag.in-progress{
+background:#e0f2fe;
+color:#0369a1;
+}
+
+.status-tag.completed{
+background:#dcfce7;
+color:#166534;
+}
+
+/* ===============================
+   REPORTS PAGE IMPROVEMENTS
+=================================*/
+
+.maintenance-table-card h3{
+margin-top:28px;
+margin-bottom:12px;
+font-size:16px;
+font-weight:600;
+color:#0f4c81;
+}
+
+.maintenance-table-card table{
+margin-top:14px;
+border-radius:10px;
+overflow:hidden;
+}
+
+.maintenance-table-card thead{
+background:#f1f5f9;
+}
+
+.maintenance-table-card thead th{
+font-size:12px;
+letter-spacing:0.4px;
+text-transform:uppercase;
+color:#64748b;
+}
+
+.maintenance-table-card tbody td{
+font-size:14px;
+}
+/* ===============================
+   MODAL CLOSE BUTTON
+=================================*/
+
+.modal-box{
+position:relative;
+}
+
+.modal-close-btn{
+position:absolute;
+top:14px;
+right:16px;
+background:none;
+border:none;
+font-size:18px;
+cursor:pointer;
+color:#6b7280;
+}
+
+.modal-close-btn:hover{
+color:#111827;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal-footer button{
+  padding:8px 16px;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* Cancel button */
+.modal-footer button:first-child{
+  background:#f3f4f6;
+  color:#333;
+  border:1px solid #d1d5db;
+}
+
+.modal-footer button:first-child:hover{
+  background:#e5e7eb;
+}
+
+
+/* ACTION COLUMN ALIGNMENT FIX */
+
+
+
+
+
+.icon-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }

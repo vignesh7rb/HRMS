@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";   
 import {
   FaThLarge,
   FaUsers,
@@ -8,7 +8,10 @@ import {
   FaWallet,
   FaChevronDown,
   FaChevronUp,
-} from "react-icons/fa";
+  FaUserCircle
+}
+
+from "react-icons/fa";
 import "../../../assets/styles/sidebar/sidebar.css";
 
 const Sidebar = () => {
@@ -243,6 +246,17 @@ const Sidebar = () => {
           <FaWallet className="icon" />
           <span>Expense & Finance</span>
         </Link>
+{/* ================= ESS ================= */}
+<Link
+  to="/ess"
+  className={`sidebar-item ${isActive("/ess") ? "active" : ""}`}
+>
+  <FaUserCircle className="icon" />
+  <span>ESS</span>
+</Link>
+
+
+
 
       </div>
     </div>

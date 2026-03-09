@@ -18,6 +18,8 @@ import Step4Education from "./steps/Step4Education";
 import Step5Documents from "./steps/Step5Documents";
 import Step6Review from "./steps/Step6Review";
 
+
+
 const steps = [
   { label: "Personal Information", icon: <FaUser /> },
   { label: "Contact Details", icon: <FaEnvelope /> },
@@ -76,6 +78,22 @@ const stepRefs = [
     }
     setCurrentStep(target);
   };
+  const [showPopup, setShowPopup] = useState(false);
+const [fadeOut, setFadeOut] = useState(false);
+
+const handleSubmit = () => {
+  setShowPopup(true);
+  setFadeOut(false);
+
+  setTimeout(() => {
+    setFadeOut(true);
+  }, 3000);
+
+  setTimeout(() => {
+    setShowPopup(false);
+    setFadeOut(false);
+  }, 3800);
+};
 
   const renderStep = () => {
     switch (currentStep) {
@@ -119,8 +137,15 @@ const stepRefs = [
             setData={(d) => setFormData({ ...formData, documents: d })}
           />
         );
-      case 5:
-        return <Step6Review data={formData} />;
+        case 5:
+  return (
+    <Step6Review
+      data={formData}
+      prev={prev}
+      showPopup={showPopup}
+      fadeOut={fadeOut}
+    />
+  );
       default:
         return null;
     }
@@ -163,13 +188,23 @@ const stepRefs = [
             </button>
           )}
 
-          {currentStep < 5 && (
+          {currentStep < 5 ? (
   <button className="btn-primary" onClick={next}>
     Next
+  </button>
+) : (
+  <button className="btn-primary" onClick={handleSubmit}>
+    Submit Application
   </button>
 )}
 
         </div>
+        {/* SUCCESS POPUP */}
+      {showPopup && (
+        <div className={`success-popup ${fadeOut ? "fade-out" : ""}`}>
+          ✅ Application Submitted Successfully
+        </div>
+      )}
       </div>
 
      

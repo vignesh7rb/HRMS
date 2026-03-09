@@ -169,6 +169,9 @@ const handleEditClick = (asset) => {
   setEditAsset(asset);
   setShowEditModal(true);
 };
+const openView = (asset) => {
+  setSelectedAsset(asset);
+};
 const handleUpdateAsset = () => {
   const updatedAssignments = assignments.map(item =>
     item.id === editAsset.id ? editAsset : item
@@ -298,8 +301,8 @@ const handleUpdateAsset = () => {
                   <td className="action-buttons">
 
 <button
-  className="icon-btn view"
-  onClick={() => setSelectedAsset(item)}
+  className="icon-btn"
+  onClick={() => openView(item)}
 >
   <FaEye />
 </button>

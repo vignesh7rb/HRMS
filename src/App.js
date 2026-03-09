@@ -44,6 +44,8 @@ import ReturnAsset from "./pages/AssetManagement/ReturnAsset";
 import MaintenanceSchedule from "./pages/AssetManagement/MaintenanceSchedule";
 import AssetDisposal from "./pages/AssetManagement/AssetDisposal";
 
+import EssPortal from "./pages/EssPortal/EssPortal";
+
 
 import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
@@ -310,6 +312,18 @@ function App() {
               }
             />
 
+
+            <Route
+              path="/ess"
+              element={
+                <ProtectedRoute allowedRoles={["ADMIN"]}>
+                  <MainLayout>
+                    <EssPortal />
+                  </MainLayout>
+                </ProtectedRoute>
+              }
+            />
+
             {/* ============ HR PORTAL ============ */}
             <Route
               path="/hr"
@@ -353,6 +367,9 @@ function App() {
   <Route path="payroll" element={<EmployeePayroll />} />
   <Route path="profile" element={<EmployeeProfile />} />
 </Route>
+   {/* ============ ESS PORTAL ============ */}
+  <Route path = "ESS" element = {<EssPortal />} />
+  
 
           </Routes>
         </Suspense>

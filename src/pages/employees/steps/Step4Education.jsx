@@ -1,22 +1,16 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
 
-const Step4Education = forwardRef((props, ref) => {
-  const [form, setForm] = useState({
-    qualification: "",
-    university: "",
-    graduationYear: "",
-  });
-
+const Step4Education = forwardRef(({ data, setData }, ref) => {
   const [errors, setErrors] = useState({});
 
-  // 🔒 expose validation to parent (Next button)
+  // expose validation to parent
   useImperativeHandle(ref, () => ({
     validate() {
       const newErrors = {};
 
-      if (!form.qualification.trim()) newErrors.qualification = "Required";
-      if (!form.university.trim()) newErrors.university = "Required";
-      if (!form.graduationYear.trim()) newErrors.graduationYear = "Required";
+      if (!data.qualification?.trim()) newErrors.qualification = "Required";
+      if (!data.university?.trim()) newErrors.university = "Required";
+      if (!data.graduationYear?.trim()) newErrors.graduationYear = "Required";
 
       setErrors(newErrors);
       return Object.keys(newErrors).length === 0;
@@ -25,7 +19,12 @@ const Step4Education = forwardRef((props, ref) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -35,6 +34,7 @@ const Step4Education = forwardRef((props, ref) => {
       <p className="subtitle">Step 4 of 6</p>
 
       <div className="form-grid">
+
         {/* Highest Qualification */}
         <div className="form-group">
           <label>
@@ -42,7 +42,7 @@ const Step4Education = forwardRef((props, ref) => {
           </label>
           <input
             name="qualification"
-            value={form.qualification}
+            value={data.qualification || ""}
             onChange={handleChange}
             className={errors.qualification ? "input-error" : ""}
             placeholder="e.g. B.Tech, MBA"
@@ -59,7 +59,7 @@ const Step4Education = forwardRef((props, ref) => {
           </label>
           <input
             name="university"
-            value={form.university}
+            value={data.university || ""}
             onChange={handleChange}
             className={errors.university ? "input-error" : ""}
             placeholder="Enter university name"
@@ -76,7 +76,7 @@ const Step4Education = forwardRef((props, ref) => {
           </label>
           <input
             name="graduationYear"
-            value={form.graduationYear}
+            value={data.graduationYear || ""}
             onChange={handleChange}
             className={errors.graduationYear ? "input-error" : ""}
             placeholder="e.g. 2022"
@@ -86,24 +86,40 @@ const Step4Education = forwardRef((props, ref) => {
           )}
         </div>
 
-        {/* Optional Fields */}
+        {/* Previous Company */}
         <div className="form-group">
           <label>Previous Company</label>
-          <input placeholder="Enter previous company" />
+          <input
+            name="previousCompany"
+            value={data.previousCompany || ""}
+            onChange={handleChange}
+            placeholder="Enter previous company"
+          />
         </div>
 
+        {/* Previous Designation */}
         <div className="form-group">
           <label>Previous Designation</label>
-          <input placeholder="Enter previous designation" />
+          <input
+            name="previousDesignation"
+            value={data.previousDesignation || ""}
+            onChange={handleChange}
+            placeholder="Enter previous designation"
+          />
         </div>
 
+        {/* Total Experience */}
         <div className="form-group" style={{ gridColumn: "1 / -1" }}>
           <label>Total Experience</label>
           <textarea
             rows="3"
+            name="totalExperience"
+            value={data.totalExperience || ""}
+            onChange={handleChange}
             placeholder="Describe experience, skills, achievements"
           />
         </div>
+
       </div>
     </>
   );
