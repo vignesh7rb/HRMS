@@ -16,6 +16,7 @@
   justify-content:space-between;
   align-items:center;
   margin-bottom:25px;
+  
 }
 
 .task-page-header h1{
@@ -23,6 +24,7 @@
   font-weight: 700;
   margin:0;
   color:#0f4c81;
+  margin-top: -25px;
 }
 
 

@@ -11,9 +11,7 @@ const EmpTask = () => {
 
   /* ================= ADD TASK ================= */
 
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-  };
+  
 
   /* ================= TOGGLE TASK ================= */
 
