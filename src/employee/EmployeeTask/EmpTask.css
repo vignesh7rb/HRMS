@@ -4,6 +4,8 @@
   padding:30px;
   background:#f4f6fa;
   font-family:"Inter",sans-serif;
+  
+  
 }
 
 
@@ -17,9 +19,10 @@
 }
 
 .task-page-header h1{
-  font-size:26px;
+  font-size:30px;
+  font-weight: 700;
   margin:0;
-  color:#1e293b;
+  color:#0f4c81;
 }
 
 

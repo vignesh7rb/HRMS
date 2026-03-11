@@ -43,10 +43,10 @@ const Empsalary = () => {
 
   return (
     <div className="salary-page">
-      {/* TOP HEADER */}
+      {/* TOP BAR */}
 
       <div className="salary-topbar">
-        <h2 className="page-title">Employee Payslip</h2>
+        <h2 className="page-titlee">Employee Payslip</h2>
 
         <div className="month-select-box">
           <label>Select Payslip Month</label>
@@ -64,6 +64,16 @@ const Empsalary = () => {
               ))}
             </select>
           </div>
+
+          <div className="download-wrapper">
+            <button
+              className="download-btnn"
+              onClick={downloadPDF}
+              data-html2canvas-ignore="true"
+            >
+              Download Payslip
+            </button>
+          </div>
         </div>
       </div>
 
@@ -77,7 +87,7 @@ const Empsalary = () => {
             <div className="company-info">
               <img
                 src="/crestclimber-logo.jpeg"
-                alt="Crestclimber Logo"
+                alt="logo"
                 className="company-logo"
               />
 
@@ -90,6 +100,7 @@ const Empsalary = () => {
               </div>
             </div>
           </div>
+
           {/* EMPLOYEE DETAILS */}
 
           <table className="employee-details-table">
@@ -97,7 +108,6 @@ const Empsalary = () => {
               <tr>
                 <td>Name</td>
                 <td>Subash Selvaraj</td>
-
                 <td>Account Number</td>
                 <td>921010009834346</td>
               </tr>
@@ -105,7 +115,6 @@ const Empsalary = () => {
               <tr>
                 <td>Employee Number</td>
                 <td>INE001</td>
-
                 <td>Bank Name</td>
                 <td>AXIS BANK LTD</td>
               </tr>
@@ -113,7 +122,6 @@ const Empsalary = () => {
               <tr>
                 <td>Designation</td>
                 <td>Software Engineer</td>
-
                 <td>PAN</td>
                 <td>JCLPS3533J</td>
               </tr>
@@ -121,28 +129,19 @@ const Empsalary = () => {
               <tr>
                 <td>Department</td>
                 <td>Development</td>
-
                 <td>LOP Days</td>
-                <td>0.00</td>
+                <td>0</td>
               </tr>
 
               <tr>
                 <td>Date of Joining</td>
                 <td>06/08/2024</td>
-
                 <td>Generated On</td>
                 <td>01/07/2025</td>
               </tr>
-
-              <tr>
-                <td>Location</td>
-                <td>Chennai</td>
-
-                <td></td>
-                <td></td>
-              </tr>
             </tbody>
           </table>
+
           {/* SALARY TABLE */}
 
           <div className="salary-table-wrapper">
@@ -199,9 +198,21 @@ const Empsalary = () => {
 
               <tbody>
                 <tr>
-                  <td>GROSS DEDUCTION</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td>Provident Fund</td>
+                  <td>768</td>
+                  <td>8,448</td>
+                </tr>
+
+                <tr>
+                  <td>Professional Tax</td>
+                  <td>200</td>
+                  <td>2,200</td>
+                </tr>
+
+                <tr className="total-row">
+                  <td>Total Deduction</td>
+                  <td>968</td>
+                  <td>10,648</td>
                 </tr>
               </tbody>
             </table>
@@ -215,21 +226,21 @@ const Empsalary = () => {
                 <td>
                   <b>NET PAY</b>
                 </td>
-                <td>₹16,000</td>
+                <td>₹15,032</td>
               </tr>
 
               <tr>
                 <td>
                   <b>NET TRANSFER</b>
                 </td>
-                <td>₹16,000</td>
+                <td>₹15,032</td>
               </tr>
 
               <tr>
                 <td>
                   <b>IN WORDS</b>
                 </td>
-                <td>Rupees Sixteen Thousand Only</td>
+                <td>Rupees Fifteen Thousand Thirty Two Only</td>
               </tr>
             </tbody>
           </table>
@@ -238,14 +249,6 @@ const Empsalary = () => {
             This is a computer generated payslip. No signature required.
           </p>
         </div>
-
-        <button
-          className="download-btnn"
-          data-html2canvas-ignore="true"
-          onClick={downloadPDF}
-        >
-          Download Payslip
-        </button>
       </div>
     </div>
   );

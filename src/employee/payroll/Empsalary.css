@@ -2,6 +2,7 @@
   padding:30px;
   font-family:"Inter",sans-serif;
   background:#f4f6fa;
+  margin-top: -60px;
 }
 
 /* TOP BAR */
@@ -9,13 +10,16 @@
 .salary-topbar{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
+  align-items:flex-start;
+  margin-top:20px;
 }
 
-.page-title{
-  font-size:24px;
-  font-weight:600;
+.page-titlee{
+  font-size:30px;
+  font-weight:700;
+  padding:50;
+  color:#0f4c81;
+  margin-top: 10px;
 }
 
 /* MONTH SELECT */
@@ -23,13 +27,16 @@
 .month-select-box{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:10px;
+}
+
+.month-select-box label{
   font-size:14px;
 }
 
 .month-selectors{
   display:flex;
-  gap:10px;
+  gap:12px;
 }
 
 .month-selectors select{
@@ -39,17 +46,37 @@
   font-size:14px;
 }
 
+/* DOWNLOAD BUTTON */
+
+.download-wrapper{
+  display:flex;
+  justify-content:center;
+}
+
+.download-btnn{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:6px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.download-btnn:hover{
+  background:#1e40af;
+}
+
+
 /* PAYSLIP */
 
 .payslip-wrapper{
   display:flex;
-  flex-direction:column;
-  align-items:center;
+  justify-content:center;
 }
 
 .payslip{
-  width:760px;          /* safe width for A4 */
-  margin:auto;
+  width:760px;
   background:#fff;
   padding:25px;
   border-radius:8px;
@@ -61,11 +88,9 @@
 
 .company-header{
   margin-bottom:25px;
-  padding-bottom:10px;
   border-bottom:1px solid #ddd;
+  padding-bottom:10px;
 }
-
-/* LOGO + TITLE ROW */
 
 .company-info{
   display:flex;
@@ -73,26 +98,21 @@
   gap:20px;
 }
 
-/* LOGO */
-
 .company-logo{
   width:110px;
 }
 
-/* TITLE */
-
 .company-title h2{
   margin:0;
   font-size:20px;
-  font-weight:700;
 }
 
 .payslip-month{
-  margin-top:4px;
   font-size:16px;
-  color:#333;
-  text-align: center;
+  text-align:center;
 }
+
+
 /* EMPLOYEE TABLE */
 
 .employee-details-table{
@@ -104,20 +124,15 @@
 .employee-details-table td{
   border:1px solid #d1d5db;
   padding:8px 10px;
-  font-size:14px;
 }
 
 .employee-details-table td:nth-child(1),
 .employee-details-table td:nth-child(3){
   font-weight:600;
   background:#f9fafb;
-  width:20%;
 }
 
-.employee-details-table td:nth-child(2),
-.employee-details-table td:nth-child(4){
-  width:30%;
-}
+
 /* SALARY TABLE */
 
 .salary-table-wrapper{
@@ -145,6 +160,7 @@
   font-weight:600;
 }
 
+
 /* NET PAY */
 
 .netpay-table{
@@ -158,42 +174,11 @@
   padding:8px;
 }
 
+
 /* NOTE */
 
 .note{
   margin-top:20px;
   font-size:12px;
   text-align:center;
-}
-
-/* DOWNLOAD BUTTON */
-
-.download-btnn{
-  margin-top:20px;
-  padding:10px 20px;
-  background:#4f46e5;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-
-  font-size:14px;
-  font-weight:500;
-
-  min-width:170px;     /* prevents shrinking */
-  white-space:nowrap;  /* prevents text breaking */
-  text-align:center;
-}
-
-.download-btn:hover{
-  background:#4338ca;
-}
-
-
-/* TABLE SAFETY FOR PDF */
-
-table{
-  width:100%;
-  table-layout:fixed;
-  word-break:break-word;
 }

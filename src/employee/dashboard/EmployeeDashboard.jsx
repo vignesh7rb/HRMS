@@ -1,157 +1,212 @@
 import React from "react";
 import "./EmployeeDashboard.css";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const EmployeeDashboard = () => {
+  /* ATTENDANCE DATA */
+
+  const attendanceData = [
+    { name: "Present", value: 18 },
+    { name: "Late", value: 2 },
+    { name: "Absent", value: 1 },
+    { name: "Leave", value: 3 },
+  ];
+
+  const COLORS = ["#22c55e", "#f59e0b", "#ef4444", "#6366f1"];
+
+  /* TASK DATA */
+
+  const tasks = [
+    { task: "Update HRMS attendance module", deadline: "10 Mar" },
+    { task: "Fix login authentication issue", deadline: "12 Mar" },
+    { task: "Prepare sprint report", deadline: "14 Mar" },
+  ];
+
+  /* ASSET DATA */
+
+  const assets = [
+    { name: "Laptop", desc: "Dell Latitude 5420", date: "02 Mar 2026" },
+    {
+      name: "Company Email",
+      desc: "bhuvanesh@company.com",
+      date: "01 Mar 2026",
+    },
+  ];
+
   return (
     <div className="employee-dashboard">
       {/* HEADER */}
 
       <div className="dashboard-header">
         <div>
-          <h2>Employee Dashboard</h2>
-          <p>Track your attendance, leave balance and payroll information</p>
+          <h1>Employee Workspace</h1>
+          <p>Welcome back, Bhuvanesh 👋</p>
         </div>
 
-        <div className="header-info">
-          <span>Today: 06 Mar 2026</span>
-          <span>Shift: 09:00 AM - 06:00 PM</span>
-        </div>
-      </div>
-
-      {/* KPI CARDS */}
-
-      <div className="kpi-grid">
-        <div className="kpi-card">
-          <p>Net Salary</p>
-          <h3>₹45,000</h3>
-          <span>Credited on 5 Mar</span>
-        </div>
-
-        <div className="kpi-card">
-          <p>Leave Balance</p>
-          <h3>14 Days</h3>
-          <span>CL + SL + EL</span>
-        </div>
-
-        <div className="kpi-card">
-          <p>Attendance Rate</p>
-          <h3>92%</h3>
-          <span>18 / 20 Days</span>
-        </div>
-
-        <div className="kpi-card">
-          <p>Overtime</p>
-          <h3>12 Hours</h3>
-          <span>This Month</span>
+        <div className="header-right">
+          <span>Today : 11 Mar 2026</span>
+          <span>Shift : 09:00 AM - 06:00 PM</span>
         </div>
       </div>
 
-      {/* MAIN GRID */}
+      {/* TOP GRID */}
 
-      <div className="main-grid">
-        {/* ATTENDANCE */}
+      <div className="top-grid">
+        {/* PROFILE */}
 
-        <div className="card">
-          <h3>Monthly Attendance Overview</h3>
+        <div className="card profile-card">
+          <div className="avatar">BK</div>
 
-          <div className="summary-grid">
-            <div>
-              <span>Present</span>
-              <strong>18</strong>
+          <h3>Bhuvanesh Kumar</h3>
+          <p className="role">Software Developer</p>
+
+          <div className="profile-details">
+            <div className="detail-row">
+              <span>Employee ID</span>
+              <strong>EMP1023</strong>
             </div>
 
-            <div>
-              <span>Late</span>
-              <strong>3</strong>
-            </div>
-
-            <div>
-              <span>Absent</span>
-              <strong>2</strong>
-            </div>
-
-            <div>
-              <span>Weekly Off</span>
-              <strong>4</strong>
+            <div className="detail-row">
+              <span>Department</span>
+              <strong>Engineering</strong>
             </div>
           </div>
         </div>
 
-        {/* LEAVE */}
+        {/* SHIFT TIMELINE */}
 
-        <div className="card">
-          <h3>Leave Balance Details</h3>
+        <div className="card shift-card">
+          <h3>Today's Shift</h3>
 
-          <div className="summary-grid">
-            <div>
-              <span>Casual Leave</span>
-              <strong>8</strong>
+          <div className="shift-status">
+            <span className="status-dot"></span>
+            Present
+          </div>
+
+          <div className="shift-timeline">
+            <div className="timeline-item">
+              <div className="timeline-dot"></div>
+
+              <div className="timeline-content">
+                <span>Punch In</span>
+                <strong>09:05 AM</strong>
+              </div>
             </div>
 
-            <div>
-              <span>Sick Leave</span>
-              <strong>6</strong>
+            <div className="timeline-item">
+              <div className="timeline-dot"></div>
+
+              <div className="timeline-content">
+                <span>Break Time</span>
+                <strong>01:00 PM</strong>
+              </div>
             </div>
 
-            <div>
-              <span>Earned Leave</span>
-              <strong>12</strong>
-            </div>
+            <div className="timeline-item">
+              <div className="timeline-dot inactive"></div>
 
-            <div>
-              <span>Comp Off</span>
-              <strong>2</strong>
+              <div className="timeline-content">
+                <span>Punch Out</span>
+                <strong>--</strong>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* PAYROLL */}
+        {/* ATTENDANCE CHART */}
 
         <div className="card">
-          <h3>Salary Breakdown</h3>
+          <h3>Attendance Insights</h3>
 
-          <ul className="list">
-            <li>Basic Salary : ₹30,000</li>
-            <li>House Rent Allowance : ₹8,000</li>
-            <li>Other Allowances : ₹7,000</li>
-            <li>Deductions : ₹2,500</li>
-          </ul>
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart>
+              <Pie data={attendanceData} dataKey="value" outerRadius={80} label>
+                {attendanceData.map((entry, index) => (
+                  <Cell key={index} fill={COLORS[index]} />
+                ))}
+              </Pie>
+
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* SECOND GRID */}
+
+      <div className="middle-grid">
+        {/* TASKS */}
+
+        <div className="card">
+          <h3>Assigned Tasks</h3>
+
+          <table className="task-table">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Deadline</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {tasks.map((t, i) => (
+                <tr key={i}>
+                  <td>{t.task}</td>
+                  <td>{t.deadline}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        {/* HOLIDAYS */}
+        {/* LEAVE HISTORY */}
 
         <div className="card">
-          <h3>Upcoming Holidays</h3>
+          <h3>Leave History</h3>
 
           <ul className="list">
-            <li>08 Mar – Mahashivratri</li>
-            <li>25 Mar – Holi</li>
-            <li>14 Apr – Tamil New Year</li>
+            <li>15 Mar – Personal Leave</li>
+            <li>22 Mar – Sick Leave</li>
           </ul>
         </div>
       </div>
 
-      {/* ACTIVITY */}
+      {/* ASSETS */}
 
       <div className="card">
-        <h3>Recent Activities</h3>
+        <h3>Assigned Company Assets</h3>
 
-        <div className="activity-list">
-          <div className="activity-item">
-            <span className="dot"></span>
-            Leave request submitted – 18 Feb
-          </div>
+        <table className="asset-table">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Description</th>
+              <th>Date</th>
+            </tr>
+          </thead>
 
-          <div className="activity-item">
-            <span className="dot"></span>
-            Salary credited – 05 Feb
-          </div>
+          <tbody>
+            {assets.map((a, i) => (
+              <tr key={i}>
+                <td>{a.name}</td>
+                <td>{a.desc}</td>
+                <td>{a.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-          <div className="activity-item">
-            <span className="dot"></span>
-            Attendance regularized – 02 Feb
-          </div>
-        </div>
+      {/* RECENT ACTIVITY */}
+
+      <div className="card">
+        <h3>Recent Activity</h3>
+
+        <ul className="activity-list">
+          <li>Leave approved – 18 Feb</li>
+          <li>Task assigned by manager – 20 Feb</li>
+          <li>Attendance updated – 02 Mar</li>
+        </ul>
       </div>
     </div>
   );

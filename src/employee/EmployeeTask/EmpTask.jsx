@@ -9,7 +9,11 @@ import "./EmpTask.css";
 const EmpTask = () => {
   const [tasks, setTasks] = useState([]);
 
- 
+  /* ================= ADD TASK ================= */
+
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
 
   /* ================= TOGGLE TASK ================= */
 

@@ -42,7 +42,7 @@ const EmployeeNavbar = () => {
     if (path.includes("/employee/attendance")) return "Attendance";
     if (path.includes("/employee/leave")) return "Leave";
     if (path.includes("/employee/payroll")) return "Payslip";
-    if (path.includes("/employee/p")) return "Payslip";
+    if (path.includes("/employee/task-management")) return "Task Management";
 
     return "Employee Portal";
   };

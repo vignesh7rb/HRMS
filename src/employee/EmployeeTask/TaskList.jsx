@@ -34,7 +34,7 @@ const TaskList = ({ tasks, completeTask, deleteTask }) => {
   };
 
   return (
-    <div className="task-page">
+    <div className="task-pagge">
       <h1 className="task-title">My Tasks</h1>
 
       <div className="task-table">
