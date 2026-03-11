@@ -10,12 +10,12 @@ const AdminPayrollReports = () => {
   const [selectedMonth, setSelectedMonth] = useState("Feb 2026");
   const [departmentFilter, setDepartmentFilter] = useState("ALL");
 
-  const reportData = [
+  const reportData = useMemo(() => [
     { id: "EMP001", name: "John", dept: "IT", netPay: 45000, pf: 1800 },
     { id: "EMP014", name: "Priya", dept: "HR", netPay: 52000, pf: 2100 },
     { id: "EMP021", name: "Arun", dept: "Finance", netPay: 39000, pf: 1600 },
     { id: "EMP030", name: "Divya", dept: "IT", netPay: 61000, pf: 2400 }
-  ];
+  ], []);
 
   /* =====================================================
      FILTERED DATA
@@ -24,7 +24,7 @@ const AdminPayrollReports = () => {
   const filteredData = useMemo(() => {
     if (departmentFilter === "ALL") return reportData;
     return reportData.filter(r => r.dept === departmentFilter);
-  }, [departmentFilter]);
+  }, [departmentFilter, reportData]);
 
   /* =====================================================
      DERIVED REPORT VALUES (ZOHO KPI STYLE)

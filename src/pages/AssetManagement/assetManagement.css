@@ -14,7 +14,18 @@
   min-height: 100vh;
   font-family: Inter, system-ui, sans-serif;
 }
+.action-buttons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;
+}
 
+.action-buttons button{
+  white-space:nowrap;
+  flex-shrink:0;
+}
 /* ===============================
    PAGE HEADER
 =================================*/
@@ -210,10 +221,11 @@
    TABLE STYLING
 =================================*/
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+  table-layout:auto;
 }
 
 thead th {
@@ -233,6 +245,11 @@ tbody td {
 
 tbody tr:hover {
   background: #f9fbff;
+}
+
+thead th:last-child,
+tbody td:last-child{
+  text-align:center;
 }
 
 /* ===============================

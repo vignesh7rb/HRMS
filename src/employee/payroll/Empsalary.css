@@ -1,0 +1,199 @@
+.salary-page{
+  padding:30px;
+  font-family:"Inter",sans-serif;
+  background:#f4f6fa;
+}
+
+/* TOP BAR */
+
+.salary-topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.page-title{
+  font-size:24px;
+  font-weight:600;
+}
+
+/* MONTH SELECT */
+
+.month-select-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:14px;
+}
+
+.month-selectors{
+  display:flex;
+  gap:10px;
+}
+
+.month-selectors select{
+  padding:8px 12px;
+  border-radius:6px;
+  border:1px solid #dcdcdc;
+  font-size:14px;
+}
+
+/* PAYSLIP */
+
+.payslip-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.payslip{
+  width:760px;          /* safe width for A4 */
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:8px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+
+/* COMPANY HEADER */
+
+.company-header{
+  margin-bottom:25px;
+  padding-bottom:10px;
+  border-bottom:1px solid #ddd;
+}
+
+/* LOGO + TITLE ROW */
+
+.company-info{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+/* LOGO */
+
+.company-logo{
+  width:110px;
+}
+
+/* TITLE */
+
+.company-title h2{
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+}
+
+.payslip-month{
+  margin-top:4px;
+  font-size:16px;
+  color:#333;
+  text-align: center;
+}
+/* EMPLOYEE TABLE */
+
+.employee-details-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:20px;
+}
+
+.employee-details-table td{
+  border:1px solid #d1d5db;
+  padding:8px 10px;
+  font-size:14px;
+}
+
+.employee-details-table td:nth-child(1),
+.employee-details-table td:nth-child(3){
+  font-weight:600;
+  background:#f9fafb;
+  width:20%;
+}
+
+.employee-details-table td:nth-child(2),
+.employee-details-table td:nth-child(4){
+  width:30%;
+}
+/* SALARY TABLE */
+
+.salary-table-wrapper{
+  display:flex;
+  gap:20px;
+}
+
+.salary-table{
+  width:50%;
+  border-collapse:collapse;
+}
+
+.salary-table th{
+  background:#f1f3f6;
+  padding:8px;
+  border:1px solid #ddd;
+}
+
+.salary-table td{
+  padding:8px;
+  border:1px solid #ddd;
+}
+
+.total-row td{
+  font-weight:600;
+}
+
+/* NET PAY */
+
+.netpay-table{
+  width:100%;
+  margin-top:20px;
+  border-collapse:collapse;
+}
+
+.netpay-table td{
+  border:1px solid #ddd;
+  padding:8px;
+}
+
+/* NOTE */
+
+.note{
+  margin-top:20px;
+  font-size:12px;
+  text-align:center;
+}
+
+/* DOWNLOAD BUTTON */
+
+.download-btnn{
+  margin-top:20px;
+  padding:10px 20px;
+  background:#4f46e5;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+
+  font-size:14px;
+  font-weight:500;
+
+  min-width:170px;     /* prevents shrinking */
+  white-space:nowrap;  /* prevents text breaking */
+  text-align:center;
+}
+
+.download-btn:hover{
+  background:#4338ca;
+}
+
+
+/* TABLE SAFETY FOR PDF */
+
+table{
+  width:100%;
+  table-layout:fixed;
+  word-break:break-word;
+}

@@ -83,17 +83,7 @@ const HRPayroll = () => {
     };
   }, [employees]);
 
-  /* ===============================
-     HR ACTIONS
-  =============================== */
-  const updateLeaveSalary = (id, value) => {
-    const safe = Math.max(0, Number(value) || 0);
-    setEmployees((prev) =>
-      prev.map((e) =>
-        e.id === id ? { ...e, leaveSalary: safe } : e
-      )
-    );
-  };
+ 
 
   const markReady = () => {
     setPreviewStatus("READY_FOR_ADMIN");

@@ -47,6 +47,7 @@ const EssPortal = () => {
 
   return (
     <div className="ess-container">
+      <h1>ESS Portal</h1>
 
       {/* HEADER */}
 

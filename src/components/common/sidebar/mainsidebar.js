@@ -52,12 +52,22 @@ const Sidebar = () => {
 
   const isAssetActive = location.pathname.includes("/assets");
 
+
+  /* ================= EXPENSE & FINANCE DROPDOWN ================= */
+const [showExpenseMenu, setShowExpenseMenu] = useState(
+  location.pathname.includes("/expense")
+);
+
+const isExpenseActive = location.pathname.includes("/expense");
+
   return (
     <div className="sidebar">
       {/* Logo */}
       <div className="sidebar-header">Crest Climbers</div>
 
       <div className="sidebar-menu">
+
+
 
         {/* ================= DASHBOARD ================= */}
         <Link
@@ -238,14 +248,62 @@ const Sidebar = () => {
 
         </div>
 
-        {/* ================= EXPENSE ================= */}
-        <Link
-          to="/expense"
-          className={`sidebar-item ${isActive("/expense") ? "active" : ""}`}
-        >
-          <FaWallet className="icon" />
-          <span>Expense & Finance</span>
-        </Link>
+        {/* ================= EXPENSE & FINANCE ================= */}
+
+
+<div
+
+  className={`sidebar-item ${isExpenseActive ? "active" : ""}`}
+  onClick={() => setShowExpenseMenu(!showExpenseMenu)}
+>
+  <FaWallet className="icon" />
+  <span>Expense & Finance</span>
+
+  <span className="dropdown-icon">
+    {showExpenseMenu ? <FaChevronUp /> : <FaChevronDown />}
+  </span>
+</div>
+
+<div className={`submenu sidebar-submenu ${showExpenseMenu ? "open" : ""}`}>
+
+ 
+
+  <Link
+    to="/expense/daily-entry"
+    className={`sidebar-subitem ${isActive("/expense/daily-entry") ? "active" : ""}`}
+  >
+    Daily Expense Entry
+  </Link>
+
+  <Link
+    to="/expense/invoice"
+    className={`sidebar-subitem ${isActive("/expense/invoice") ? "active" : ""}`}
+  >
+    Invoice
+  </Link>
+
+  <Link
+    to="/expense/ledger"
+    className={`sidebar-subitem ${isActive("/expense/ledger") ? "active" : ""}`}
+  >
+    Ledger Summary
+  </Link>
+
+  <Link
+    to="/expense/quotation"
+    className={`sidebar-subitem ${isActive("/expense/quotation") ? "active" : ""}`}
+  >
+    Quotation
+  </Link>
+
+  <Link
+    to="/expense/vendor-payment"
+    className={`sidebar-subitem ${isActive("/expense/vendor-payment") ? "active" : ""}`}
+  >
+    Vendor Payment
+  </Link>
+
+</div>
 {/* ================= ESS ================= */}
 <Link
   to="/ess"

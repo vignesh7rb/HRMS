@@ -6,6 +6,7 @@ import store from "./store/store";
 /* ================= LAYOUTS ================= */
 import MainLayout from "./components/layout/mainlayout";
 import HRLayout from "./HR/layout/HRLayout";
+import EmployeeMainLayout from "./employee/layout/EmployeeMainLayout";
 
 /* ================= AUTH ================= */
 import Login from "./pages/auth/login";
@@ -18,13 +19,18 @@ import AuthLayout from "../src/components/layout/AuthLayout";
 import MyProfile from "./components/MyProfile/MyProfile";
 
 /* ================= EMPLOYEE ================= */
-import EmployeeMainLayout from "./employee/layout/EmployeeMainLayout";
 import EmployeeDashboard from "./employee/dashboard/EmployeeDashboard";
 import EmployeeAttendance from "./employee/attendance/EmployeeAttendance";
-import EmployeeLeave from "./employee/leave/EmployeeLeave";
-import EmployeePayroll from "./employee/payroll/EmployeePayroll";
-
 import EmployeeProfile from "./employee/profile/EmployeeProfile";
+import EmpLeave from "./employee/leave/EmpLeave";
+import Empsalary from "./employee/payroll/Empsalary";
+
+/* ===== TASK MODULE ===== */
+
+import EmpTask from "./employee/EmployeeTask/EmpTask";
+import TaskList from "./employee/EmployeeTask/TaskList";
+import MeetingScheduler from "./employee/EmployeeTask/MeetingScheduler";
+import TeamChat from "./employee/EmployeeTask/TeamChat";
 
 /* ================= ADMIN ================= */
 
@@ -47,7 +53,11 @@ import AssetDisposal from "./pages/AssetManagement/AssetDisposal";
 import EssPortal from "./pages/EssPortal/EssPortal";
 
 
-import AdminExpenseFinance from "./pages/ExpenseFinance/AdminExpenseFinance";
+import DailyExpenseEntry from "./pages/ExpenseFinance/dailyexpenseentry";
+import Invoice from "./pages/ExpenseFinance/invoice";
+import LedgerSummary from "./pages/ExpenseFinance/LedgerSummary";
+import Quotation from "./pages/ExpenseFinance/quotation";
+import VendorPayment from "./pages/ExpenseFinance/VendorPayment";
 import EmployeeDirectory from "./pages/employees/EmployeeDirectory";
 import Attendance from "./pages/attendance/attendance";
 import LeaveList from "./pages/leave/leavelist";
@@ -301,16 +311,61 @@ function App() {
 />
             
 
-            <Route
-              path="/expense"
-              element={
-                <ProtectedRoute allowedRoles={["ADMIN"]}>
-                  <MainLayout>
-                    <AdminExpenseFinance />
-                  </MainLayout>
-                </ProtectedRoute>
-              }
-            />
+
+<Route
+  path="/expense/daily-entry"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <DailyExpenseEntry />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/expense/invoice"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <Invoice />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/expense/ledger"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <LedgerSummary />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/expense/quotation"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <Quotation />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/expense/vendor-payment"
+  element={
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
+      <MainLayout>
+        <VendorPayment />
+      </MainLayout>
+    </ProtectedRoute>
+  }
+/>
 
 
             <Route
@@ -351,22 +406,54 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="*" element={<Navigate to="/login" />} />
 
-            {/* ============ EMPLOYEE PORTAL ============ */}
-<Route
-  path="/employee"
-  element={
-    <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
-      <EmployeeMainLayout />
-    </ProtectedRoute>
-  }
->
-  <Route index element={<Navigate to="dashboard" />} />
-  <Route path="dashboard" element={<EmployeeDashboard />} />
-  <Route path="attendance" element={<EmployeeAttendance />} />
-  <Route path="leave" element={<EmployeeLeave />} />
-  <Route path="payroll" element={<EmployeePayroll />} />
-  <Route path="profile" element={<EmployeeProfile />} />
-</Route>
+           {/* ================= EMPLOYEE PORTAL ================= */}
+
+            <Route
+              path="/employee"
+              element={
+                <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+                  <EmployeeMainLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route
+                path="/employee/task-management"
+                element={
+                  <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+                    {" "}
+                    <EmpTask />{" "}
+                  </ProtectedRoute>
+                }
+              />
+              <Route index element={<Navigate to="dashboard" />} />
+
+              <Route path="dashboard" element={<EmployeeDashboard />} />
+
+              <Route path="attendance" element={<EmployeeAttendance />} />
+
+              <Route path="leave" element={<EmpLeave />} />
+
+              {/* ===== TASK MANAGEMENT ===== */}
+
+              <Route path="tasks" element={<EmpTask />} />
+
+              <Route path="EmployeeTask/TaskList" element={<TaskList />} />
+
+              <Route
+                path="EmployeeTask/MeetingScheduler"
+                element={<MeetingScheduler />}
+              />
+
+              <Route path="EmployeeTask/TeamChat" element={<TeamChat />} />
+
+              {/* ===== PAYROLL ===== */}
+
+              <Route path="payroll/salary" element={<Empsalary />} />
+
+              {/* ===== PROFILE ===== */}
+
+              <Route path="profile" element={<EmployeeProfile />} />
+            </Route>
    {/* ============ ESS PORTAL ============ */}
   <Route path = "ESS" element = {<EssPortal />} />
   

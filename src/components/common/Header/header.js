@@ -51,7 +51,11 @@ const Topbar = () => {
     if (path.startsWith("/assets/maintenance")) return "AssetMaintenance";
     if (path.startsWith("/assets/disposal")) return "Asset Disposal";
     
-    if (path.startsWith("/expense")) return "Expense & Finance";
+    if (path.startsWith("/expense/daily-entry")) return "Daily Entry";
+    if (path.startsWith("/expense/invoice")) return "Invoice";
+    if (path.startsWith("/expense/ledger")) return "Ledger Summary";
+    if (path.startsWith("/expense/quotation")) return "Quotation";
+    if (path.startsWith("/expense/vendor-payment")) return "Vendor Payment";
     return "Profile";
   };
 

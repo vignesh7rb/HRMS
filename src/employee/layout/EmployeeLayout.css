@@ -1,30 +1,48 @@
-/* ===== EMPLOYEE LAYOUT ===== */
+/* ===== MAIN LAYOUT ===== */
+
 .employee-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 /* ===== SIDEBAR ===== */
+
 .employee-sidebar {
   width: 240px;
-  min-width: 240px;
+  height: 100vh;
   background: #0f4c81;
   position: fixed;
-  top: 0;
-  bottom: 0;
   left: 0;
+  top: 0;
 }
 
-/* ===== RIGHT SIDE ===== */
+/* ===== RIGHT SECTION ===== */
+
 .employee-right {
-  margin-left: 240px;              /* ✅ SAME AS SIDEBAR */
-  width: calc(100% - 240px);       /* ✅ SAME AS SIDEBAR */
-  background: #f6f8fb;
-  min-height: 100vh;
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-/* ===== PAGE CONTENT ===== */
+/* ===== NAVBAR SPACE ===== */
+
 .employee-content {
+  flex: 1;
   padding: 24px;
-  margin-top: 80px;                /* ✅ SAME AS TOPBAR HEIGHT */
+  margin-top: 80px;
+  overflow-y: auto;
+}
+
+/* ===== FOOTER ===== */
+
+.employee-footer {
+  height: 40px;
+  flex-shrink: 0;
+  background: #f1f5f9;
+  text-align: center;
+  line-height: 40px;
+  font-size: 13px;
+  color: #475569;
 }
